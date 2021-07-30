@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 
-import '/compontent/ui/my_toast.dart';
+import 'package:flutter_huanhu/compontent/ui/my_toast.dart';
 
 /// 函数防抖
 ///
@@ -42,31 +42,31 @@ throttle(
 //[params]: 参数
 //[callback]: 要执行的方法
 //[type]: 0 等待cookie和api 都请求结束  1 谁快用谁
-// Future staticStorage({cookieName, api, params, callback, type = 0}) async {
-//   var data;
-//   var paramsToJson;
-//   var date = DateTime.now();
-//   _post() async {
-//     data = await api(Map<String, dynamic>.from(params));
-//     if (data != null) {
-//       if (type == 0 || (type == 1 && paramsToJson == null)) {
-//         paramsToJson = callback.call(data);
-//         PersistentStorage().setStorage(cookieName, data);
-//         return paramsToJson;
-//       }
-//     }
-//   }
-//
-//   _getCookie() async {
-//     data = await PersistentStorage().getStorage(cookieName);
-//     if (data != null && paramsToJson == null) paramsToJson = callback.call(data);
-//     return paramsToJson;
-//   }
-//
-//   _getCookie();
-//   await _post();
-//   return paramsToJson;
-// }
+Future staticStorage({cookieName, api, params, callback, type = 0}) async {
+  var data;
+  var paramsToJson;
+  var date = DateTime.now();
+  _post() async {
+    data = await api(Map<String, dynamic>.from(params));
+    if (data != null) {
+      if (type == 0 || (type == 1 && paramsToJson == null)) {
+        paramsToJson = callback.call(data);
+        Sesstion().setStorage(cookieName, data);
+        return paramsToJson;
+      }
+    }
+  }
+
+  _getCookie() async {
+    data = await Sesstion().getStorage(cookieName);
+    if (data != null && paramsToJson == null) paramsToJson = callback.call(data);
+    return paramsToJson;
+  }
+
+  _getCookie();
+  await _post();
+  return paramsToJson;
+}
 
 String typeOf(element) {
   return element.runtimeType.toString();
@@ -128,8 +128,8 @@ formCheck(key, value, [required = false]) {
         str = required ? '参数不能为空' : null;
       }
       break;
-// default:
-//   str = null;
+    // default:
+    //   str = null;
   }
   return str;
 }

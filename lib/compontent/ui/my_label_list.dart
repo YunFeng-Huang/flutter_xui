@@ -1,5 +1,5 @@
 import 'package:flutter/cupertino.dart';
-import 'package:xui/compontent/js/index.dart';
+import 'package:flutter_huanhu/compontent/js/index.dart';
 import './index.dart';
 import 'color_utils.dart';
 import 'css.dart';

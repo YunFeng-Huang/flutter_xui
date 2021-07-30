@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:xui/compontent/js/index.dart';
-import 'package:xui/compontent/js/screem.dart';
-
+import 'package:flutter_huanhu/compontent/js/index.dart';
+import 'package:flutter_huanhu/compontent/js/screem.dart';
 import './index.dart';
+import '../../routes_config.dart';
 import 'css.dart';
 
 // ignore: must_be_immutable
@@ -37,7 +37,7 @@ class XAppBar extends StatelessWidget implements PreferredSizeWidget {
             onTap: isNotNull(leftCallback)
                 ? leftCallback.call()
                 : () {
-                    Navigator.pop(context);
+                    Routers.pop();
                   },
             child: Icon(
               Icons.chevron_left,
