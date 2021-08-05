@@ -1,8 +1,8 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_huanhu/compontent/ui/my_loading.dart';
-import 'package:flutter_huanhu/main.dart';
+import 'package:xui/compontent/ui/my_loading.dart';
+import 'package:xui/main.dart';
 import '../js/index.dart';
 import '../../config.dart';
 import './index.dart';

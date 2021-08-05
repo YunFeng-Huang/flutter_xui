@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_huanhu/compontent/js/index.dart';
+import 'package:xui/compontent/js/index.dart';
 
 import '../css.dart';
 import '../index.dart';

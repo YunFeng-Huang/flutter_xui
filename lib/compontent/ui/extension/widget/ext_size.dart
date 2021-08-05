@@ -1,6 +1,6 @@
 // ignore: import_of_legacy_library_into_null_safe
 
-import 'package:flutter_huanhu/compontent/js/screem.dart';
+import 'package:xui/compontent/js/screem.dart';
 
 extension SizeExtension on num {
   ///[ScreenUtil.setWidth]

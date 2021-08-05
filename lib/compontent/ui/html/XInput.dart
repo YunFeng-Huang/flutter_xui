@@ -1,7 +1,7 @@
 // ignore: must_be_immutable
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_huanhu/compontent/js/index.dart';
+import 'package:xui/compontent/js/index.dart';
 import '../index.dart';
 import '../css.dart';
 import '../my_toast.dart';

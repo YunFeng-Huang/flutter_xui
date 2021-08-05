@@ -3,10 +3,10 @@ import 'dart:core';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_huanhu/compontent/js/index.dart';
-import 'package:flutter_huanhu/compontent/ui/color_utils.dart';
-import 'package:flutter_huanhu/compontent/ui/index.dart';
-import 'package:flutter_huanhu/compontent/ui/my_toast.dart';
+import 'package:xui/compontent/js/index.dart';
+import 'package:xui/compontent/ui/color_utils.dart';
+import 'package:xui/compontent/ui/index.dart';
+import 'package:xui/compontent/ui/my_toast.dart';
 
 import 'html/XInput.dart';
 export './index.dart';

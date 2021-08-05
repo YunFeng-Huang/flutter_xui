@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_huanhu/compontent/js/index.dart';
-import 'package:flutter_huanhu/compontent/ui/my_loading.dart';
-import 'package:flutter_huanhu/routes_config.dart';
-import 'package:flutter_huanhu/compontent/js/screem.dart';
+import 'package:xui/compontent/js/index.dart';
+import 'package:xui/compontent/ui/my_loading.dart';
+import 'package:xui/routes_config.dart';
+import 'package:xui/compontent/js/screem.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import './index.dart';
 import 'color_utils.dart';

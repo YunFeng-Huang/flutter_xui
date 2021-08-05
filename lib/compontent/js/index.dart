@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:flutter_huanhu/compontent/ui/my_toast.dart';
+import 'package:xui/compontent/ui/my_toast.dart';
 
 /// 函数防抖
 ///

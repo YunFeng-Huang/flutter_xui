@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_huanhu/compontent/js/index.dart';
-import 'package:flutter_huanhu/compontent/ui/color_utils.dart';
+import 'package:xui/compontent/js/index.dart';
+import 'package:xui/compontent/ui/color_utils.dart';
 import '../index.dart';
 
 // var data = [

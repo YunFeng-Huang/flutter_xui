@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_huanhu/generated/json/base/json_convert_content.dart';
+import 'package:xui/generated/json/base/json_convert_content.dart';
 import '../color_utils.dart';
 import '../css.dart';
 
