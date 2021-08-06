@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/services.dart';
-export './compontent/ui/index.dart';
+export 'compontent/index.dart';
 
 class Xui {
   static const MethodChannel _channel = const MethodChannel('xui');

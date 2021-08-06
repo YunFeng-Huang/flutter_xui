@@ -1,8 +1,9 @@
 // ignore: must_be_immutable
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_huanhu/compontent/js/index.dart';
-import '../index.dart';
+import 'package:xui/compontent/js/formCheck.dart';
+import 'package:xui/compontent/js/index.dart';
+import '../../index.dart';
 import '../css.dart';
 import '../my_toast.dart';
 
@@ -22,7 +23,7 @@ class XInput extends StatelessWidget {
   Color? _border;
   ValueChanged<String>? _onChanged;
   FormFieldSetter<String>? _onSaved;
-  String? _validator;
+  late FormKeyEnum _validator;
   bool? _required;
   double? _radius;
   EdgeInsetsGeometry? _padding;
@@ -52,15 +53,15 @@ class XInput extends StatelessWidget {
   }
   @override
   Widget build(BuildContext context) {
-    FocusNode _focusNode = new FocusNode();
-    _focusNode.addListener(() {
-      if (!_focusNode.hasFocus) {
-        var str = formCheck(_validator, _controller?.text.toString(), _required);
-        if (isNotNull(str)) {
-          showToast(str);
-        }
-      }
-    });
+    // FocusNode _focusNode = new FocusNode();
+    // _focusNode.addListener(() {
+    //   if (!_focusNode.hasFocus && isNotNull(_validator)) {
+    //     var str = formCheck(_validator, _controller?.text.toString(), _required);
+    //     if (isNotNull(str)) {
+    //       showToast(str);
+    //     }
+    //   }
+    // });
     return ClipRRect(
       borderRadius: BorderRadius.circular(_radius ?? 0),
       child: Container(
@@ -86,29 +87,29 @@ class XInput extends StatelessWidget {
             ),
             Expanded(
               child: TextFormField(
-                  obscureText: _obscureText ?? false,
-                  focusNode: _focusNode,
-                  keyboardType: _keyboardType,
-                  controller: _controller,
-                  textAlign: _textAlign ?? TextAlign.start,
-                  enabled: _enabled ?? true,
-                  style: font(12, color: '#3E3E3E'),
-                  onChanged: _onChanged,
-                  decoration: InputDecoration(
-                    isCollapsed: true, //重点，相当于高度包裹的意思，必须设置为true，不然有默认奇妙的最小高度
-                    contentPadding: _contentPadding,
-                    hintText: _hintText,
-                    hintStyle: _hintStyle,
-                    border: OutlineInputBorder(borderSide: BorderSide.none),
-                  )
-                  // onSaved: _onSaved,
-                  // validator: (value) {
-                  //   print(value);
-                  //   print('validator');
-                  //   var str = formCheck(_validator, value, _required);
-                  //   return str;
-                  // },
-                  ),
+                obscureText: _obscureText ?? false,
+                // focusNode: _focusNode,
+                keyboardType: _keyboardType,
+                controller: _controller,
+                textAlign: _textAlign ?? TextAlign.start,
+                enabled: _enabled ?? true,
+                style: font(12, color: '#3E3E3E'),
+                onChanged: _onChanged,
+                decoration: InputDecoration(
+                  isCollapsed: true, //重点，相当于高度包裹的意思，必须设置为true，不然有默认奇妙的最小高度
+                  contentPadding: _contentPadding,
+                  hintText: _hintText,
+                  hintStyle: _hintStyle,
+                  border: OutlineInputBorder(borderSide: BorderSide.none),
+                ),
+                onSaved: (v) => formCheck(_validator, v, _required),
+                // validator: (value) {
+                //   print(value);
+                //   print('validator');
+                //   var str = formCheck(_validator, _controller?.text.toString(), _required);
+                //   return str;
+                // },
+              ),
             ),
           ],
         ),

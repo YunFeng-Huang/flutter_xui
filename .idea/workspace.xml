@@ -2,7 +2,37 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c95599b0-8a0e-4099-b1bc-6fa344652e67" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/lib/compontent/js/FormCheck.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/compontent/js/time_format.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/compontent/ui/html/XRadio.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Flutter_Plugins.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Flutter_Plugins.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/example/pubspec.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/compontent/js/index.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/compontent/js/index.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/compontent/ui/color_utils.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/compontent/js/color_utils.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/compontent/ui/css.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/compontent/ui/css.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/compontent/ui/extension/widget/ext_size.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/compontent/ui/extension/widget/ext_size.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/compontent/ui/html/XButtom.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/compontent/ui/html/XButtom.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/compontent/ui/html/XCheckbox.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/compontent/ui/html/XCheckbox.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/compontent/ui/html/XDivision.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/compontent/ui/html/XDivision.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/compontent/ui/html/XForm.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/compontent/ui/html/XForm.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/compontent/ui/html/XImage.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/compontent/ui/html/XImage.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/compontent/ui/html/XInput.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/compontent/ui/html/XInput.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/compontent/ui/html/XSelectDateTime.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/compontent/ui/html/XSelectDateTime.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/compontent/ui/html/XSelectInput.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/compontent/ui/html/XSelectInput.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/compontent/ui/html/XSlider.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/compontent/ui/html/XSlider.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/compontent/ui/html/XTable.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/compontent/ui/html/XTable.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/compontent/ui/icon.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/compontent/ui/icon.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/compontent/ui/index.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/compontent/index.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/compontent/ui/my_computer.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/compontent/ui/my_computer.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/compontent/ui/my_custom_app_bar.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/compontent/ui/my_custom_app_bar.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/compontent/ui/my_label_list.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/compontent/ui/my_label_list.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/compontent/ui/my_loading.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/compontent/ui/my_loading.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/compontent/ui/my_scroll_view.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/compontent/ui/my_scroll_view.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/compontent/ui/my_toast.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/compontent/ui/my_toast.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/xui.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/xui.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.yaml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

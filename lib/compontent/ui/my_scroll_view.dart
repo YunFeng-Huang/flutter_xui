@@ -1,12 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_huanhu/compontent/js/index.dart';
-import 'package:flutter_huanhu/compontent/ui/my_loading.dart';
-import 'package:flutter_huanhu/routes_config.dart';
-import 'package:flutter_huanhu/compontent/js/screem.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
-import './index.dart';
-import 'color_utils.dart';
+import 'package:xui/compontent/js/index.dart';
+import 'package:xui/compontent/js/screem.dart';
+import '../index.dart';
+import '../js/color_utils.dart';
 
 // ignore: must_be_immutable
 class XCustomScrollView extends StatefulWidget {
@@ -67,7 +65,7 @@ class _XCustomScrollViewState extends State<XCustomScrollView> {
   }
 
   void _onLoading() async {
-    await onRefresh?.call();
+    await onLoading?.call();
     // if failed,use loadFailed(),if no data return,use LoadNodata()
     // items.add((items.length+1).toString());
     if (mounted) setState(() {});
@@ -79,8 +77,8 @@ class _XCustomScrollViewState extends State<XCustomScrollView> {
     return Scaffold(
         backgroundColor: backgroundColor,
         body: SmartRefresher(
-          enablePullDown: true,
-          enablePullUp: true,
+          enablePullDown: isNotNull(onRefresh),
+          enablePullUp: isNotNull(onLoading),
           header: MaterialClassicHeader(color: Colors.blue),
           footer: CustomFooter(
             builder: (BuildContext context, LoadStatus? mode) {
@@ -116,7 +114,7 @@ class _XCustomScrollViewState extends State<XCustomScrollView> {
                       controller: controller,
                       slivers: slivers,
                     ),
-                    if (!isNotNull(appbar?.customAppBar))
+                    if (!isNotNull(appbar?.customAppBar) && isNotNull(appbar))
                       XAppBarWidget(
                         context,
                         title: appbar?.title,
@@ -125,14 +123,14 @@ class _XCustomScrollViewState extends State<XCustomScrollView> {
                       ).background(
                         color: Colors.white.withOpacity(opacity),
                       ),
-                    if (!isNotNull(appbar?.customAppBar))
+                    if (!isNotNull(appbar?.customAppBar) && isNotNull(appbar))
                       XAppBarWidget(
                         context,
                         title: appbar?.title,
                         appbarHeight: appbarHeight,
                         color: Colors.black.withOpacity(opacity),
                       ),
-                    if (isNotNull(appbar?.customAppBar)) appbar!.customAppBar!,
+                    if (isNotNull(appbar?.customAppBar) && isNotNull(appbar)) appbar!.customAppBar!,
                     if (bottomAppBar != null)
                       Container(
                         height: 98.w,
@@ -181,7 +179,7 @@ Widget XAppBarWidget(
         GestureDetector(
           behavior: HitTestBehavior.opaque,
           onTap: () {
-            Routers.pop(context);
+            Navigator.pop(context);
           },
           child: Icon(
             Icons.chevron_left,

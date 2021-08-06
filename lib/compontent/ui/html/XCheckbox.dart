@@ -1,8 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_huanhu/compontent/js/index.dart';
-import 'package:flutter_huanhu/compontent/ui/css.dart';
-import '../index.dart';
+import 'package:xui/compontent/js/index.dart';
+
+import '../css.dart';
+import '../../index.dart';
 
 // ignore: must_be_immutable
 class XCheckBox extends StatefulWidget {
@@ -21,7 +22,11 @@ class XCheckBox extends StatefulWidget {
 }
 
 class _XCheckBoxState extends State<XCheckBox> {
-  bool value = false;
+  bool get _value => widget.value!;
+  set _value(v) {
+    onChanged!(v);
+  }
+
   Function(bool?)? get onChanged => widget.onChanged;
   String? get activeColor => widget.activeColor;
   double? get radius => widget.radius;
@@ -32,14 +37,11 @@ class _XCheckBoxState extends State<XCheckBox> {
   @override
   void initState() {
     super.initState();
-    setState(() {
-      value = widget.value!;
-    });
   }
 
   @override
   Widget build(BuildContext context) {
-    Widget _icon = (value
+    Widget _icon = (_value
         ? Icon(
             Icons.check,
             size: size,
@@ -65,9 +67,8 @@ class _XCheckBoxState extends State<XCheckBox> {
       ),
       onTap: () {
         setState(() {
-          value = !value;
+          _value = !_value;
         });
-        onChanged!(value);
       },
     );
   }

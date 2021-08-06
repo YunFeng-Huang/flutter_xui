@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import './index.dart';
+import '../index.dart';
 import 'css.dart';
 
 class LoadingConfig {

@@ -1,6 +1,6 @@
 // ignore:non_constant_identifier_names
 import 'package:flutter/cupertino.dart';
-import '../index.dart';
+import '../../index.dart';
 import '../css.dart';
 
 // ignore: must_be_immutable

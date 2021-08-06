@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_huanhu/compontent/ui/css.dart';
-import '../index.dart';
+import '../../index.dart';
 
 // ignore: must_be_immutable
 class XSlider extends StatelessWidget {

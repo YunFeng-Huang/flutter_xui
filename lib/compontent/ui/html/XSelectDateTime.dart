@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import '../css.dart';
+import '../../index.dart';
 
 // ignore: must_be_immutable
 class XSelectDateTime extends StatefulWidget {
@@ -11,8 +12,9 @@ class XSelectDateTime extends StatefulWidget {
   List? list;
   double? width;
   double? height;
-
-  XSelectDateTime({this.initialValue, this.onConfirm, this.onChanged, this.height, this.width});
+  DateTime? minTime;
+  DateTime? maxTime;
+  XSelectDateTime({this.initialValue, this.onConfirm, this.onChanged, this.maxTime, this.minTime, this.height, this.width});
   @override
   _XSelectDateTimeState createState() => _XSelectDateTimeState();
 }
@@ -24,6 +26,8 @@ class _XSelectDateTimeState extends State<XSelectDateTime> {
   List? get list => widget.list;
   double? get width => widget.width;
   double? get height => widget.height;
+  DateTime? get minTime => widget.minTime;
+  DateTime? get maxTime => widget.maxTime;
   @override
   void initState() {
     // TODO: implement initState
@@ -35,7 +39,7 @@ class _XSelectDateTimeState extends State<XSelectDateTime> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        DatePicker.showDateTimePicker(context, showTitleActions: true, onChanged: (date) {
+        DatePicker.showDateTimePicker(context, minTime: minTime, maxTime: maxTime, showTitleActions: true, onChanged: (date) {
           print('change $date in time zone ' + date.timeZoneOffset.inHours.toString());
           onChanged?.call(date);
         }, onConfirm: (date) {

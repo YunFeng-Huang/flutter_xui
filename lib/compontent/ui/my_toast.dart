@@ -1,12 +1,9 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_huanhu/compontent/ui/my_loading.dart';
-import 'package:flutter_huanhu/main.dart';
 import '../js/index.dart';
-import '../../config.dart';
-import './index.dart';
-import 'color_utils.dart';
+import '../index.dart';
+import '../js/color_utils.dart';
 import 'css.dart';
 
 //用法  showToast('删除成功！') icon 为图标
@@ -258,10 +255,6 @@ class ToastCompoent {
     _toastPosition = position;
     _pdHorizontal = pdHorizontal;
     _pdVertical = pdVertical;
-
-    context = context ?? navigatorKey.currentState!.context;
-    print(context);
-
     //获取OverlayState
     OverlayState? overlayState = Overlay.of(context!);
     print(overlayState);

@@ -1,18 +1,18 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import 'color_utils.dart';
+import '../js/color_utils.dart';
 import 'icon.dart';
 import 'my_toast.dart';
-import '../ui/index.dart';
+import '../index.dart';
 
 // ignore: must_be_immutable
 class XComputer extends StatefulWidget {
   int min;
   int max;
-  final double height;
+  double height;
   int num;
-  final ValueChanged<int> onValueChanged;
+  ValueChanged<int> onValueChanged;
 
   XComputer({Key? key, this.height = 36.0, this.num = 0, this.min = 0, this.max = 1000000000000, required this.onValueChanged}) : super(key: key);
 
@@ -95,9 +95,7 @@ class _XComputerState extends State<XComputer> {
     }
     setState(() {
       widget.num += 1;
-      if (widget.onValueChanged != null) {
-        widget.onValueChanged(widget.num);
-      }
+      widget.onValueChanged(widget.num);
     });
   }
 }

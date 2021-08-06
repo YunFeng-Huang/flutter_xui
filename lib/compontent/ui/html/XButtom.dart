@@ -1,15 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_huanhu/compontent/js/index.dart';
 
 import '../css.dart';
-import '../index.dart';
+import '../../index.dart';
 
 // ignore: must_be_immutable
 class XButton extends StatefulWidget {
-  TextStyle? textStyle;
+  TextStyle? style;
   String? text;
-  // TextStyle textStyle;
   double? width;
   double? height;
   double? horizontal;
@@ -21,13 +19,14 @@ class XButton extends StatefulWidget {
   Map? params;
   Function? api;
   Function? callback;
-  XButton(this.text, {this.textStyle, this.width, this.height, this.borderSize, this.borderColor, this.radius, this.vertical, this.horizontal, this.params, this.api, required this.callback, this.color});
+  bool disabled;
+  XButton(this.text, {this.style, this.width, this.height, this.borderSize, this.borderColor, this.radius, this.vertical, this.horizontal, this.disabled = false, this.params, this.api, required this.callback, this.color});
   @override
   _XButtonState createState() => _XButtonState();
 }
 
 class _XButtonState extends State<XButton> {
-  TextStyle? get textStyle => widget.textStyle;
+  TextStyle? get style => widget.style;
   String? get text => widget.text;
   double? get radius => widget.radius ?? 10.w;
   double? get width => widget.width;
@@ -60,11 +59,13 @@ class _XButtonState extends State<XButton> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: _disabled ? null : onPressed,
+      onTap: _disabled || widget.disabled ? null : onPressed,
       child: Center(
         child: Text(
           text ?? '',
-          style: textStyle ?? font(16, colorA: Colors.white),
+          style: style,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
         ).padding(horizontal: horizontal, vertical: vertical),
       ).background(color: color, border: borderSize, borderColor: borderColor, width: width, height: height, radius: radius),
     );

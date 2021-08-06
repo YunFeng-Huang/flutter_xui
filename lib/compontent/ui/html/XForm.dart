@@ -2,8 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../css.dart';
-import 'package:flutter_huanhu/compontent/ui/index.dart';
-
+import '../../index.dart';
 import '../my_loading.dart';
 
 // ignore: must_be_immutable
@@ -37,13 +36,18 @@ class XFormItem extends StatelessWidget {
   String? label;
   dynamic value;
   TextStyle? labelStyle;
+  TextStyle? valueStyle;
   double? labelWidth;
-  double? width;
+  double? valueWidth;
   double? height;
+  CrossAxisAlignment? align;
   Alignment? labelAlign;
+  Alignment? valueAlign;
   Widget? child;
+  Widget? custom;
   bool? inline;
-  XFormItem({this.child, this.width, this.value, this.height, this.label, this.labelStyle, this.labelWidth, this.labelAlign, this.inline});
+  bool? hidden;
+  XFormItem({this.child, this.hidden, this.valueWidth, this.valueStyle, this.valueAlign, this.align, this.custom, this.value, this.height, this.label, this.labelStyle, this.labelWidth, this.labelAlign, this.inline});
 
   @override
   Widget build(BuildContext context) {
@@ -52,16 +56,21 @@ class XFormItem extends StatelessWidget {
         : Text(
             '$label :',
             style: labelStyle ?? font(20.w, colorA: Color.fromRGBO(0, 0, 0, 0.85), weight: FontWeight.w400),
-          ).background(width: labelWidth ?? 150.w, alignment: labelAlign ?? Alignment.centerRight, height: height ?? 34.w).margin(right: 10.w);
+          ).background(width: labelWidth ?? 150.w, alignment: labelAlign ?? Alignment.centerRight, height: height).margin(right: 10.w);
     Widget _rightInput = (child ??
             Text(
               '$value',
-              style: font(20.w, colorA: Color.fromRGBO(0, 0, 0, 0.65), weight: FontWeight.w400),
+              style: valueStyle ?? font(20.w, colorA: Color.fromRGBO(0, 0, 0, 0.65), weight: FontWeight.w400),
             ))
+        .background(width: valueWidth, alignment: valueAlign, height: height)
         .margin(left: 10.w);
-    return label == null
-        ? Container()
-        : (inline ?? false
+    Widget _custom = custom ?? Container();
+
+    return (isNotNull(hidden) && hidden!
+        ? SizedBox(width: 0, height: 0)
+        : isNotNull(custom)
+            ? _custom
+            : (inline ?? false
                 ? Wrap(
                     crossAxisAlignment: WrapCrossAlignment.center,
                     alignment: WrapAlignment.center,
@@ -71,13 +80,12 @@ class XFormItem extends StatelessWidget {
                     ],
                   )
                 : Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
+                    crossAxisAlignment: align ?? CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       _leftLable,
                       Expanded(child: _rightInput),
                     ],
-                  ))
-            .background(width: width);
+                  )));
   }
 }
