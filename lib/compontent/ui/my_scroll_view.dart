@@ -43,7 +43,7 @@ class XCustomScrollView extends StatefulWidget {
     this.bottomAppBarConfig,
     this.headerLoading,
     this.enterLoading,
-  }) {
+  }) : super(key: key) {
     headerLoading = this.headerLoading ?? HeaderWidget();
     list = [];
     if (!loading) {
@@ -63,10 +63,10 @@ class XCustomScrollView extends StatefulWidget {
   }
 
   @override
-  _XCustomScrollViewState createState() => _XCustomScrollViewState();
+  XCustomScrollViewState createState() => XCustomScrollViewState();
 }
 
-class _XCustomScrollViewState extends State<XCustomScrollView> {
+class XCustomScrollViewState extends State<XCustomScrollView> {
   bool get loading => widget.loading;
   Widget? get enterLoading => widget.enterLoading;
   XCustomScrollViewAppbar? get appbar => widget.appbar;
@@ -168,6 +168,23 @@ class _XCustomScrollViewState extends State<XCustomScrollView> {
           child: Center(child: body),
         );
       },
+    );
+  }
+
+  void toBottom() {
+    print(11111);
+    controller.animateTo(
+      controller.position.maxScrollExtent,
+      duration: const Duration(milliseconds: 300),
+      curve: Curves.easeOut,
+    );
+  }
+
+  void toTop() {
+    controller.animateTo(
+      0,
+      duration: const Duration(milliseconds: 300),
+      curve: Curves.easeOut,
     );
   }
 
