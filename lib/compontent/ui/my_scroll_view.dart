@@ -8,22 +8,24 @@ import 'package:xui/compontent/js/screem.dart';
 import '../index.dart';
 import '../js/color_utils.dart';
 
+enum PageStatus { loading, error, success }
+
 // ignore: must_be_immutable
 class XCustomScrollView extends StatefulWidget {
   List<Widget> list = [];
   XCustomScrollViewAppbar? appbar;
   // ignore: non_constant_identifier_names
-  AppBar? XAppBar;
+  AppBar? xAppBar;
   Color backgroundColor;
-  bool loading;
+  PageStatus status = PageStatus.loading;
   Function? slivers;
   Widget? bottomAppBar;
   Widget? headerLoading;
-  Widget? enterLoading;
+  Widget emptyWidget;
+  Widget? errorWidget;
   Function? onRefresh;
   Function? onLoading;
   double? appbarHeight;
-
   XBottomAppBarConfig? bottomAppBarConfig;
   // double? bottomAppBarHeight;
   // Color? bottomAppBarColor;
@@ -32,21 +34,22 @@ class XCustomScrollView extends StatefulWidget {
     this.onRefresh,
     this.appbarHeight,
     this.onLoading,
-    required this.loading,
+    required this.status,
     required this.slivers,
+    required this.emptyWidget,
+    this.errorWidget,
     this.appbar,
     this.backgroundColor = Colors.transparent,
     this.bottomAppBar,
     // this.bottomAppBarHeight,
     // ignore: non_constant_identifier_names
-    this.XAppBar,
+    this.xAppBar,
     this.bottomAppBarConfig,
     this.headerLoading,
-    this.enterLoading,
   }) : super(key: key) {
     headerLoading = this.headerLoading ?? HeaderWidget();
     list = [];
-    if (!loading) {
+    if (status != PageStatus.loading) {
       list = List.from(slivers!());
       if (bottomAppBar != null) {
         bottomAppBarConfig = bottomAppBarConfig ?? XBottomAppBarConfig();
@@ -67,8 +70,9 @@ class XCustomScrollView extends StatefulWidget {
 }
 
 class XCustomScrollViewState extends State<XCustomScrollView> {
-  bool get loading => widget.loading;
-  Widget? get enterLoading => widget.enterLoading;
+  PageStatus get status => widget.status;
+  Widget get EmptyWidget => widget.emptyWidget;
+  Widget? get errorWidget => widget.errorWidget;
   XCustomScrollViewAppbar? get appbar => widget.appbar;
   Widget get headerLoading => widget.headerLoading!;
   Color get backgroundColor => widget.backgroundColor;
@@ -81,7 +85,7 @@ class XCustomScrollViewState extends State<XCustomScrollView> {
       RefreshController(initialRefresh: false);
   Function? get onRefresh => widget.onRefresh;
   Function? get onLoading => widget.onLoading;
-  AppBar? get XAppBar => widget.XAppBar;
+  AppBar? get xAppBar => widget.xAppBar;
   Color? get bottomAppBarColor => widget.bottomAppBarConfig?.bottomAppBarColor!;
   double get bottomAppBarHeight =>
       widget.bottomAppBarConfig?.bottomAppBarHeight! ?? 0.0;
@@ -172,7 +176,6 @@ class XCustomScrollViewState extends State<XCustomScrollView> {
   }
 
   void toBottom() {
-    print(11111);
     controller.animateTo(
       controller.position.maxScrollExtent,
       duration: const Duration(milliseconds: 300),
@@ -192,7 +195,7 @@ class XCustomScrollViewState extends State<XCustomScrollView> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: backgroundColor,
-      appBar: XAppBar,
+      appBar: xAppBar,
       floatingActionButton: bottomAppBar == null ? null : _footerBottom(),
       floatingActionButtonAnimator:
           bottomAppBar == null ? null : CustomFloatingActionButtonAnimator(),
@@ -208,50 +211,48 @@ class XCustomScrollViewState extends State<XCustomScrollView> {
         controller: _refreshController,
         onRefresh: _onRefresh,
         onLoading: _onLoading,
-        child: loading
-            ? Center(
-                child: Loading(),
-              )
-            : slivers.length == 0
-                ? Center(
-                    child: enterLoading ?? XMyEmpty(),
-                  )
-                : (appbar?.customAppBar == null
-                    ? (CustomScrollView(
-                        physics: ClampingScrollPhysics(),
-                        controller: controller,
-                        slivers: slivers,
-                      ))
-                    : Stack(
-                        children: [
-                          CustomScrollView(
+        child: status == PageStatus.loading
+            ? Center(child: Loading())
+            : status == PageStatus.error
+                ? Center(child: errorWidget ?? Center(child: Text('错误页面')))
+                : slivers.length == 0
+                    ? Center(child: EmptyWidget)
+                    : (appbar?.customAppBar == null
+                        ? (CustomScrollView(
                             physics: ClampingScrollPhysics(),
                             controller: controller,
                             slivers: slivers,
-                          ),
-                          if (!isNotNull(appbar?.customAppBar) &&
-                              isNotNull(appbar))
-                            XAppBarWidget(
-                              context,
-                              title: appbar?.title,
-                              appbarHeight: appbarHeight,
-                              color: Colors.white.withOpacity(1 - opacity),
-                            ).background(
-                              colorA: Colors.white.withOpacity(opacity),
-                            ),
-                          if (!isNotNull(appbar?.customAppBar) &&
-                              isNotNull(appbar))
-                            XAppBarWidget(
-                              context,
-                              title: appbar?.title,
-                              appbarHeight: appbarHeight,
-                              color: Colors.black.withOpacity(opacity),
-                            ),
-                          if (isNotNull(appbar?.customAppBar) &&
-                              isNotNull(appbar))
-                            appbar!.customAppBar!,
-                        ],
-                      )),
+                          ))
+                        : Stack(
+                            children: [
+                              CustomScrollView(
+                                physics: ClampingScrollPhysics(),
+                                controller: controller,
+                                slivers: slivers,
+                              ),
+                              if (!isNotNull(appbar?.customAppBar) &&
+                                  isNotNull(appbar))
+                                XAppBarWidget(
+                                  context,
+                                  title: appbar?.title,
+                                  appbarHeight: appbarHeight,
+                                  color: Colors.white.withOpacity(1 - opacity),
+                                ).background(
+                                  colorA: Colors.white.withOpacity(opacity),
+                                ),
+                              if (!isNotNull(appbar?.customAppBar) &&
+                                  isNotNull(appbar))
+                                XAppBarWidget(
+                                  context,
+                                  title: appbar?.title,
+                                  appbarHeight: appbarHeight,
+                                  color: Colors.black.withOpacity(opacity),
+                                ),
+                              if (isNotNull(appbar?.customAppBar) &&
+                                  isNotNull(appbar))
+                                appbar!.customAppBar!,
+                            ],
+                          )),
       ),
     );
   }
