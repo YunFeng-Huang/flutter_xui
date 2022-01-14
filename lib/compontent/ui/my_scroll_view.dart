@@ -118,16 +118,13 @@ class XCustomScrollViewState extends State<XCustomScrollView> {
   }
 
   void _onRefresh() async {
-    // Timer(Duration(milliseconds: 5000), () {
-    //   _refreshController.refreshFailed();
-    // });
     bool success = await onRefresh?.call();
-    // if failed,use refreshFailed()
     if (success) {
       _refreshController.refreshCompleted();
     } else {
       _refreshController.refreshFailed();
     }
+    _refreshController.loadComplete();
   }
 
   void _onLoading() async {
