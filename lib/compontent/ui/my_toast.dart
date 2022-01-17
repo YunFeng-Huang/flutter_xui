@@ -8,45 +8,41 @@ import '../js/color_utils.dart';
 import 'css.dart';
 
 //用法  showToast('删除成功！') icon 为图标
-void showToast(context, String text, {icon, showTime = 2000}) {
-  debounce(() {
-    return ToastCompoent.toast(context, text, icon: icon, showTime: showTime);
-  });
+showToast(context, String text, {icon, showTime = 2000}) {
+  return ToastCompoent.toast(context, text, icon: icon, showTime: showTime);
 }
 
 //用法 showLoading('加载中，请等待... ...')
-void showLoading(context, [String text = "加载中，请等待..."]) {
-  throttle(() {
-    return showCupertinoModalPopup(
-      barrierDismissible: false,
-      context: context,
-      builder: (context) {
-        return Center(
-          child: Container(
-            decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(20.w),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black12,
-                    blurRadius: 10.w,
-                  )
-                ]),
-            padding: EdgeInsets.all(20.w),
-            // margin: EdgeInsets.all(.w),
-            // constraints: BoxConstraints(minHeight: 220.w, minWidth: 220.w),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Loading(text: text),
-              ],
-            ),
+showLoading(context, [String text = "加载中，请等待..."]) {
+  return showCupertinoModalPopup(
+    barrierDismissible: false,
+    context: context,
+    builder: (context) {
+      return Center(
+        child: Container(
+          decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(20.w),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black12,
+                  blurRadius: 10.w,
+                )
+              ]),
+          padding: EdgeInsets.all(20.w),
+          // margin: EdgeInsets.all(.w),
+          // constraints: BoxConstraints(minHeight: 220.w, minWidth: 220.w),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Loading(text: text),
+            ],
           ),
-        );
-      },
-    );
-  });
+        ),
+      );
+    },
+  );
 }
 
 Future<dynamic>? showConfirmDialog(
@@ -356,21 +352,3 @@ class ToastCompoent {
     return backResult;
   }
 }
-//
-// class Loading2 {
-//   static OverlayEntry overlayEntry;
-//   static void show({@required BuildContext context}) {
-//     overlayEntry = new OverlayEntry(builder: (context) {
-//       return Container(
-//         width: MediaQuery.of(context).size.width,
-//         height: MediaQuery.of(context).size.height,
-//         color: Colors.red,
-//       );
-//     });
-//     Overlay.of(context).insert(overlayEntry);
-//   }
-//
-//   static void remove() {
-//     overlayEntry.remove();
-//   }
-// }
