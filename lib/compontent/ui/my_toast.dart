@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../js/index.dart';
 import '../index.dart';
@@ -16,21 +17,24 @@ void showToast(context, String text, {icon, showTime = 2000}) {
 //用法 showLoading('加载中，请等待... ...')
 void showLoading(context, [String text = "加载中，请等待..."]) {
   throttle(() {
-    return showDialog(
+    return showCupertinoModalPopup(
       barrierDismissible: false,
       context: context,
       builder: (context) {
         return Center(
           child: Container(
-            decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(3.w), boxShadow: [
-              BoxShadow(
-                color: Colors.black12,
-                blurRadius: 10.w,
-              )
-            ]),
-            padding: EdgeInsets.all(16.w),
-            margin: EdgeInsets.all(16.w),
-            constraints: BoxConstraints(minHeight: 220.w, minWidth: 220.w),
+            decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(20.w),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black12,
+                    blurRadius: 10.w,
+                  )
+                ]),
+            padding: EdgeInsets.all(20.w),
+            // margin: EdgeInsets.all(.w),
+            // constraints: BoxConstraints(minHeight: 220.w, minWidth: 220.w),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               mainAxisAlignment: MainAxisAlignment.center,
@@ -53,7 +57,7 @@ Future<dynamic>? showConfirmDialog(
   cancelTitle = "取消",
   title = '温馨提示',
 }) {
-  return showDialog(
+  return showCupertinoModalPopup(
       context: context,
       builder: (context) {
         return SimpleDialog(
@@ -149,7 +153,8 @@ Future<dynamic>? showConfirmDialog(
                           ),
                           borderRadius: BorderRadius.only(
                             bottomRight: Radius.circular(20.w),
-                            bottomLeft: Radius.circular(cancelTitle != null ? 0.w : 20.w),
+                            bottomLeft: Radius.circular(
+                                cancelTitle != null ? 0.w : 20.w),
                           ),
                         ),
                         alignment: Alignment.center,
@@ -271,7 +276,9 @@ class ToastCompoent {
                 padding: EdgeInsets.symmetric(horizontal: 40.0),
                 child: AnimatedOpacity(
                   opacity: _showing ? 1.0 : 0.0, //目标透明度
-                  duration: _showing ? Duration(milliseconds: 100) : Duration(milliseconds: 300),
+                  duration: _showing
+                      ? Duration(milliseconds: 100)
+                      : Duration(milliseconds: 300),
                   child: _buildToastWidget(),
                 ),
               )),
@@ -304,7 +311,8 @@ class ToastCompoent {
       child: Card(
         color: _bgColor,
         child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: _pdHorizontal!, vertical: _pdVertical!),
+            padding: EdgeInsets.symmetric(
+                horizontal: _pdHorizontal!, vertical: _pdVertical!),
             child: _img == null
                 ? Text(
                     _msg!,
