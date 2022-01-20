@@ -13,6 +13,7 @@ class XSelectInput extends StatefulWidget {
   Widget child;
   Function itemBuilder;
   bool? hiddenDivider;
+  Offset? offset;
   XSelectInput({
     this.initialValue,
     required this.onSelected,
@@ -20,6 +21,7 @@ class XSelectInput extends StatefulWidget {
     required this.child,
     required this.itemBuilder,
     this.hiddenDivider,
+    this.offset,
   });
   @override
   _XSelectInputState createState() => _XSelectInputState();
@@ -28,12 +30,12 @@ class XSelectInput extends StatefulWidget {
 class _XSelectInputState extends State<XSelectInput> {
   // SelectTypeEntity? value;
   // Function? get onSelected => widget.onSelected;
-  set value(v) {
-    widget.onSelected!(v);
-    widget.initialValue = v;
-  }
+  // set value(v) {
+  //   widget.onSelected!(v);
+  //   // widget.initialValue = v;
+  // }
 
-  SelectTypeEntity? get value => widget.initialValue;
+  // SelectTypeEntity? get value => widget.initialValue;
 
   List<SelectTypeEntity>? get list => widget.list;
   Widget get child => widget.child;
@@ -46,7 +48,7 @@ class _XSelectInputState extends State<XSelectInput> {
 
   @override
   Widget build(BuildContext context) {
-    if (value == null) return SizedBox(height: 0, width: 0);
+    // if (value == null) return SizedBox(height: 0, width: 0);
     return Theme(
       data: Theme.of(context).copyWith(
         cardColor: Colors.white,
@@ -54,9 +56,12 @@ class _XSelectInputState extends State<XSelectInput> {
         hoverColor: Colors.transparent,
       ),
       child: PopupMenuButton(
-        initialValue: value,
+        offset: widget.offset ?? Offset.zero,
+        initialValue: widget.initialValue,
         onSelected: (c) {
-          value = c as SelectTypeEntity;
+          // value = c as SelectTypeEntity;
+          widget.initialValue = c as SelectTypeEntity;
+          widget.onSelected!(c);
           setState(() {});
         },
         child: child,
