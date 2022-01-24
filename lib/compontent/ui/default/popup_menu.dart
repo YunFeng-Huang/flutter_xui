@@ -815,16 +815,23 @@ class _PopupMenuRoute<T> extends PopupRoute<T> {
       removeRight: true,
       child: Builder(
         builder: (BuildContext context) {
-          return CustomSingleChildLayout(
-            delegate: _PopupMenuRouteLayout(
-              position,
-              itemSizes,
-              selectedItemIndex,
-              Directionality.of(context),
-              mediaQuery.padding,
-            ),
-            child: capturedThemes.wrap(menu),
-          ).background(colorA: Color.fromRGBO(0, 0, 0, 0.5));
+          return GestureDetector(
+            child: CustomSingleChildLayout(
+              delegate: _PopupMenuRouteLayout(
+                position,
+                itemSizes,
+                selectedItemIndex,
+                Directionality.of(context),
+                mediaQuery.padding,
+              ),
+              child: capturedThemes.wrap(menu),
+            ).background(colorA: Color.fromRGBO(0, 0, 0, 0.5)),
+            onTap: () {
+              if (Navigator.canPop(context)) {
+                Navigator.pop(context);
+              }
+            },
+          );
         },
       ),
     );
