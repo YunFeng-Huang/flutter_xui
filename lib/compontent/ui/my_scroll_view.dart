@@ -23,30 +23,32 @@ class XCustomScrollView extends StatefulWidget {
   Widget? headerLoading;
   Widget emptyWidget;
   Widget? errorWidget;
+  Widget? loadingWidget;
   Function? onRefresh;
   Function? onLoading;
   double? appbarHeight;
   XBottomAppBarConfig? bottomAppBarConfig;
   // double? bottomAppBarHeight;
   // Color? bottomAppBarColor;
-  XCustomScrollView({
-    Key? key,
-    this.onRefresh,
-    this.appbarHeight,
-    this.onLoading,
-    required this.status,
-    required this.slivers,
-    required this.emptyWidget,
-    this.errorWidget,
-    this.appbar,
-    this.backgroundColor = Colors.transparent,
-    this.bottomAppBar,
-    // this.bottomAppBarHeight,
-    // ignore: non_constant_identifier_names
-    this.xAppBar,
-    this.bottomAppBarConfig,
-    this.headerLoading,
-  }) : super(key: key) {
+  XCustomScrollView(
+      {Key? key,
+      this.onRefresh,
+      this.appbarHeight,
+      this.onLoading,
+      required this.status,
+      required this.slivers,
+      required this.emptyWidget,
+      this.errorWidget,
+      this.appbar,
+      this.backgroundColor = Colors.transparent,
+      this.bottomAppBar,
+      // this.bottomAppBarHeight,
+      // ignore: non_constant_identifier_names
+      this.xAppBar,
+      this.bottomAppBarConfig,
+      this.headerLoading,
+      this.loadingWidget})
+      : super(key: key) {
     headerLoading = this.headerLoading ?? HeaderWidget();
     list = [];
     if (status != PageStatus.loading) {
@@ -73,6 +75,7 @@ class XCustomScrollViewState extends State<XCustomScrollView> {
   PageStatus get status => widget.status;
   Widget get EmptyWidget => widget.emptyWidget;
   Widget? get errorWidget => widget.errorWidget;
+  Widget? get loadingWidget => widget.loadingWidget;
   XCustomScrollViewAppbar? get appbar => widget.appbar;
   Widget get headerLoading => widget.headerLoading!;
   Color get backgroundColor => widget.backgroundColor;
@@ -209,7 +212,7 @@ class XCustomScrollViewState extends State<XCustomScrollView> {
         onRefresh: _onRefresh,
         onLoading: _onLoading,
         child: status == PageStatus.loading
-            ? Center(child: Loading())
+            ? Center(child: loadingWidget ?? Loading())
             : status == PageStatus.error
                 ? Center(child: errorWidget ?? Center(child: Text('错误页面')))
                 : slivers.length == 0
