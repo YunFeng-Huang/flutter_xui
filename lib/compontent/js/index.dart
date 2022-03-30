@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/material.dart';
 import 'package:xui/compontent/ui/index.dart';
 
 import 'local_storage.dart';
@@ -26,6 +28,7 @@ debounce(
 ///
 /// [func]: 要执行的方法
 bool enable = true;
+
 throttle(
   Function func, [
   Duration delay = const Duration(milliseconds: 2000),
@@ -36,6 +39,18 @@ throttle(
     Timer(delay, () {
       enable = true;
     });
+  }
+}
+
+// ignore: unused_element
+String? _key = '';
+throttle2(
+  Function func, [
+  String? key,
+]) {
+  if (_key != key) {
+    func.call();
+    _key = key;
   }
 }
 
@@ -165,4 +180,45 @@ countdown(time, callback) {
 
 Iterable mapData(List list) {
   return list.asMap().entries;
+}
+
+filterList(data, key) {
+  // List data=[{'name':'1','id':1},{'name':'1','id':1},{'name':'2','id':2},{'name':'2','id':2}];
+  var _a = new Set(); //将_a带上去重属性
+  List _h = [];
+  for (int i = 0; i < data.length; i++) {
+    _a.add(data[i][key]); //_a会自动将重复的去掉  _a=[1,2]
+  }
+  List _b = _a.toList();
+  for (int j = 0; j < _a.length; j++) {
+    for (int i = 0; i < data.length; i++) {
+      if (_b[j] == data[i][key]) {
+        _h.add(data[i]);
+        break;
+      }
+    }
+  }
+  return _h;
+}
+
+loadImage(String url) async {
+  Completer completer = Completer();
+  ImageStreamListener? listener;
+  ImageStream stream =
+      CachedNetworkImageProvider(url).resolve(ImageConfiguration.empty);
+  listener = ImageStreamListener((ImageInfo frame, bool sync) {
+    final image = frame.image;
+    completer.complete(image);
+    if (listener != null) {
+      stream.removeListener(listener);
+    }
+  });
+  stream.addListener(listener);
+  return completer.future;
+}
+
+double getY(BuildContext buildContext) {
+  final RenderBox box = buildContext.findRenderObject() as RenderBox;
+  final offset = box.localToGlobal(Offset.zero);
+  return offset.dy;
 }

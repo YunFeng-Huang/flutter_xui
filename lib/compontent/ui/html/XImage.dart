@@ -6,12 +6,17 @@ import '../../index.dart';
 
 // ignore: must_be_immutable
 class XImage extends StatelessWidget {
-  String image;
+  String? image;
   BoxFit? fit;
   double? width;
   double? height;
   double? borderRadius;
-  XImage({required this.image, this.fit, this.width, this.height, this.borderRadius});
+  XImage(
+      {required this.image,
+      this.fit,
+      this.width,
+      this.height,
+      this.borderRadius});
   @override
   Widget build(BuildContext context) {
     return XImg(
@@ -39,19 +44,24 @@ Widget XImg({image, fit, width, height, borderRadius}) {
           child: CircularProgressIndicator(strokeWidth: 1),
         ),
       ),
-      errorWidget: (context, url, error) => Icon(Icons.error),
+      errorWidget: (context, url, error) => Center(
+        child: Container(
+          width: 40.w,
+          height: 40.w,
+          child: CircularProgressIndicator(strokeWidth: 1),
+        ),
+      ),
     );
   }
-
   return ClipRRect(
-    child: image ==null||image.contains('http')
-            ? _network()
-            : Image.asset(
-                image,
-                fit: fit ?? BoxFit.contain,
-                width: width,
-                height: height,
-              ),
+    child: image == null ||image == '' || image.contains('http')
+        ? _network()
+        : Image.asset(
+            image,
+            fit: fit ?? BoxFit.contain,
+            width: width,
+            height: height,
+          ),
     borderRadius: BorderRadius.circular(borderRadius ?? 0),
   );
 }

@@ -72,7 +72,7 @@ class XUnderlineTabIndicator extends Decoration {
     double cw = (indicator.left + indicator.right) / 2;
     return Rect.fromLTWH(
       cw - wantWidth / 2,
-      indicator.bottom - borderSide.width,
+      indicator.bottom - borderSide.width-5,
       wantWidth,
       borderSide.width,
     );

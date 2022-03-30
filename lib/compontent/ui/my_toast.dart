@@ -239,11 +239,11 @@ class ToastCompoent {
     String msg, {
     IconData? icon,
     int showTime = 2000,
-    Color bgColor = Colors.black,
+    Color? bgColor,
     Color textColor = Colors.white,
-    double textSize = 14.0,
+    double textSize = 13.0,
     String position = 'center',
-    double pdHorizontal = 20.0,
+    double pdHorizontal = 10.0,
     double pdVertical = 10.0,
   }) async {
     _context = context;
@@ -251,7 +251,7 @@ class ToastCompoent {
     _img = icon;
     _startedTime = DateTime.now();
     _showTime = showTime;
-    _bgColor = bgColor;
+    _bgColor = bgColor ?? Color.fromRGBO(0, 0, 0, 0.8);
     _textColor = textColor;
     _textSize = textSize;
     _toastPosition = position;
@@ -315,6 +315,7 @@ class ToastCompoent {
                     style: TextStyle(
                       fontSize: _textSize,
                       color: _textColor,
+                      fontWeight: FontWeight.w300
                     ),
                   )
                 : Column(

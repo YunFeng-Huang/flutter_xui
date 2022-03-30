@@ -22,6 +22,7 @@ export 'ui/html/XSelectInput.dart';
 export 'ui/html/XSlider.dart';
 export 'ui/html/XTable.dart';
 export 'ui/html/XPaginatedTable.dart';
+export 'ui/html/XText.dart';
 
 export 'js/index.dart';
 export 'js/print_log.dart';
@@ -43,6 +44,8 @@ export 'ui/my_empty.dart';
 export 'ui/my_scroll_view.dart';
 export 'ui/my_toast.dart';
 export 'ui/my_uploadFile.dart';
+export 'ui/my_uploadFile.dart';
+export 'ui/my_text_selection_controls.dart';
 
 export 'ui/css.dart';
 export 'ui/icon.dart';

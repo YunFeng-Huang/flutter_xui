@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -28,27 +29,23 @@ class XCustomScrollView extends StatefulWidget {
   Function? onLoading;
   double? appbarHeight;
   XBottomAppBarConfig? bottomAppBarConfig;
-  // double? bottomAppBarHeight;
-  // Color? bottomAppBarColor;
-  XCustomScrollView(
-      {Key? key,
-      this.onRefresh,
-      this.appbarHeight,
-      this.onLoading,
-      required this.status,
-      required this.slivers,
-      required this.emptyWidget,
-      this.errorWidget,
-      this.appbar,
-      this.backgroundColor = Colors.transparent,
-      this.bottomAppBar,
-      // this.bottomAppBarHeight,
-      // ignore: non_constant_identifier_names
-      this.xAppBar,
-      this.bottomAppBarConfig,
-      this.headerLoading,
-      this.loadingWidget})
-      : super(key: key) {
+  XCustomScrollView({
+    Key? key,
+    this.onRefresh,
+    this.appbarHeight,
+    this.onLoading,
+    required this.status,
+    required this.slivers,
+    required this.emptyWidget,
+    this.errorWidget,
+    this.appbar,
+    this.backgroundColor = Colors.transparent,
+    this.bottomAppBar,
+    this.xAppBar,
+    this.bottomAppBarConfig,
+    this.headerLoading,
+    this.loadingWidget,
+  }) : super(key: key) {
     headerLoading = this.headerLoading ?? HeaderWidget();
     list = [];
     if (status != PageStatus.loading) {
@@ -58,8 +55,7 @@ class XCustomScrollView extends StatefulWidget {
         list.add(
           SliverToBoxAdapter(
             child: SizedBox(
-              height:
-                  (this.bottomAppBarConfig?.bottomAppBarHeight! ?? 0.0) + 44.w,
+              height: (this.bottomAppBarConfig?.bottomAppBarHeight ?? 0.0),
             ),
           ),
         );
@@ -145,33 +141,19 @@ class XCustomScrollViewState extends State<XCustomScrollView> {
 
   _footerBottom() {
     return XBottomAppBarWrap(
-      child: bottomAppBar!.padding(horizontal: 20.w),
+      child: bottomAppBar,
       color: bottomAppBarColor,
       height: bottomAppBarHeight,
       boxShadow: widget.bottomAppBarConfig?.boxShadow,
+      heightAuto: widget.bottomAppBarConfig?.bottomAppBarHeightAuto,
     );
   }
 
-  _customFooter() {
-    return CustomFooter(
-      builder: (BuildContext context, LoadStatus? mode) {
-        Widget body;
-        if (mode == LoadStatus.idle) {
-          body = Text("上拉加载");
-        } else if (mode == LoadStatus.loading) {
-          body = CupertinoActivityIndicator();
-        } else if (mode == LoadStatus.failed) {
-          body = Text("加载失败！点击重试！");
-        } else if (mode == LoadStatus.canLoading) {
-          body = Text("松手,加载更多!");
-        } else {
-          body = Text("没有更多数据了!");
-        }
-        return Container(
-          height: 55.0,
-          child: Center(child: body),
-        );
-      },
+  void animateTo(double position) {
+    controller.animateTo(
+      position,
+      duration: const Duration(milliseconds: 300),
+      curve: Curves.easeOut,
     );
   }
 
@@ -183,85 +165,93 @@ class XCustomScrollViewState extends State<XCustomScrollView> {
     );
   }
 
-  void toTop() {
-    controller.animateTo(
-      0,
-      duration: const Duration(milliseconds: 300),
-      curve: Curves.easeOut,
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
+    print(status);
     return Scaffold(
-      backgroundColor: backgroundColor,
-      appBar: xAppBar,
-      floatingActionButton: bottomAppBar == null ? null : _footerBottom(),
-      floatingActionButtonAnimator:
-          bottomAppBar == null ? null : CustomFloatingActionButtonAnimator(),
-      floatingActionButtonLocation:
-          bottomAppBar == null ? null : CustomFloatingActionButtonLocation(0),
-      body: SmartRefresher(
-        // ignore: unnecessary_null_comparison
-        enablePullDown: onRefresh != null,
-        // ignore: unnecessary_null_comparison
-        enablePullUp: onLoading != null,
-        header: headerLoading,
-        footer: _customFooter(),
-        controller: _refreshController,
-        onRefresh: _onRefresh,
-        onLoading: _onLoading,
-        child: status == PageStatus.loading
-            ? Center(child: loadingWidget ?? Loading())
-            : status == PageStatus.error
-                ? Center(child: errorWidget ?? Center(child: Text('错误页面')))
-                : slivers.length == 0
-                    ? Center(child: EmptyWidget)
-                    : (appbar?.customAppBar == null
-                        ? (CustomScrollView(
-                            physics: ClampingScrollPhysics(),
-                            controller: controller,
-                            slivers: slivers,
-                          ))
-                        : Stack(
-                            children: [
-                              CustomScrollView(
-                                physics: ClampingScrollPhysics(),
-                                controller: controller,
-                                slivers: slivers,
-                              ),
-                              if (!isNotNull(appbar?.customAppBar) &&
-                                  isNotNull(appbar))
-                                XAppBarWidget(
-                                  context,
-                                  title: appbar?.title,
-                                  appbarHeight: appbarHeight,
-                                  color: Colors.white.withOpacity(1 - opacity),
-                                ).background(
-                                  colorA: Colors.white.withOpacity(opacity),
-                                ),
-                              if (!isNotNull(appbar?.customAppBar) &&
-                                  isNotNull(appbar))
-                                XAppBarWidget(
-                                  context,
-                                  title: appbar?.title,
-                                  appbarHeight: appbarHeight,
-                                  color: Colors.black.withOpacity(opacity),
-                                ),
-                              if (isNotNull(appbar?.customAppBar) &&
-                                  isNotNull(appbar))
-                                appbar!.customAppBar!,
-                            ],
-                          )),
-      ),
-    );
+        backgroundColor: backgroundColor,
+        appBar: xAppBar,
+        // floatingActionButton: bottomAppBar == null ? null : _footerBottom(),
+        // floatingActionButtonAnimator:
+        //     bottomAppBar == null ? null : CustomFloatingActionButtonAnimator(),
+        // floatingActionButtonLocation:
+        //     bottomAppBar == null ? null : CustomFloatingActionButtonLocation(0),
+        body: SafeArea(
+          child: Stack(
+            children: [
+              Column(
+                children: [
+                  Expanded(
+                    child: SmartRefresher(
+                      // ignore: unnecessary_null_comparison
+                      enablePullDown: onRefresh != null,
+                      // ignore: unnecessary_null_comparison
+                      enablePullUp: onLoading != null,
+                      header: headerLoading,
+                      footer: XSmartRefresherCustomFooter(),
+                      controller: _refreshController,
+                      onRefresh: _onRefresh,
+                      onLoading: _onLoading,
+                      child: status == PageStatus.loading
+                          ? Center(child: loadingWidget ?? Loading())
+                          : status == PageStatus.error
+                              ? Transform.translate(
+                                  offset: Offset(0, -90.w),
+                                  child: Center(
+                                    child: errorWidget ??
+                                        Center(
+                                          child: Text('错误页面'),
+                                        ),
+                                  ),
+                                )
+                              : slivers.length == 0
+                                  ? Center(child: EmptyWidget)
+                                  : CustomScrollView(
+                                      physics: ClampingScrollPhysics(),
+                                      controller: controller,
+                                      slivers: slivers,
+                                    ),
+                    ),
+                  ),
+                  if (bottomAppBar != null) SizedBox(height: 88.w)
+                ],
+              ),
+              if (!isNotNull(appbar?.customAppBar) && isNotNull(appbar))
+                XAppBarWidget(
+                  context,
+                  title: appbar?.title,
+                  appbarHeight: appbarHeight,
+                  color: Colors.white.withOpacity(1 - opacity),
+                ).background(
+                  colorA: Colors.white.withOpacity(opacity),
+                ),
+              if (!isNotNull(appbar?.customAppBar) && isNotNull(appbar))
+                XAppBarWidget(
+                  context,
+                  title: appbar?.title,
+                  appbarHeight: appbarHeight,
+                  color: Colors.black.withOpacity(opacity),
+                ),
+              if (isNotNull(appbar?.customAppBar) && isNotNull(appbar))
+                appbar!.customAppBar!,
+              if (bottomAppBar != null)
+                Positioned(
+                  child: _footerBottom(),
+                  bottom: 0,
+                  left: 0,
+                  right: 0,
+                ),
+            ],
+          ),
+          bottom: true,
+        ));
   }
 }
 
 // ignore: non_constant_identifier_names
-XBottomAppBarWrap({child, color, height, boxShadow}) {
+XBottomAppBarWrap({child, color, height, boxShadow, heightAuto}) {
   return Container(
-    height: height,
+    height: heightAuto ? null : height,
     decoration: BoxDecoration(
       color: color ?? Colors.white,
       boxShadow: boxShadow ??
@@ -277,6 +267,43 @@ XBottomAppBarWrap({child, color, height, boxShadow}) {
   );
 }
 
+XSmartRefresherCustomFooter() {
+  TextStyle _style = font(28, color: '#9EA6AE');
+  return CustomFooter(
+    builder: (BuildContext context, LoadStatus? mode) {
+      Widget body;
+
+      if (mode == LoadStatus.idle) {
+        body = Text(
+          "上拉加载",
+          style: _style,
+        );
+      } else if (mode == LoadStatus.loading) {
+        body = CupertinoActivityIndicator();
+      } else if (mode == LoadStatus.failed) {
+        body = Text(
+          "加载失败！点击重试！",
+          style: _style,
+        );
+      } else if (mode == LoadStatus.canLoading) {
+        body = Text(
+          "松手,加载更多",
+          style: _style,
+        );
+      } else {
+        body = Text(
+          "没有更多了",
+          style: _style,
+        );
+      }
+      return Container(
+        height: 55.0,
+        child: Center(child: body),
+      );
+    },
+  );
+}
+
 class XCustomScrollViewAppbar {
   String? title;
   Widget? customAppBar;
@@ -286,14 +313,17 @@ class XCustomScrollViewAppbar {
 class XBottomAppBarConfig {
   Color? bottomAppBarColor;
   double? bottomAppBarHeight;
+  bool? bottomAppBarHeightAuto;
   List<BoxShadow>? boxShadow;
   XBottomAppBarConfig({
     this.bottomAppBarColor,
     this.bottomAppBarHeight,
+    this.bottomAppBarHeightAuto,
     this.boxShadow,
   }) {
     bottomAppBarColor = this.bottomAppBarColor ?? Colors.white;
-    bottomAppBarHeight = this.bottomAppBarHeight ?? 110.w;
+    bottomAppBarHeight = this.bottomAppBarHeight ?? 0.0;
+    bottomAppBarHeightAuto = this.bottomAppBarHeightAuto ?? false;
   }
 }
 
@@ -428,5 +458,37 @@ class _HeaderWidgetState extends State<HeaderWidget> {
           });
         },
         height: height);
+  }
+}
+
+class XSliverAppBarDelegate extends SliverPersistentHeaderDelegate {
+  const XSliverAppBarDelegate({
+    required this.minHeight,
+    required this.maxHeight,
+    required this.child,
+  });
+
+  final double minHeight;
+  final double maxHeight;
+  final Widget child;
+
+  @override
+  double get minExtent => minHeight;
+
+  @override
+  double get maxExtent => max(maxHeight, minHeight);
+
+  @override
+  Widget build(
+      BuildContext context, double shrinkOffset, bool overlapsContent) {
+    print(shrinkOffset);
+    return new SizedBox.expand(child: child);
+  }
+
+  @override
+  bool shouldRebuild(XSliverAppBarDelegate oldDelegate) {
+    return maxHeight != oldDelegate.maxHeight ||
+        minHeight != oldDelegate.minHeight ||
+        child != oldDelegate.child;
   }
 }

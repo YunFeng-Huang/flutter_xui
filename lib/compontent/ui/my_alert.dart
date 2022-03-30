@@ -4,11 +4,16 @@ import '../index.dart';
 
 class XAlert {
   BuildContext context;
+  Color backgroundColor = Color.fromRGBO(0, 0, 0, 0.5);
   XAlert(this.context);
 
   /// 底部弹出提示框
   showBottomAlert({required list, callback, title}) {
     return showCupertinoModalPopup(
+      barrierColor:CupertinoDynamicColor.withBrightness(
+        color: backgroundColor,
+        darkColor: Color(0x7A000000),
+      ),
       context: context,
       builder: (context) {
         return ShowCustomAlterWidget(callback, list, title);
@@ -29,6 +34,10 @@ class XAlert {
       bool cancalBtn = true,
       child}) {
     return showCupertinoModalPopup(
+      barrierColor:CupertinoDynamicColor.withBrightness(
+        color: backgroundColor,
+        darkColor: Color(0x7A000000),
+      ),
       context: context,
       builder: (BuildContext context) {
         return ShowTipsAlterWidget(
@@ -87,7 +96,8 @@ class _ShowTipsAlterWidgetState extends State<ShowTipsAlterWidget> {
             width: widget.width ?? 560.w,
             height: widget.height ?? 330.w,
             colorA: Colors.white,
-            radius: 16.w),
+            radius: 16.w,
+        ),
       ),
     );
   }
@@ -112,7 +122,7 @@ class _ShowTipsAlterWidgetState extends State<ShowTipsAlterWidget> {
 
   Widget _buttonView() {
     return new Container(
-      height: 100.w,
+      height: 88.w,
       child: new Row(
         children: <Widget>[
           if (widget.cancalBtn!)
@@ -136,18 +146,18 @@ class _ShowTipsAlterWidgetState extends State<ShowTipsAlterWidget> {
     return XButton(
       text: widget.cancalText ?? '取消',
       callback: () => Navigator.pop(context, false),
-      style: font(36, colorA: themeColor.gray, weight: FontWeight.w400),
+      style: font(32, colorA: themeColor.gray, weight: FontWeight.w400),
     ).center;
   }
 
   Widget _getRightBtn() {
     return XButton(
       disabled: disabled,
-      text: widget.sureText ?? '确定',
+      text: widget.sureText ?? '确认',
       style: font(
-        36,
+        32,
         colorA: themeColor.active,
-        weight: FontWeight.w600,
+        weight: FontWeight.w400,
       ),
       callback: () async {
         disabled = true;
@@ -237,7 +247,7 @@ class _ShowInputAlertWidgetState extends State<ShowInputAlertWidget> {
           },
         ),
         CupertinoDialogAction(
-          child: Text("确定"),
+          child: Text("确认"),
           onPressed: () {
             widget.callback(inputValue);
             Navigator.pop(context);
