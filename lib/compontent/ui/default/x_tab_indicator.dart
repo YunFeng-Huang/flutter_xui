@@ -21,9 +21,12 @@ class XUnderlineTabIndicator extends Decoration {
   const XUnderlineTabIndicator({
     this.borderSide = const BorderSide(width: 2.0, color: Colors.white),
     this.insets = EdgeInsets.zero,
+    this.wantWidth = 20,
+    this.wantBottom = 0.0
   })  : assert(borderSide != null),
         assert(insets != null);
-
+  final double wantWidth;
+  final double wantBottom;
   /// The color and weight of the horizontal line drawn below the selected tab.
   final BorderSide borderSide;
 
@@ -66,13 +69,11 @@ class XUnderlineTabIndicator extends Decoration {
     assert(rect != null);
     assert(textDirection != null);
     final Rect indicator = insets.resolve(textDirection).deflateRect(rect);
-    //希望的宽度
-    double wantWidth = 20;
     //取中间坐标
     double cw = (indicator.left + indicator.right) / 2;
     return Rect.fromLTWH(
       cw - wantWidth / 2,
-      indicator.bottom - borderSide.width-5,
+      indicator.bottom - borderSide.width-wantBottom,
       wantWidth,
       borderSide.width,
     );

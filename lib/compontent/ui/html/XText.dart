@@ -21,7 +21,7 @@ class _XTextState extends State<XText> {
       strutStyle: StrutStyle(
         fontSize: widget.style.fontSize,
         height: 1.0,
-        leading: widget.style.height! - 1,
+        leading: (widget.style.height! - 1.0)/2,
         forceStrutHeight: true,
       ),
         maxLines:widget.maxLines,
