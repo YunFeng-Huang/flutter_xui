@@ -1,67 +1,81 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:xui/compontent/js/index.dart';
 import '../../index.dart';
 
+enum XImageType { general, avatar }
+
 // ignore: must_be_immutable
-class XImage extends StatelessWidget {
+class XImage extends StatefulWidget {
   String? image;
   BoxFit? fit;
   double? width;
   double? height;
   double? borderRadius;
-  XImage(
-      {required this.image,
-      this.fit,
-      this.width,
-      this.height,
-      this.borderRadius});
-  @override
-  Widget build(BuildContext context) {
-    return XImg(
-      image: image,
-      fit: fit,
-      width: width,
-      height: height,
-      borderRadius: borderRadius,
-    );
+  XImageType type;
+  String errorWidgetBackground;
+  double iconSize = 0.0;
+  XImage({
+    Key? key,
+    required this.image,
+    this.fit,
+    this.width,
+    this.height,
+    this.borderRadius,
+    this.type = XImageType.general,
+    this.errorWidgetBackground = '#F3F6F9',
+  }) : super(key: key) {
+    iconSize = (this.height == null ? 40.w : this.height!) / 2;
   }
+
+  @override
+  State<XImage> createState() => _XImageState();
 }
 
-// ignore: non_constant_identifier_names
-Widget XImg({image, fit, width, height, borderRadius}) {
-  _network() {
-    return CachedNetworkImage(
-      imageUrl: image,
-      fit: fit ?? BoxFit.contain,
-      width: width,
-      height: height,
-      placeholder: (context, url) => Center(
-        child: Container(
-          width: 40.w,
-          height: 40.w,
-          child: CircularProgressIndicator(strokeWidth: 1),
-        ),
-      ),
-      errorWidget: (context, url, error) => Center(
-        child: Container(
-          width: 40.w,
-          height: 40.w,
-          child: CircularProgressIndicator(strokeWidth: 1),
-        ),
-      ),
+class _XImageState extends State<XImage> {
+  _errorWidget() {
+    Icon _icon = globalConfig.imgList[widget.type];
+    return Icon(
+      _icon.icon,
+      size: widget.iconSize,
+      color: _icon.color,
     );
   }
-  return ClipRRect(
-    child: image == null ||image == '' || image.contains('http')
-        ? _network()
-        : Image.asset(
-            image,
-            fit: fit ?? BoxFit.contain,
-            width: width,
-            height: height,
-          ),
-    borderRadius: BorderRadius.circular(borderRadius ?? 0),
-  );
+
+  _network() {
+    return CachedNetworkImage(
+      imageUrl: widget.image ?? '',
+      fit: widget.fit ?? BoxFit.contain,
+      width: widget.width,
+      height: widget.height,
+      placeholder: (context, url) => _errorWidget(),
+      // placeholder: (context, url) => Center(
+      //   child: Container(
+      //     width: widget.iconSize,
+      //     height: widget.iconSize,
+      //     color: Colors.redAccent,
+      //     // child: CircularProgressIndicator(strokeWidth: 0.5),
+      //   ),
+      // ),
+      errorWidget: (context, url, error) => Center(
+        child: _errorWidget(),
+      ).background(color: widget.errorWidgetBackground),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return ClipRRect(
+      child: widget.image == null ||
+              widget.image == '' ||
+              widget.image!.contains('http')
+          ? _network()
+          : Image.asset(
+              widget.image ?? '',
+              fit: widget.fit ?? BoxFit.contain,
+              width: widget.width,
+              height: widget.height,
+            ),
+      borderRadius: BorderRadius.circular(widget.borderRadius ?? 0),
+    );
+  }
 }

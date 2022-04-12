@@ -308,4 +308,20 @@ class DateUtil {
   static bool isLeapYearByYear(int year) {
     return year % 4 == 0 && year % 100 != 0 || year % 400 == 0;
   }
+
+  static String getCustomTime(int? time) {
+    String value = '';
+    if (time == null) return '';
+    value = DateUtil.formatDateMs(time, format: "yyyy-MM-dd");
+    if (DateUtil.isToday(time)) {
+      value = DateUtil.formatDateMs(time, format: "HH:mm");
+    } else if (DateUtil.isYesterday(
+        DateTime.fromMillisecondsSinceEpoch(time), DateTime.now())) {
+      value = '昨天';
+    } else if (DateUtil.isBeforeYesterday(
+        DateTime.fromMillisecondsSinceEpoch(time), DateTime.now())) {
+      value = '前天';
+    }
+    return value;
+  }
 }

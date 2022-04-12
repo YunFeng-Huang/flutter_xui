@@ -1175,6 +1175,7 @@ class PopupMenuButtonState<T> extends State<PopupMenuButton<T>> {
     );
     final List<PopupMenuEntry<T>> items = widget.itemBuilder(context);
     // Only show the menu if there is something to show
+    Log.d(items, 'items');
     if (items.isNotEmpty) {
       Log.d(position, 'position');
       showMenu<T?>(

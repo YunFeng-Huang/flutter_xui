@@ -64,6 +64,11 @@ class _XSelectInputState extends State<XSelectInput> {
           widget.onSelected!(c);
           setState(() {});
         },
+        elevation:0,
+        shape: RoundedRectangleBorder(
+          side: BorderSide(color: Colors.white),
+          borderRadius: BorderRadius.circular(10.w),
+        ),
         child: child,
         itemBuilder: (context) => List.generate(list?.length ?? 0, (index) {
           SelectTypeEntity c = list![index];
@@ -72,7 +77,6 @@ class _XSelectInputState extends State<XSelectInput> {
             child: Container(
               child: itemBuilder(c),
               decoration: BoxDecoration(
-                color: Colors.white,
                 border: Border(
                   top: index == 0 || hiddenDivider
                       ? BorderSide.none
