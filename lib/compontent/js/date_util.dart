@@ -312,7 +312,7 @@ class DateUtil {
   static String getCustomTime(int? time) {
     String value = '';
     if (time == null) return '';
-    value = DateUtil.formatDateMs(time, format: "yyyy-MM-dd");
+    value = DateUtil.formatDateMs(time, format: "yyyy-MM-dd HH:mm");
     if (DateUtil.isToday(time)) {
       value = DateUtil.formatDateMs(time, format: "HH:mm");
     } else if (DateUtil.isYesterday(
@@ -321,6 +321,9 @@ class DateUtil {
     } else if (DateUtil.isBeforeYesterday(
         DateTime.fromMillisecondsSinceEpoch(time), DateTime.now())) {
       value = '前天';
+    }  else if (DateUtil.yearIsEqual(
+        DateTime.fromMillisecondsSinceEpoch(time), DateTime.now())) {
+      value = DateUtil.formatDateMs(time, format: "MM-dd HH:mm");
     }
     return value;
   }

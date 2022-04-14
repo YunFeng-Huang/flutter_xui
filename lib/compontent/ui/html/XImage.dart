@@ -33,12 +33,16 @@ class XImage extends StatefulWidget {
 
 class _XImageState extends State<XImage> {
   _errorWidget() {
-    Icon _icon = globalConfig.imgList[widget.type];
-    return Icon(
-      _icon.icon,
-      size: widget.iconSize,
-      color: _icon.color,
-    );
+    var _icon = globalConfig.imgList[widget.type];
+    if(typeOf(_icon)=='Icon'){
+      return Icon(
+        _icon.icon,
+        size: widget.iconSize,
+        color: _icon.color,
+      );
+    }else{
+      return Center(child:XImage(image: _icon));
+    }
   }
 
   _network() {

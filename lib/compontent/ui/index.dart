@@ -12,7 +12,7 @@ class GlobalConfig {
   Widget? smartRefresherCustomHeader;
   Map imgList = {
     XImageType.general: Icon(null, color: HexToColor('#C1C6CB')),
-    XImageType.avatar: Icon(null, color: HexToColor('#C1C6CB')),
+    XImageType.avatar:'',
   };
   static Timer? timerCancel;
   GlobalConfig({
