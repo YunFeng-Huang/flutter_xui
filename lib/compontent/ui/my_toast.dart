@@ -2,14 +2,17 @@ import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import '../js/index.dart';
 import '../index.dart';
-import '../js/color_utils.dart';
-import 'css.dart';
 
 //用法  showToast('删除成功！') icon 为图标
 showToast(context, String text, {icon, showTime = 2000}) {
   return ToastCompoent.toast(context, text, icon: icon, showTime: showTime);
+}
+
+debugInfo(context, String text) {
+  bool isDev = !bool.fromEnvironment("dart.vm.product");
+  if (isDev)
+    return ToastCompoent.toast(context, 'debug提示:$text', showTime: 2000);
 }
 
 //用法 showLoading('加载中，请等待... ...')
@@ -313,10 +316,9 @@ class ToastCompoent {
                 ? Text(
                     _msg!,
                     style: TextStyle(
-                      fontSize: _textSize,
-                      color: _textColor,
-                      fontWeight: FontWeight.w300
-                    ),
+                        fontSize: _textSize,
+                        color: _textColor,
+                        fontWeight: FontWeight.w300),
                   )
                 : Column(
                     children: <Widget>[
