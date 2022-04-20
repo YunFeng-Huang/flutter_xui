@@ -36,6 +36,7 @@ class XInput extends StatelessWidget {
   int? _maxLength;
   late bool _autofocus;
   TextSelectionControls? _selectionControls;
+  FocusNode? _focusNode = new FocusNode();
   XInput(
       {row = true,
       label,
@@ -61,9 +62,11 @@ class XInput extends StatelessWidget {
       maxLines,
       autofocus,
       maxLength,
+      focusNode,
       selectionControls,
       fillColor}) {
     _row = row ?? false;
+    _focusNode = focusNode;
     _label = label;
     _padding = padding;
     _labelWidget = labelWidget;
@@ -125,12 +128,18 @@ class XInput extends StatelessWidget {
           autofocus: _autofocus,
           maxLines: _maxLines,
           obscureText: _obscureText ?? false,
-          // focusNode: _focusNode,
+          focusNode: _focusNode,
           keyboardType: _keyboardType,
           controller: _controller,
           textAlign: _textAlign ?? TextAlign.start,
           enabled: _enabled ?? true,
-          style: _style,
+          style: _style?.copyWith(height: 1.0),
+          strutStyle: StrutStyle(
+            fontSize: _style?.fontSize,
+            height: 1.0,
+            leading: (_style?.height ?? 1.0 - 1.0) / 2,
+            forceStrutHeight: true,
+          ),
           maxLength: _maxLength,
           onChanged: _onChanged,
           decoration: InputDecoration(

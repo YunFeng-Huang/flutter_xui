@@ -14,7 +14,6 @@ class XDivision extends StatelessWidget {
       width: width,
       height: height,
       color: themeColor.line,
-      margin: EdgeInsets.symmetric(vertical: 10.w),
     );
   }
 }
