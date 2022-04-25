@@ -167,7 +167,6 @@ class XCustomScrollViewState extends State<XCustomScrollView> {
 
   @override
   Widget build(BuildContext context) {
-    print(status);
     return Scaffold(
         backgroundColor: backgroundColor,
         appBar: xAppBar,

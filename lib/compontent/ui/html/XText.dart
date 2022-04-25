@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 
 // ignore: must_be_immutable
 class XText extends StatefulWidget {
-  String msg = '';
+  String? msg = '';
   TextStyle style;
   int? maxLines;
   TextOverflow? overflow;
@@ -15,8 +15,11 @@ class XText extends StatefulWidget {
 class _XTextState extends State<XText> {
   @override
   Widget build(BuildContext context) {
+    if(widget.msg==""){
+      return Container(height: 0);
+    }
     return Text(
-      widget.msg,
+      widget.msg??"",
       style: widget.style.copyWith(height: 1.0),
       strutStyle: StrutStyle(
         fontSize: widget.style.fontSize,
