@@ -315,7 +315,17 @@ class DateUtil {
     value =
         DateUtil.formatDateMs(time, format: "yyyy${split}MM${split}dd HH:mm");
     if (DateUtil.isToday(time)) {
-      value = DateUtil.formatDateMs(time, format: "HH:mm");
+      DateTime _now = DateTime.now();
+      DateTime _value = DateTime.fromMillisecondsSinceEpoch(time);
+      if(_now.difference(_value).inMinutes<1){
+        value = '刚刚';
+      }else if(_now.difference(_value).inHours<1){
+        value = '${_now.difference(_value).inMinutes}分钟前';
+      }else if(_now.difference(_value).inHours<24){
+        value = '${_now.difference(_value).inHours}小时前';
+      } else{
+        value = DateUtil.formatDateMs(time, format: "HH:mm");
+      }
     } else if (DateUtil.isYesterday(
         DateTime.fromMillisecondsSinceEpoch(time), DateTime.now())) {
       value = '昨天';
@@ -325,6 +335,8 @@ class DateUtil {
     } else if (DateUtil.yearIsEqual(
         DateTime.fromMillisecondsSinceEpoch(time), DateTime.now())) {
       value = DateUtil.formatDateMs(time, format: "MM${split}dd HH:mm");
+    }else{
+      value = DateUtil.formatDateMs(time, format: "yyyy${split}MM${split}dd HH:mm");
     }
     return value;
   }
