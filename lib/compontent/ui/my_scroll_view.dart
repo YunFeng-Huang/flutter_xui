@@ -233,7 +233,7 @@ class XCustomScrollViewState extends State<XCustomScrollView> {
                 ),
               if (isNotNull(appbar?.customAppBar) && isNotNull(appbar))
                 appbar!.customAppBar!,
-              if (bottomAppBar != null)
+              if (bottomAppBar != null && status != PageStatus.error)
                 Positioned(
                   child: _footerBottom(),
                   bottom: 0,
