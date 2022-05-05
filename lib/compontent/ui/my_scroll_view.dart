@@ -351,12 +351,7 @@ Widget XAppBarWidget(
           },
           child: BackButton(
             color: color ?? HexToColor('#010101'),
-          )
-              // Icon(
-              //   Icons.chevron_left,
-              //   color: color ?? HexToColor('#010101'),
-              // )
-              .background(width: height, height: height),
+          ).background(width: height, height: height),
         ).centerLeft.margin(left: 24.w),
         Text(
           title ?? '',

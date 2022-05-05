@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
-
+import 'dart:ui' as ui;
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:xui/compontent/ui/index.dart';
@@ -201,13 +201,13 @@ filterList(data, key) {
   return _h;
 }
 
-loadImage(String url) async {
-  Completer completer = Completer();
+Future<ui.Image> loadImage(String url) async {
+  Completer<ui.Image> completer = Completer<ui.Image>();
   ImageStreamListener? listener;
   ImageStream stream =
       CachedNetworkImageProvider(url).resolve(ImageConfiguration.empty);
   listener = ImageStreamListener((ImageInfo frame, bool sync) {
-    final image = frame.image;
+    final ui.Image image = frame.image;
     completer.complete(image);
     if (listener != null) {
       stream.removeListener(listener);
