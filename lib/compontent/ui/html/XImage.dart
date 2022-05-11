@@ -34,19 +34,21 @@ class XImage extends StatefulWidget {
 class _XImageState extends State<XImage> {
   _errorWidget() {
     var _icon = globalConfig.imgList[widget.type];
-    if(typeOf(_icon)=='Icon'){
+    if (typeOf(_icon) == 'Icon') {
       return Icon(
         _icon.icon,
         size: widget.iconSize,
         color: _icon.color,
       );
-    }else{
-      return Center(child:XImage(image: _icon));
+    } else {
+      return Center(child: XImage(image: _icon));
     }
   }
 
   _network() {
     return CachedNetworkImage(
+      fadeInDuration : const Duration(milliseconds: 0),
+      fadeOutDuration : const Duration(milliseconds: 0),
       imageUrl: widget.image ?? '',
       fit: widget.fit ?? BoxFit.contain,
       width: widget.width,

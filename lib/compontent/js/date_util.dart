@@ -314,25 +314,45 @@ class DateUtil {
     String value = '';
     if (time == null) return '';
     if (DateUtil.isToday(time)) {
+      value = DateUtil.formatDateMs(time, format: "HH:mm");
+    } else if (DateUtil.isYesterday(
+        DateTime.fromMillisecondsSinceEpoch(time), _now)) {
+      value = '昨天';
+    } else if (DateUtil.isBeforeYesterday(
+        DateTime.fromMillisecondsSinceEpoch(time), _now)) {
+      value = '前天';
+    } else if (DateUtil.yearIsEqual(
+        DateTime.fromMillisecondsSinceEpoch(time), _now)) {
+      value = DateUtil.formatDateMs(time, format: "MM${split}dd HH:mm");
+    } else {
+      value =
+          DateUtil.formatDateMs(time, format: "yyyy${split}MM${split}dd HH:mm");
+    }
+    return value;
+  }
+
+  static String getCustomTime1(int? time, {String? split = '-'}) {
+    DateTime _now = DateTime.now();
+    String value = '';
+    if (time == null) return '';
+    if (DateUtil.isToday(time)) {
       DateTime _value = DateTime.fromMillisecondsSinceEpoch(time);
       Duration _diff = _now.difference(_value);
-      if(_diff.inMinutes<1){
+      if (_diff.inMinutes < 1) {
         value = '刚刚';
-      }else if(_diff.inHours<1){
+      } else if (_diff.inHours < 1) {
         value = '${_now.difference(_value).inMinutes}分钟前';
-      }else if(_diff.inHours<24){
+      } else if (_diff.inHours < 24) {
         value = '${_now.difference(_value).inHours}小时前';
-      } else{
+      } else {
         value = DateUtil.formatDateMs(time, format: "HH:mm");
       }
-    } else if (DateUtil.isYesterday(DateTime.fromMillisecondsSinceEpoch(time), _now)) {
-      value = '昨天';
-    } else if (DateUtil.isBeforeYesterday(DateTime.fromMillisecondsSinceEpoch(time), _now)) {
-      value = '前天';
-    } else if (DateUtil.yearIsEqual(DateTime.fromMillisecondsSinceEpoch(time), _now)) {
+    } else if (DateUtil.yearIsEqual(
+        DateTime.fromMillisecondsSinceEpoch(time), _now)) {
       value = DateUtil.formatDateMs(time, format: "MM${split}dd HH:mm");
-    }else{
-      value = DateUtil.formatDateMs(time, format: "yyyy${split}MM${split}dd HH:mm");
+    } else {
+      value =
+          DateUtil.formatDateMs(time, format: "yyyy${split}MM${split}dd HH:mm");
     }
     return value;
   }
