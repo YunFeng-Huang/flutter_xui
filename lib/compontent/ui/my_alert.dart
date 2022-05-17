@@ -8,9 +8,23 @@ class XAlert {
   XAlert(this.context);
 
   /// 底部弹出提示框
-  showBottomAlert({required list, callback, title}) {
+  showBottomAlertCustom({required list, callback, title}) {
     return showCupertinoModalPopup(
-      barrierColor:CupertinoDynamicColor.withBrightness(
+      barrierColor: CupertinoDynamicColor.withBrightness(
+        color: backgroundColor,
+        darkColor: Color(0x7A000000),
+      ),
+      context: context,
+      builder: (context) {
+        return showBottomAlertCustomWidget(callback, list, title);
+      },
+    );
+  }
+
+  /// 底部弹出提示框
+  showBottomAlert_ios({required list, callback, title}) {
+    return showCupertinoModalPopup(
+      barrierColor: CupertinoDynamicColor.withBrightness(
         color: backgroundColor,
         darkColor: Color(0x7A000000),
       ),
@@ -34,7 +48,7 @@ class XAlert {
       bool cancalBtn = true,
       child}) {
     return showCupertinoModalPopup(
-      barrierColor:CupertinoDynamicColor.withBrightness(
+      barrierColor: CupertinoDynamicColor.withBrightness(
         color: backgroundColor,
         darkColor: Color(0x7A000000),
       ),
@@ -93,10 +107,10 @@ class _ShowTipsAlterWidgetState extends State<ShowTipsAlterWidget> {
             _buttonView(),
           ],
         ).background(
-            width: widget.width ?? 560.w,
-            height: widget.height ?? 330.w,
-            colorA: Colors.white,
-            radius: 16.w,
+          width: widget.width ?? 560.w,
+          height: widget.height ?? 330.w,
+          colorA: Colors.white,
+          radius: 16.w,
         ),
       ),
     );
@@ -171,6 +185,71 @@ class _ShowTipsAlterWidgetState extends State<ShowTipsAlterWidget> {
   }
 }
 
+class showBottomAlertCustomWidget extends StatefulWidget {
+  final confirmCallback;
+  final list;
+  final title;
+
+  const showBottomAlertCustomWidget(
+      this.confirmCallback, this.list, this.title);
+
+  @override
+  State<showBottomAlertCustomWidget> createState() =>
+      _showBottomAlertCustomWidgetState();
+}
+
+class _showBottomAlertCustomWidgetState
+    extends State<showBottomAlertCustomWidget> {
+  @override
+  Widget build(BuildContext context) {
+    // widget.list.add('取消');
+    return XButton(
+      callback: () {
+        Navigator.pop(context);
+      },
+      child: Scaffold(
+        backgroundColor: Colors.transparent,
+        body: Column(mainAxisAlignment: MainAxisAlignment.end, children: [
+          Column(
+            children: [
+              Text(
+                '选择图片',
+                style: font(26, color: '#9EA6AE'),
+              ).center.background(height: 110.w),
+              Column(
+                children: List.generate(
+                  widget.list.length,
+                  (index) => XButton(
+                    callback: () {
+                      Navigator.pop(context);
+                      widget.confirmCallback(index);
+                    },
+                    child: Text(widget.list[index],
+                            style: font(32, color: '#0E0D15'))
+                        .center
+                        .background(height: 110.w),
+                  ),
+                ),
+              ),
+              XButton(
+                callback: () {
+                  Navigator.pop(context);
+                },
+                child: Text(
+                  '取消',
+                  style: font(32, color: '#0E0D15'),
+                ).center.background(height: 110.w, borderTop: 1.w),
+              )
+            ],
+          )
+              .background(colorA: Colors.white, topRight: 16.w, topLeft: 16.w)
+              .bottomCenter
+        ]),
+      ),
+    );
+  }
+}
+
 class ShowCustomAlterWidget extends StatefulWidget {
   final confirmCallback;
   final list;
@@ -183,10 +262,6 @@ class ShowCustomAlterWidget extends StatefulWidget {
 }
 
 class _ShowCustomAlterWidgetState extends State<ShowCustomAlterWidget> {
-  final controller = TextEditingController();
-
-  String inputValuue = "";
-
   @override
   Widget build(BuildContext context) {
     return CupertinoActionSheet(
