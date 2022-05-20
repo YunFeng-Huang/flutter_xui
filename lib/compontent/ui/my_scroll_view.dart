@@ -277,7 +277,7 @@ XBottomAppBarWrap({child, color, height, boxShadow, heightAuto}) {
   );
 }
 
-XSmartRefresherCustomFooter({noDataString}) {
+XSmartRefresherCustomFooter() {
   TextStyle _style = font(28, color: '#9EA6AE');
   return CustomFooter(
     builder: (BuildContext context, LoadStatus? mode) {
@@ -301,7 +301,7 @@ XSmartRefresherCustomFooter({noDataString}) {
         );
       } else {
         body = Text(
-          noDataString ?? "没有更多了",
+          "没有更多了",
           style: _style,
         );
       }
