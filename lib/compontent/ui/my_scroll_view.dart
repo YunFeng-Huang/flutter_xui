@@ -8,6 +8,10 @@ import 'package:xui/compontent/js/index.dart';
 import 'package:xui/compontent/js/screem.dart';
 import '../index.dart';
 import '../js/color_utils.dart';
+import 'my_scroll_view_widget/appBarWidget.dart';
+import 'my_scroll_view_widget/bottomAppBarWrap.dart';
+import 'my_scroll_view_widget/headerWidget.dart';
+import 'my_scroll_view_widget/smartRefresherCustomFooter.dart';
 
 enum PageStatus { loading, error, success }
 
@@ -29,7 +33,7 @@ class XCustomScrollView extends StatefulWidget {
   Function? onLoading;
   Function? init;
   double? appbarHeight;
-  CustomFooter? footer;
+  Widget? footer;
   XBottomAppBarConfig? bottomAppBarConfig;
   XCustomScrollView(
       {Key? key,
@@ -258,61 +262,6 @@ class XCustomScrollViewState extends State<XCustomScrollView> {
   }
 }
 
-// ignore: non_constant_identifier_names
-XBottomAppBarWrap({child, color, height, boxShadow, heightAuto}) {
-  return Container(
-    height: heightAuto ? null : height,
-    decoration: BoxDecoration(
-      color: color ?? Colors.white,
-      boxShadow: boxShadow ??
-          [
-            BoxShadow(
-              color: Color.fromRGBO(0, 0, 0, 0.05), //底色,阴影颜色
-              blurRadius: 1, // 阴影模糊层度
-              spreadRadius: 1, //阴影模糊大小
-            )
-          ],
-    ),
-    child: child,
-  );
-}
-
-XSmartRefresherCustomFooter() {
-  TextStyle _style = font(28, color: '#9EA6AE');
-  return CustomFooter(
-    builder: (BuildContext context, LoadStatus? mode) {
-      Widget body;
-      if (mode == LoadStatus.idle) {
-        body = Text(
-          "上拉加载",
-          style: _style,
-        );
-      } else if (mode == LoadStatus.loading) {
-        body = CupertinoActivityIndicator();
-      } else if (mode == LoadStatus.failed) {
-        body = Text(
-          "加载失败！点击重试！",
-          style: _style,
-        );
-      } else if (mode == LoadStatus.canLoading) {
-        body = Text(
-          "松手,加载更多",
-          style: _style,
-        );
-      } else {
-        body = Text(
-          "没有更多了",
-          style: _style,
-        );
-      }
-      return Container(
-        height: 76 / 2,
-        child: Center(child: body),
-      );
-    },
-  );
-}
-
 class XCustomScrollViewAppbar {
   String? title;
   Widget? customAppBar;
@@ -333,166 +282,5 @@ class XBottomAppBarConfig {
     bottomAppBarColor = this.bottomAppBarColor ?? Colors.white;
     bottomAppBarHeight = this.bottomAppBarHeight ?? 0.0;
     bottomAppBarHeightAuto = this.bottomAppBarHeightAuto ?? false;
-  }
-}
-
-// ignore: non_constant_identifier_names
-Widget XAppBarWidget(
-  context, {
-  String? title,
-  double? appbarHeight,
-  // TextStyle? textStyle,
-  Color? backgroundColor,
-  double? fontSize,
-  Color? color,
-  List<Widget>? actions,
-}) {
-  double height = appbarHeight ?? 88.w;
-  return Container(
-    padding: EdgeInsets.only(top: ScreenUtil().statusBarHeight),
-    color: backgroundColor ?? Colors.transparent,
-    height: height + ScreenUtil().statusBarHeight,
-    child: Stack(
-      children: [
-        GestureDetector(
-          behavior: HitTestBehavior.opaque,
-          onTap: () {
-            Navigator.pop(context);
-          },
-          child: BackButton(
-            color: color ?? HexToColor('#010101'),
-          ).background(width: height, height: height),
-        ).centerLeft.margin(left: 24.w),
-        Text(
-          title ?? '',
-          style: TextStyle(
-            fontSize: fontSize ?? 32.w,
-            color: color ?? HexToColor('#010101'),
-            fontWeight: FontWeight.bold,
-          ),
-          // font(32, color: color ?? '#010101', bold: true),
-        ).center,
-        if (isNotNull(actions?.length))
-          Row(
-            children: List.generate(
-              actions!.length,
-              (index) => Container(
-                child: actions[index],
-                width: height,
-              ),
-            ),
-          )
-              .background(width: height * actions.length)
-              .centerRight
-              .margin(right: 24.w),
-      ],
-    ),
-  );
-}
-
-class HeaderWidget extends StatefulWidget {
-  const HeaderWidget({Key? key}) : super(key: key);
-
-  @override
-  _HeaderWidgetState createState() => _HeaderWidgetState();
-}
-
-class _HeaderWidgetState extends State<HeaderWidget> {
-  double offset = 0.00;
-  double height = 120.w;
-  double get opacity {
-    var diff = offset / height;
-    if (diff > 0) {
-      return diff > 1 ? 1 : diff;
-    } else {
-      return 0.0;
-    }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    DateTime newTime = DateTime.now();
-    return CustomHeader(
-        builder: (BuildContext context, RefreshStatus? mode) {
-          String text = '';
-          switch (mode) {
-            case RefreshStatus.refreshing:
-              text = "更新中";
-              break;
-            case RefreshStatus.completed:
-              text = "更新成功";
-              break;
-            case RefreshStatus.failed:
-              text = "更新失败";
-              break;
-            default:
-              text =
-                  '释放刷新 最后更新 ${newTime.hour}:${newTime.minute > 9 ? newTime.minute : ('0${newTime.minute}')}:${newTime.second}';
-              break;
-          }
-          return Opacity(
-            opacity: opacity,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                XImage(
-                  image: globalConfig.defaultImg,
-                  width: 28.w,
-                  height: 22.w,
-                )
-                    .center
-                    .padding(top: 4.w)
-                    .background(
-                      border: 2.w,
-                      borderColor: HexToColor('#FF4300'),
-                      radius: 100.w,
-                      width: 44.w,
-                      height: 44.w,
-                    )
-                    .margin(vertical: 15.w),
-                Text(text, style: font(24, color: '#9EA6AE')),
-              ],
-            ).center,
-          );
-        },
-        onOffsetChange: (double value) {
-          setState(() {
-            offset = value;
-          });
-        },
-        height: height);
-  }
-}
-
-class XSliverAppBarDelegate extends SliverPersistentHeaderDelegate {
-  const XSliverAppBarDelegate({
-    required this.minHeight,
-    required this.maxHeight,
-    required this.child,
-  });
-
-  final double minHeight;
-  final double maxHeight;
-  final Widget child;
-
-  @override
-  double get minExtent => minHeight;
-
-  @override
-  double get maxExtent => max(maxHeight, minHeight);
-
-  @override
-  Widget build(
-      BuildContext context, double shrinkOffset, bool overlapsContent) {
-    print(shrinkOffset);
-    return new SizedBox.expand(child: child);
-  }
-
-  @override
-  bool shouldRebuild(XSliverAppBarDelegate oldDelegate) {
-    return maxHeight != oldDelegate.maxHeight ||
-        minHeight != oldDelegate.minHeight ||
-        child != oldDelegate.child;
   }
 }
