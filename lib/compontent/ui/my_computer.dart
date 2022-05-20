@@ -1,9 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
-import '../js/color_utils.dart';
-import 'icon.dart';
-import 'my_toast.dart';
 import '../index.dart';
 
 // ignore: must_be_immutable
@@ -16,7 +11,17 @@ class XComputer extends StatefulWidget {
   double? size;
   double? radius;
   bool disabled;
-  XComputer({Key? key, this.height = 32.0, this.size = 32.0, this.num = 0, this.min = 1,this.disabled = false, this.radius, this.max = 1000000000000, required this.change}) : super(key: key);
+  XComputer(
+      {Key? key,
+      this.height = 32.0,
+      this.size = 32.0,
+      this.num = 0,
+      this.min = 1,
+      this.disabled = false,
+      this.radius,
+      this.max = 1000000000000,
+      required this.change})
+      : super(key: key);
 
   @override
   _XComputerState createState() {
@@ -25,10 +30,10 @@ class XComputer extends StatefulWidget {
 }
 
 class _XComputerState extends State<XComputer> {
-  int get min => widget.disabled? widget.num : widget.min;
+  int get min => widget.disabled ? widget.num : widget.min;
   int get max => widget.disabled ? widget.num : widget.max;
   int get num => widget.num;
- 
+
   double? get size => widget.size;
   double? get radius => widget.radius ?? 4.w;
   @override
@@ -40,7 +45,8 @@ class _XComputerState extends State<XComputer> {
         children: <Widget>[
           GestureDetector(
             onTap: _minusNum,
-            child: IconRemove(num == min, size:size,radius: radius).background(
+            child:
+                IconRemove(num == min, size: size, radius: radius).background(
               alignment: Alignment.center,
             ),
           ),
@@ -55,7 +61,7 @@ class _XComputerState extends State<XComputer> {
           ),
           GestureDetector(
             onTap: _addNum,
-            child: IconAdd(num == max, size:size,radius: radius).background(
+            child: IconAdd(num == max, size: size, radius: radius).background(
               alignment: Alignment.center,
             ),
           ),
@@ -93,22 +99,28 @@ class _XComputerState extends State<XComputer> {
 }
 
 // ignore: non_constant_identifier_names
-Widget IconAdd(b, {size,radius}) {
+Widget IconAdd(b, {size, radius}) {
   Color color = !b ? HexToColor('#3399FF') : HexToColor('#CCCCCC');
-  Color colorBg = !b ? Color.fromRGBO(51, 153, 255, 0.06) : HexToColor('#F6F6F6');
+  Color colorBg =
+      !b ? Color.fromRGBO(51, 153, 255, 0.06) : HexToColor('#F6F6F6');
   return Center(
     child: Icon(
       Icons.add,
       size: 16,
       color: color,
     ),
-  ).background(width: size ?? 32.w, height: size ?? 32.w, colorA: colorBg, radius: radius??1.w);
+  ).background(
+      width: size ?? 32.w,
+      height: size ?? 32.w,
+      colorA: colorBg,
+      radius: radius ?? 1.w);
 }
 
 // ignore: non_constant_identifier_names
-Widget IconRemove(b, {size,radius}) {
+Widget IconRemove(b, {size, radius}) {
   Color color = !b ? HexToColor('#3399FF') : HexToColor('#CCCCCC');
-  Color colorBg = !b ? Color.fromRGBO(51, 153, 255, 0.06) : HexToColor('#F6F6F6');
+  Color colorBg =
+      !b ? Color.fromRGBO(51, 153, 255, 0.06) : HexToColor('#F6F6F6');
 
   return Center(
     child: Icon(
@@ -116,5 +128,9 @@ Widget IconRemove(b, {size,radius}) {
       size: 16,
       color: color,
     ),
-  ).background(width: size ?? 32.w, height: size ?? 32.w, colorA: colorBg, radius: radius??1.w);
+  ).background(
+      width: size ?? 32.w,
+      height: size ?? 32.w,
+      colorA: colorBg,
+      radius: radius ?? 1.w);
 }

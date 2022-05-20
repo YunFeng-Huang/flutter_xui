@@ -1,9 +1,7 @@
 import 'dart:async';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../index.dart';
-import 'css.dart';
 
 class LoadingConfig {
   static String? text;
@@ -78,5 +76,3 @@ class _LoadingState extends State<Loading> {
     );
   }
 }
-
-

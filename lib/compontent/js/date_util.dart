@@ -1,10 +1,3 @@
-/**
- * @Author: Sky24n
- * @GitHub: https://github.com/Sky24n
- * @Description: Date Util.
- * @Date: 2018/9/8
- */
-
 /// 一些常用格式参照。可以自定义格式，例如：'yyyy/MM/dd HH:mm:ss'，'yyyy/M/d HH:mm:ss'。
 /// 格式要求
 /// year -> yyyy/yy   month -> MM/M    day -> dd/d

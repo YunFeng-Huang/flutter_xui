@@ -1,9 +1,5 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:xui/compontent/js/index.dart';
-import 'package:xui/compontent/js/screem.dart';
 import '../index.dart';
-import 'css.dart';
 
 // ignore: must_be_immutable
 class XAppBar extends StatelessWidget implements PreferredSizeWidget {
@@ -61,7 +57,10 @@ class XAppBar extends StatelessWidget implements PreferredSizeWidget {
                   width: 88.w,
                 ),
               ),
-            ).background(width: 88.w * actions!.length).centerRight.margin(right: 24.w),
+            )
+                .background(width: 88.w * actions!.length)
+                .centerRight
+                .margin(right: 24.w),
         ],
       ),
     );
@@ -72,8 +71,4 @@ class XAppBar extends StatelessWidget implements PreferredSizeWidget {
   Size get preferredSize => new Size.fromHeight(kToolbarHeight);
 }
 
-
-
-class XAppBarX extends AppBar{
-  
-}
+class XAppBarX extends AppBar {}

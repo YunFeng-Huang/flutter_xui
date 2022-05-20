@@ -1,8 +1,5 @@
 import 'package:flutter/cupertino.dart';
-import 'package:xui/compontent/js/index.dart';
 import '../index.dart';
-import '../js/color_utils.dart';
-import 'css.dart';
 
 class XLabelConfig {
   Color? border;

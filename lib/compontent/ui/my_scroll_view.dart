@@ -1,13 +1,9 @@
 import 'dart:async';
-import 'dart:math';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
-import 'package:xui/compontent/js/index.dart';
-import 'package:xui/compontent/js/screem.dart';
+
 import '../index.dart';
-import '../js/color_utils.dart';
 import 'my_scroll_view_widget/appBarWidget.dart';
 import 'my_scroll_view_widget/bottomAppBarWrap.dart';
 import 'my_scroll_view_widget/headerWidget.dart';
