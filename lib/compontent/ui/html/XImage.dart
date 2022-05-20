@@ -64,7 +64,7 @@ class _XImageState extends State<XImage> {
       // ),
       errorWidget: (context, url, error) => Center(
         child: _errorWidget(),
-      ).background(color: widget.errorWidgetBackground),
+      ),
     );
   }
 

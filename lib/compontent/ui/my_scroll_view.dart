@@ -29,25 +29,27 @@ class XCustomScrollView extends StatefulWidget {
   Function? onLoading;
   Function? init;
   double? appbarHeight;
+  CustomFooter? footer;
   XBottomAppBarConfig? bottomAppBarConfig;
-  XCustomScrollView({
-    Key? key,
-    this.onRefresh,
-    this.appbarHeight,
-    this.onLoading,
-    this.init,
-    required this.status,
-    required this.slivers,
-    required this.emptyWidget,
-    this.errorWidget,
-    this.appbar,
-    this.backgroundColor = Colors.transparent,
-    this.bottomAppBar,
-    this.xAppBar,
-    this.bottomAppBarConfig,
-    this.headerLoading,
-    this.loadingWidget,
-  }) : super(key: key) {
+  XCustomScrollView(
+      {Key? key,
+      this.onRefresh,
+      this.appbarHeight,
+      this.onLoading,
+      this.init,
+      required this.status,
+      required this.slivers,
+      required this.emptyWidget,
+      this.errorWidget,
+      this.appbar,
+      this.backgroundColor = Colors.transparent,
+      this.bottomAppBar,
+      this.xAppBar,
+      this.bottomAppBarConfig,
+      this.headerLoading,
+      this.loadingWidget,
+      this.footer})
+      : super(key: key) {
     headerLoading = this.headerLoading ?? HeaderWidget();
     list = [];
     if (status != PageStatus.loading) {
@@ -102,7 +104,6 @@ class XCustomScrollViewState extends State<XCustomScrollView> {
     widget.init?.call(controller);
     if (!isNotNull(appbar?.customAppBar))
       controller?.addListener(() {
-        print('controller.offset==${controller?.offset}');
         setState(() {
           opacity = (controller?.offset ?? 0.0) >= appbarHeight
               ? 1.00
@@ -195,7 +196,7 @@ class XCustomScrollViewState extends State<XCustomScrollView> {
                     // ignore: unnecessary_null_comparison
                     enablePullUp: onLoading != null,
                     header: headerLoading,
-                    footer: XSmartRefresherCustomFooter(),
+                    footer: widget.footer ?? XSmartRefresherCustomFooter(),
                     controller: _refreshController,
                     onRefresh: _onRefresh,
                     onLoading: _onLoading,
@@ -220,7 +221,7 @@ class XCustomScrollViewState extends State<XCustomScrollView> {
                                   ),
                   ),
                 ),
-                if (bottomAppBar != null) SizedBox(height: 88.w)
+                if (bottomAppBar != null) SizedBox(height: bottomAppBarHeight)
               ],
             ),
             if (!isNotNull(appbar?.customAppBar) && isNotNull(appbar))
@@ -276,12 +277,11 @@ XBottomAppBarWrap({child, color, height, boxShadow, heightAuto}) {
   );
 }
 
-XSmartRefresherCustomFooter() {
+XSmartRefresherCustomFooter({noDataString}) {
   TextStyle _style = font(28, color: '#9EA6AE');
   return CustomFooter(
     builder: (BuildContext context, LoadStatus? mode) {
       Widget body;
-
       if (mode == LoadStatus.idle) {
         body = Text(
           "上拉加载",
@@ -301,12 +301,12 @@ XSmartRefresherCustomFooter() {
         );
       } else {
         body = Text(
-          "没有更多了",
+          noDataString ?? "没有更多了",
           style: _style,
         );
       }
       return Container(
-        height: 55.0,
+        height: 76 / 2,
         child: Center(child: body),
       );
     },
