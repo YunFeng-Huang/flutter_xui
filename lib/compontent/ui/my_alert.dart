@@ -332,3 +332,160 @@ class _ShowInputAlertWidgetState extends State<ShowInputAlertWidget> {
     );
   }
 }
+
+//用法 showLoading('加载中，请等待... ...')
+showLoading(context, [String text = "加载中，请等待..."]) {
+  return showCupertinoModalPopup(
+    barrierDismissible: false,
+    context: context,
+    builder: (context) {
+      return Center(
+        child: Container(
+          decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(20.w),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black12,
+                  blurRadius: 10.w,
+                )
+              ]),
+          padding: EdgeInsets.all(20.w),
+          // margin: EdgeInsets.all(.w),
+          // constraints: BoxConstraints(minHeight: 220.w, minWidth: 220.w),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Loading(text: text),
+            ],
+          ),
+        ),
+      );
+    },
+  );
+}
+
+Future<dynamic>? showConfirmDialog(
+  BuildContext context,
+  String text, {
+  Function? confirmCallback,
+  submitTitle = '确定',
+  cancelTitle = "取消",
+  title = '温馨提示',
+}) {
+  return showCupertinoModalPopup(
+      context: context,
+      builder: (context) {
+        return SimpleDialog(
+          title: Container(
+            height: 80.w,
+            alignment: Alignment.center,
+            decoration: BoxDecoration(
+              color: Color.fromRGBO(235, 236, 236, 1),
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(20.w),
+                topRight: Radius.circular(20.w),
+              ),
+            ),
+            child: Text(
+              title,
+              style: font(30, color: '#3e3e3e'),
+            ),
+          ),
+          titlePadding: EdgeInsets.all(0),
+          contentPadding: EdgeInsets.all(0),
+          backgroundColor: Colors.white,
+          elevation: 0,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(
+              Radius.circular(20.w),
+            ),
+          ),
+          children: <Widget>[
+            Container(
+              alignment: Alignment.center,
+              padding: EdgeInsets.symmetric(vertical: 56.w, horizontal: 42.w),
+              child: Text(
+                text,
+                style: font(26, color: '#030303'),
+              ),
+            ),
+            Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.only(
+                  bottomLeft: Radius.circular(20.w),
+                  bottomRight: Radius.circular(20.w),
+                ),
+              ),
+              child: Row(
+                children: [
+                  if (cancelTitle != null)
+                    Expanded(
+                      flex: 1,
+                      child: GestureDetector(
+                        onTap: () {
+                          Navigator.of(context).pop();
+                        },
+                        child: Container(
+                          height: 76.w,
+                          decoration: BoxDecoration(
+                            color: Color.fromRGBO(235, 236, 236, 1),
+                            borderRadius: BorderRadius.only(
+                              bottomLeft: Radius.circular(20.w),
+                            ),
+                          ),
+                          alignment: Alignment.center,
+                          child: Text(cancelTitle),
+                        ),
+                      ),
+                    ),
+                  Expanded(
+                    flex: 1,
+                    child: GestureDetector(
+                      onTap: () {
+                        confirmCallback?.call();
+                        if (confirmCallback != null) {
+                          Navigator.of(context).pop();
+                        }
+                      },
+                      child: Container(
+                        // width: 340.w,
+                        height: 76.w,
+                        // decoration: BoxDecoration(
+                        //   image: DecorationImage(
+                        //     image: NetworkImage(telIcon),
+                        //     fit: BoxFit.fill,
+                        //     alignment: AlignmentDirectional.topStart,
+                        //   ),
+                        // ),
+                        decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                            colors: [
+                              Color.fromRGBO(253, 100, 79, 1),
+                              Color.fromRGBO(241, 141, 39, 1),
+                            ],
+                            begin: Alignment.topCenter,
+                            end: Alignment.bottomCenter,
+                          ),
+                          borderRadius: BorderRadius.only(
+                            bottomRight: Radius.circular(20.w),
+                            bottomLeft: Radius.circular(
+                                cancelTitle != null ? 0.w : 20.w),
+                          ),
+                        ),
+                        alignment: Alignment.center,
+                        child: Text(
+                          submitTitle,
+                          style: font(28, color: '#ffffff'),
+                        ).background(),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        );
+      });
+}
