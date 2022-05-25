@@ -225,7 +225,7 @@ class XCustomScrollViewState extends State<XCustomScrollView> {
                                   ),
                   ),
                 ),
-                if (bottomAppBar != null) SizedBox(height: bottomAppBarHeight)
+                // if (bottomAppBar != null) SizedBox(height: bottomAppBarHeight)
               ],
             ),
             if (!isNotNull(appbar?.customAppBar) && isNotNull(appbar))
