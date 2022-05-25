@@ -4,7 +4,11 @@ import 'package:flutter/material.dart';
 
 //用法  showToast('删除成功！') icon 为图标
 showToast(context, String text) {
-  return Toast.makeText(context:context, content:text,animated: Toast.ANIMATED_MOVEMENT_BTB).show();
+  return Toast.makeText(
+          context: context,
+          content: text,
+          animated: Toast.ANIMATED_MOVEMENT_TWEEN)
+      .show();
 }
 
 debugInfo(context, String text) {
