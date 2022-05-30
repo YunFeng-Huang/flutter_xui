@@ -15,7 +15,7 @@ class ThemeColor {
   Color? background;
   Color? line;
   Color? border;
-
+  Color? primary;
   ThemeColor({
     this.disable,
     this.active,
@@ -31,6 +31,7 @@ class ThemeColor {
     active = active ?? Color(0xFF3399FF);
     black = black ?? Color(0x010101);
     red = red ?? Color(0xFFFFC4F32);
+    primary = primary ?? Color(0xFFFF4300);
     gray = gray ?? Color(0xFF6C7480);
     white = white ?? Color(0xFFFFFFFF);
     background = background ?? Color(0xFFEEEFF3);

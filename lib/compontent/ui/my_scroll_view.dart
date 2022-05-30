@@ -103,7 +103,6 @@ class XCustomScrollViewState extends State<XCustomScrollView> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    print('initState=====');
     controller = ScrollController();
     widget.init?.call(controller);
     if (!isNotNull(appbar?.customAppBar))
