@@ -14,7 +14,11 @@ showToast(context, String text) {
 debugInfo(context, String text) {
   bool isDev = !bool.fromEnvironment("dart.vm.product");
   if (isDev)
-    return ToastCompoent.toast(context, 'debug提示:$text', showTime: 2000);
+    return Toast.makeText(
+        context: context,
+        content: text,
+        animated: Toast.ANIMATED_MOVEMENT_TWEEN)
+        .show();
 }
 
 class Toast {
@@ -49,7 +53,7 @@ class Toast {
   // 自定义 显示内容
   static Widget? _toastWidget;
   static ToastLayoutStyle style = ToastLayoutStyle(
-      fontSize: 13, height: 18 / 13, horizontal: 10, vertical: 10);
+      fontSize: 14, height: 20 / 14, horizontal: 15, vertical: 10);
   // 动画
   static int _animated = 0;
   // 执行动画时间
@@ -270,6 +274,7 @@ class Toast {
 
   //toast绘制
   static _defaultToastLayout() {
+    print(style.fontSize);
     return ConstrainedBox(
       constraints: BoxConstraints(
         //限制 最大宽度
@@ -284,7 +289,8 @@ class Toast {
               style: TextStyle(
                   fontSize: style.fontSize,
                   color: _contentColor,
-                  height: style.height),
+                  height: style.height,
+              ),
               maxLines: 2,
               overflow: TextOverflow.ellipsis),
         ),
@@ -326,137 +332,4 @@ class ToastLayoutStyle {
       required this.vertical,
       required this.fontSize,
       required this.height});
-}
-
-class ToastCompoent {
-  static OverlayEntry? _overlayEntry; // toast靠它加到屏幕上
-  static bool _showing = false; // toast是否正在showing
-  static DateTime? _startedTime; // 开启一个新toast的当前时间，用于对比是否已经展示了足够时间
-  static String? _msg; // 提示内容
-  static int? _showTime; // toast显示时间
-  static Color? _bgColor; // 背景颜色
-  static Color? _textColor; // 文本颜色
-  static double? _textSize; // 文字大小
-  static String? _toastPosition; // 显示位置
-  static double? _pdHorizontal; // 左右边距
-  static double? _pdVertical; // 上下边距
-  static IconData? _img; //图标
-  static BuildContext? _context;
-  static void toast(
-    BuildContext context,
-    String msg, {
-    IconData? icon,
-    int showTime = 2000,
-    Color? bgColor,
-    Color textColor = Colors.white,
-    double textSize = 13.0,
-    String position = 'center',
-    double pdHorizontal = 10.0,
-    double pdVertical = 10.0,
-  }) async {
-    _context = context;
-    _msg = msg;
-    _img = icon;
-    _startedTime = DateTime.now();
-    _showTime = showTime;
-    _bgColor = bgColor ?? Color.fromRGBO(0, 0, 0, 0.8);
-    _textColor = textColor;
-    _textSize = textSize;
-    _toastPosition = position;
-    _pdHorizontal = pdHorizontal;
-    _pdVertical = pdVertical;
-    //获取OverlayState
-    OverlayState? overlayState = Overlay.of(_context!);
-    _showing = true;
-    if (_overlayEntry == null) {
-      _overlayEntry = OverlayEntry(
-        builder: (BuildContext context) => Positioned(
-          //top值，可以改变这个值来改变toast在屏幕中的位置
-          top: _calToastPosition(context),
-          child: Container(
-              alignment: Alignment.center,
-              width: MediaQuery.of(context).size.width,
-              child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 40.0),
-                child: AnimatedOpacity(
-                  opacity: _showing ? 1.0 : 0.0, //目标透明度
-                  duration: _showing
-                      ? Duration(milliseconds: 100)
-                      : Duration(milliseconds: 300),
-                  child: _buildToastWidget(),
-                ),
-              )),
-        ),
-      );
-      Future.delayed(Duration(milliseconds: 1), () {
-        overlayState!.insert(_overlayEntry!);
-      });
-    } else {
-      Future.delayed(Duration(milliseconds: 1), () {
-        _overlayEntry!.markNeedsBuild();
-      });
-
-      //重新绘制UI，类似setState
-    }
-    await Future.delayed(Duration(milliseconds: _showTime!)); // 等待时间
-    //2秒后 到底消失不消失
-    if (DateTime.now().difference(_startedTime!).inMilliseconds >= _showTime!) {
-      _showing = false;
-      _overlayEntry!.markNeedsBuild();
-      await Future.delayed(Duration(milliseconds: 200));
-      _overlayEntry!.remove();
-      _overlayEntry = null;
-    }
-  }
-
-  //toast绘制
-  static _buildToastWidget() {
-    return Center(
-      child: Card(
-        color: _bgColor,
-        child: Padding(
-            padding: EdgeInsets.symmetric(
-                horizontal: _pdHorizontal!, vertical: _pdVertical!),
-            child: _img == null
-                ? Text(
-                    _msg!,
-                    style: TextStyle(
-                        fontSize: _textSize,
-                        color: _textColor,
-                        fontWeight: FontWeight.w300),
-                  )
-                : Column(
-                    children: <Widget>[
-                      Icon(
-                        _img,
-                        color: _textColor,
-                      ),
-                      SizedBox(
-                        height: 4.0,
-                      ),
-                      Text(
-                        _msg!,
-                        style: TextStyle(
-                          fontSize: _textSize,
-                          color: _textColor,
-                        ),
-                      ),
-                    ],
-                  )),
-      ),
-    );
-  }
-
-//  设置toast位置
-  static _calToastPosition(context) {
-    var backResult;
-    if (_toastPosition == 'top') {
-      backResult = MediaQuery.of(context).size.height * 1 / 4;
-    } else if (_toastPosition == 'center') {
-      backResult = MediaQuery.of(context).size.height * 2 / 5;
-    } else {
-      backResult = MediaQuery.of(context).size.height * 3 / 4;
-    }
-    return backResult;
-  }
 }
