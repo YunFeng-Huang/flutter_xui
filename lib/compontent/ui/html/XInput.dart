@@ -124,7 +124,7 @@ class XInput extends StatelessWidget {
 
     // ignore: non_constant_identifier_names
     _InputWidget() {
-      return TextFormField(
+      return TextField(
           cursorColor:themeColor.primary,
           autofocus: _autofocus,
           maxLines: _maxLines,
@@ -134,13 +134,13 @@ class XInput extends StatelessWidget {
           controller: _controller,
           textAlign: _textAlign ?? TextAlign.start,
           enabled: _enabled ?? true,
-          style: _style?.copyWith(height: 1.0),
-          strutStyle: StrutStyle(
-            fontSize: _style?.fontSize,
-            height: 1.0,
-            leading: (_style?.height ?? 1.0 - 1.0) / 2,
-            forceStrutHeight: true,
-          ),
+          style: _style,
+          // strutStyle: StrutStyle(
+          //   fontSize: _style?.fontSize,
+          //   height: 1.0,
+          //   leading: (_style?.height ?? 1.0 - 1.0) / 2,
+          //   forceStrutHeight: true,
+          // ),
           maxLength: _maxLength,
           onChanged: _onChanged,
           decoration: InputDecoration(
@@ -152,7 +152,7 @@ class XInput extends StatelessWidget {
             hintStyle: _hintStyle,
             border: OutlineInputBorder(borderSide: BorderSide.none),
           ),
-          onSaved: (v) => formCheck(_validator, v, _required),
+          // onSaved: (v) => formCheck(_validator, v, _required),
           selectionControls: _selectionControls ?? XTextSelectionControls()
           // validator: (value) {
           //   print(value);

@@ -27,7 +27,7 @@ class XCustomScrollView extends StatefulWidget {
   Widget? loadingWidget;
   Function? onRefresh;
   Function? onLoading;
-  Function? init;
+  Function(ScrollController, RefreshController)? init;
   double? appbarHeight;
   Widget? footer;
   XBottomAppBarConfig? bottomAppBarConfig;
@@ -92,7 +92,6 @@ class XCustomScrollViewState extends State<XCustomScrollView> {
   Color? get bottomAppBarColor => widget.bottomAppBarConfig?.bottomAppBarColor!;
   double get bottomAppBarHeight =>
       widget.bottomAppBarConfig?.bottomAppBarHeight! ?? 0.0;
-  bool noData = false;
   Timer? _timer;
   ScrollController? controller = ScrollController();
   @override
@@ -100,7 +99,7 @@ class XCustomScrollViewState extends State<XCustomScrollView> {
     // TODO: implement initState
     super.initState();
     controller = ScrollController();
-    widget.init?.call(controller);
+    widget.init?.call(controller!, _refreshController);
     if (!isNotNull(appbar?.customAppBar))
       controller?.addListener(() {
         setState(() {
@@ -109,10 +108,6 @@ class XCustomScrollViewState extends State<XCustomScrollView> {
               : (controller?.offset ?? 0.0) / appbarHeight;
         });
       });
-    _timer = Timer(Duration(milliseconds: 5000), () {
-      noData = true;
-      setState(() {});
-    });
   }
 
   @override
