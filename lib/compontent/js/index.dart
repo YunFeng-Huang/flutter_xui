@@ -1,10 +1,12 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:io';
 import 'dart:ui' as ui;
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:xui/compontent/ui/index.dart';
-
+import 'package:flutter_cache_manager/flutter_cache_manager.dart';
+import 'package:http/http.dart' as http;
 import 'local_storage.dart';
 
 /// 函数防抖
@@ -221,4 +223,26 @@ double getY(BuildContext buildContext) {
   final RenderBox box = buildContext.findRenderObject() as RenderBox;
   final offset = box.localToGlobal(Offset.zero);
   return offset.dy;
+}
+
+deepClone(obj) {
+  dynamic newObj = obj is Map ? {} : [];
+  if (obj is Map) {
+    obj.forEach((key, value) {
+      if (obj[key] is Map || obj[key] is List) {
+        newObj[key] = deepClone(value);
+      } else {
+        newObj[key] = value;
+      }
+    });
+  } else {
+    for (int i = 0; i < obj.length; i++) {
+      if (obj[i] is Map || obj[i] is List) {
+        newObj.add(deepClone(obj[i]));
+      } else {
+        newObj.add(obj[i]);
+      }
+    }
+  }
+  return newObj;
 }
