@@ -1,8 +1,7 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
-import '../css.dart';
 import '../../index.dart';
+
+Function XButtonInterceptor = () async {};
 
 // ignore: must_be_immutable
 class XButton extends StatefulWidget {
@@ -24,6 +23,7 @@ class XButton extends StatefulWidget {
   bool? disabled;
   XButtonType? type;
   Widget? child;
+
   XButton({
     this.text,
     this.style,
@@ -70,6 +70,7 @@ class _XButtonState extends State<XButton> {
   Function? get api => widget.api;
   Function? get callback => widget.callback;
   bool _disabled = false;
+
   void onPressed() async {
     if (api != null) {
       setState(() {
@@ -78,6 +79,7 @@ class _XButtonState extends State<XButton> {
       if (params != null) {
         var data = await api?.call(new Map<String, dynamic>.from(params!));
         if (data != null) {
+          await XButtonInterceptor();
           await callback?.call(data);
         }
       }
@@ -85,6 +87,7 @@ class _XButtonState extends State<XButton> {
         _disabled = false;
       });
     } else {
+      await XButtonInterceptor();
       callback?.call();
     }
   }
@@ -103,15 +106,16 @@ class _XButtonState extends State<XButton> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                if(disabled && _type)  Container(
-                    width: 40.w,
-                    height: 40.w,
-                    child: CircularProgressIndicator(
-                      valueColor:
-                          new AlwaysStoppedAnimation<Color>(_color??themeColor.active!),
-                      strokeWidth: 2.w,
+                  if (disabled && _type)
+                    Container(
+                      width: 40.w,
+                      height: 40.w,
+                      child: CircularProgressIndicator(
+                        valueColor: new AlwaysStoppedAnimation<Color>(
+                            _color ?? themeColor.active!),
+                        strokeWidth: 2.w,
+                      ),
                     ),
-                  ),
                   Text(
                     text ?? '',
                     style: !_type && disabled

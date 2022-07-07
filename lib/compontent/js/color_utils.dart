@@ -5,7 +5,8 @@ class HexToColor extends Color {
   static int _getColorFromHex(String hexColor) {
     hexColor = hexColor.toUpperCase().replaceAll("#", "");
     // 如果传入的十六进制颜色值不符合要求，返回默认值
-    if (hexColor.length != 6 || int.tryParse(hexColor.substring(0, 6), radix: 16) == null) {
+    if (hexColor.length != 6 ||
+        int.tryParse(hexColor.substring(0, 6), radix: 16) == null) {
       hexColor = '103580';
     }
     hexColor = "FF" + hexColor;
@@ -13,4 +14,11 @@ class HexToColor extends Color {
   }
 
   HexToColor(final String hexColor) : super(_getColorFromHex(hexColor));
+}
+
+String ColorToHex(Color hexColor) {
+  return '${hexColor}'
+      .toUpperCase()
+      .replaceAll("COLOR(0XFF", "#")
+      .replaceAll(")", "");
 }
