@@ -14,6 +14,7 @@ class GlobalConfig {
     XImageType.general: Icon(null, color: HexToColor('#C1C6CB')),
     XImageType.avatar:'',
   };
+  ThemeData theme = ThemeData();
   static Timer? timerCancel;
   GlobalConfig({
     this.addFont,

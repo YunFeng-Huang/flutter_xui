@@ -12,19 +12,22 @@ class XImage extends StatefulWidget {
   double? height;
   double? borderRadius;
   XImageType type;
-  String errorWidgetBackground;
+  Color? background;
   double iconSize = 0.0;
-  XImage({
-    Key? key,
-    required this.image,
-    this.fit,
-    this.width,
-    this.height,
-    this.borderRadius,
-    this.type = XImageType.general,
-    this.errorWidgetBackground = '#F3F6F9',
-  }) : super(key: key) {
+  bool hideIcon = false;
+  XImage(
+      {Key? key,
+      required this.image,
+      this.fit,
+      this.width,
+      this.height,
+      this.borderRadius,
+      this.type = XImageType.general,
+      this.background,
+      this.hideIcon = false})
+      : super(key: key) {
     iconSize = (this.height == null ? 40.w : this.height!) / 2;
+    background = this.background ?? globalConfig.theme.backgroundColor;
   }
 
   @override
@@ -35,10 +38,13 @@ class _XImageState extends State<XImage> {
   _errorWidget() {
     var _icon = globalConfig.imgList[widget.type];
     if (typeOf(_icon) == 'Icon') {
+      if (widget.hideIcon) {
+        return SizedBox(width: 0, height: 0);
+      }
       return Icon(
         _icon.icon,
         size: widget.iconSize,
-        color: _icon.color,
+        color: globalConfig.theme.primaryColorLight,
       );
     } else {
       return Center(child: XImage(image: _icon));
@@ -47,22 +53,21 @@ class _XImageState extends State<XImage> {
 
   _network() {
     return CachedNetworkImage(
-      fadeInDuration : const Duration(milliseconds: 0),
-      fadeOutDuration : const Duration(milliseconds: 0),
+      useOldImageOnUrlChange: true,
+      fadeInDuration: Duration(milliseconds: 0),
+      fadeOutDuration: Duration(milliseconds: 0),
+      fadeInCurve: Curves.linear,
+      fadeOutCurve: Curves.linear,
       imageUrl: widget.image ?? '',
       fit: widget.fit ?? BoxFit.contain,
       width: widget.width,
       height: widget.height,
-      placeholder: (context, url) => _errorWidget(),
-      // placeholder: (context, url) => Center(
-      //   child: Container(
-      //     width: widget.iconSize,
-      //     height: widget.iconSize,
-      //     color: Colors.redAccent,
-      //     // child: CircularProgressIndicator(strokeWidth: 0.5),
-      //   ),
-      // ),
-      errorWidget: (context, url, error) => Center(
+      placeholder: (context, url) => Container(
+        color: widget.background,
+        child: _errorWidget(),
+      ),
+      errorWidget: (context, url, error) => Container(
+        color: widget.background,
         child: _errorWidget(),
       ),
     );
