@@ -52,25 +52,34 @@ class _XImageState extends State<XImage> {
   }
 
   _network() {
-    return CachedNetworkImage(
-      useOldImageOnUrlChange: true,
-      fadeInDuration: Duration(milliseconds: 0),
-      fadeOutDuration: Duration(milliseconds: 0),
-      fadeInCurve: Curves.linear,
-      fadeOutCurve: Curves.linear,
-      imageUrl: widget.image ?? '',
-      fit: widget.fit ?? BoxFit.contain,
-      width: widget.width,
-      height: widget.height,
-      placeholder: (context, url) => Container(
-        color: widget.background,
-        child: _errorWidget(),
-      ),
-      errorWidget: (context, url, error) => Container(
-        color: widget.background,
-        child: _errorWidget(),
-      ),
-    );
+    try {
+      return CachedNetworkImage(
+        useOldImageOnUrlChange: true,
+        fadeInDuration: Duration(milliseconds: 0),
+        fadeOutDuration: Duration(milliseconds: 0),
+        fadeInCurve: Curves.linear,
+        fadeOutCurve: Curves.linear,
+        imageUrl: widget.image ?? '',
+        fit: widget.fit ?? BoxFit.contain,
+        width: widget.width,
+        height: widget.height,
+        placeholder: (context, url) => Container(
+          color: widget.background,
+          child: _errorWidget(),
+        ),
+        errorWidget: (context, url, error) => Container(
+          color: widget.background,
+          child: _errorWidget(),
+        ),
+      );
+    } catch (e) {
+      return Image(
+        width: widget.width,
+        height: widget.height,
+        image: AssetImage(widget.image!),
+      );
+    }
+
   }
 
   @override

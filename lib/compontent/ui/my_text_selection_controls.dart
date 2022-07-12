@@ -290,7 +290,7 @@ class _TextSelectionControlsToolbarState
         return Stack(
           clipBehavior: Clip.none,
           children: [
-            child.background(colorA: Color.fromRGBO(0, 0, 0, 0.8), radius: 8.w),
+            child.background(colorA: Color.fromRGBO(0, 0, 0, 0.8), radius: 8.w,),
             Positioned(
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
