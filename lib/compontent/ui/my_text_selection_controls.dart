@@ -236,6 +236,13 @@ class _TextSelectionControlsToolbarState
             startTextSelectionPoint.point.dy -
             widget.textLineHeight -
             _kToolbarContentDistance);
+
+    final Offset anchorAbove2 = Offset(
+        widget.globalEditableRegion.left + widget.selectionMidpoint.dx,
+        widget.globalEditableRegion.top +
+            endTextSelectionPoint.point.dy -
+            widget.textLineHeight -
+            _kToolbarContentDistance);
     final Offset anchorBelow = Offset(
       widget.globalEditableRegion.left + widget.selectionMidpoint.dx,
       widget.globalEditableRegion.top +
@@ -284,13 +291,16 @@ class _TextSelectionControlsToolbarState
     }
 
     return TextSelectionToolbar(
-      anchorAbove: anchorAbove,
+      anchorAbove: anchorAbove2,
       anchorBelow: anchorBelow,
       toolbarBuilder: (BuildContext context, Widget child) {
         return Stack(
           clipBehavior: Clip.none,
           children: [
-            child.background(colorA: Color.fromRGBO(0, 0, 0, 0.8), radius: 8.w,),
+            child.background(
+              colorA: Color.fromRGBO(0, 0, 0, 0.8),
+              radius: 8.w,
+            ),
             Positioned(
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -303,7 +313,7 @@ class _TextSelectionControlsToolbarState
                         // 四个值 top right bottom left
                         top: BorderSide(
                             color: Color.fromRGBO(0, 0, 0, 0.8),
-                            width: ScreenUtil().setHeight(16),
+                            width: 11,
                             style: BorderStyle.solid),
                         right: BorderSide(
                             color: Colors.transparent,
@@ -318,27 +328,41 @@ class _TextSelectionControlsToolbarState
                   ),
                 ],
               ),
-              bottom: 0,
+              bottom: 0.11,
               left: 0,
               right: 0,
             ),
           ],
         );
       },
-      children: itemDatas
-          .asMap()
-          .entries
-          .map((MapEntry<int, _TextSelectionToolbarItemData> entry) {
-        return TextSelectionToolbarTextButton(
-          padding: TextSelectionToolbarTextButton.getPadding(
-              entry.key, itemDatas.length),
-          onPressed: entry.value.onPressed,
-          child: Text(
-            entry.value.label,
-            style: font(24, color: '#FFFFFF'),
-          ),
-        );
-      }).toList(),
+      children: [
+        ListView.separated(
+          shrinkWrap: true,
+          physics: NeverScrollableScrollPhysics(),
+          scrollDirection: Axis.horizontal,
+          itemCount: itemDatas.length,
+          itemBuilder: (BuildContext context, int index) {
+            _TextSelectionToolbarItemData entries = itemDatas[index];
+            // MapEntry<int, _TextSelectionToolbarItemData> entry  = itemDatas.asMap().entries.map((e) => null);
+            return TextSelectionToolbarTextButton(
+              padding: EdgeInsets.all(8),
+              onPressed: entries.onPressed,
+              child: Text(
+                entries.label,
+                style: font(24, color: '#FFFFFF'),
+              ),
+            );
+          },
+          separatorBuilder: (BuildContext context, int index) {
+            return Container(
+              margin: EdgeInsets.symmetric(vertical: 30.w),
+              width: 1.w,
+              // height: 22.w,
+              color: HexToColor('#ffffff'),
+            );
+          },
+        )
+      ],
     );
   }
 }
