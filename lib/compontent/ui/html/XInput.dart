@@ -125,7 +125,7 @@ class XInput extends StatelessWidget {
     // ignore: non_constant_identifier_names
     _InputWidget() {
       return TextField(
-          cursorColor:themeColor.primary,
+          cursorColor: themeColor.primary,
           autofocus: _autofocus,
           maxLines: _maxLines,
           obscureText: _obscureText ?? false,

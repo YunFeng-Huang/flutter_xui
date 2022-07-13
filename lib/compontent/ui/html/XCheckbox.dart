@@ -1,8 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:xui/compontent/js/index.dart';
-
-import '../css.dart';
 import '../../index.dart';
 
 // ignore: must_be_immutable
@@ -22,7 +18,7 @@ class XCheckBox extends StatefulWidget {
       {required this.value,
       required this.onChanged,
       this.radius,
-        this.disable,
+      this.disable,
       this.color,
       this.size,
       this.label,
@@ -85,14 +81,14 @@ class _XCheckBoxState extends State<XCheckBox> {
                   radius: 4.w,
                   colorA: color,
                   border: 1.w,
-                  borderColor: themeColor.border,
+                  borderColor: themeColor.divider,
                 ),
           if (isNotNull(right)) right!.margin(left: 10.w)
         ],
       ),
-      disabled:disable??false,
+      disabled: disable ?? false,
       callback: () {
-        _value =  !_value;
+        _value = !_value;
         setState(() {});
       },
     );
@@ -114,7 +110,8 @@ class XCheckBoxGroup extends StatefulWidget {
     this.radio,
     this.labelImg,
     this.labelImgSize,
-    this.horizontal,this.vertical,
+    this.horizontal,
+    this.vertical,
     required this.value,
     required this.labelWidget,
     required this.child,
@@ -137,7 +134,7 @@ class _XCheckBoxGroupState extends State<XCheckBoxGroup> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      behavior:HitTestBehavior.opaque,
+      behavior: HitTestBehavior.opaque,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -154,8 +151,8 @@ class _XCheckBoxGroupState extends State<XCheckBoxGroup> {
           ),
           widget.child,
         ],
-      ).padding(vertical:vertical,horizontal: horizontal ),
-      onTap: () => callback.call(radio??!value),
+      ).padding(vertical: vertical, horizontal: horizontal),
+      onTap: () => callback.call(radio ?? !value),
     );
   }
 }

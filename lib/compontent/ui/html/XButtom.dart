@@ -112,14 +112,14 @@ class _XButtonState extends State<XButton> {
                       height: 40.w,
                       child: CircularProgressIndicator(
                         valueColor: new AlwaysStoppedAnimation<Color>(
-                            _color ?? themeColor.active!),
+                            _color ?? themeColor.primary!),
                         strokeWidth: 2.w,
                       ),
                     ),
                   Text(
                     text ?? '',
                     style: !_type && disabled
-                        ? TextStyle(color: themeColor.disable)
+                        ? TextStyle(color: themeColor.headline4)
                         : style,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
@@ -129,7 +129,7 @@ class _XButtonState extends State<XButton> {
             ).background(
                 colorA: _color,
                 border: borderSize,
-                borderColor: borderColor ?? themeColor.line,
+                borderColor: borderColor ?? themeColor.divider,
                 width: width,
                 height: height,
                 radius: radius)),

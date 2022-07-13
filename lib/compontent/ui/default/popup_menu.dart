@@ -5,10 +5,10 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:flutter/widgets.dart';
 import 'package:xui/compontent/js/log_util.dart';
 import 'package:xui/compontent/ui/extension/widget/ext_background.dart';
-import 'package:xui/compontent/ui/extension/widget/ext_size.dart';
+
+import '../css.dart';
 
 // Examples can assume:
 // enum Commands { heroAndScholar, hurricaneCame }
@@ -600,7 +600,7 @@ class _PopupMenu<T> extends StatelessWidget {
                 Positioned(
                   child: Icon(
                     Icons.arrow_drop_up,
-                    color: Colors.white,
+                    color: themeColor.white,
                     size: 60,
                   ),
                   top: -30,

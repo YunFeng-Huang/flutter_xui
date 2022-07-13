@@ -13,7 +13,7 @@ class XLabel extends StatelessWidget {
   List labelList;
   XLabelConfig? config;
   XLabel(this.labelList, {this.config});
-  Color get border => config?.border ?? themeColor.line!;
+  Color get border => config?.border ?? themeColor.divider!;
   Color get color => config?.color ?? HexToColor('#F5F5F5');
   TextStyle get style => config?.style ?? font(20, color: '#2D2D2D');
   @override

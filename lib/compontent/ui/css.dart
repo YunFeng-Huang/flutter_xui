@@ -6,38 +6,39 @@ import '../index.dart';
 ThemeColor themeColor = ThemeColor();
 
 class ThemeColor {
-  Color? disable;
-  Color? active;
-  Color? black;
-  Color? red;
-  Color? white;
-  Color? gray;
-  Color? background;
-  Color? line;
-  Color? border;
-  Color? primary;
+  ///字体颜色
+  Color? headline1 = Color(0xFF0E0D15);
+  Color? headline2 = Color(0xFF3D3B48);
+  Color? headline3 = Color(0xFF6C7480);
+  Color? headline4 = Color(0xFF9EA6AE);
+  Color? headline5 = Color(0xFFC1C6CB);
+  Color? primary = Color(0xFFFF4300);
+  Color? primary1 = Color(0xFFFF9538);
+  Color? primary2 = Color(0xFFFE424A);
+  Color? white = Color(0xFFFFFFFF);
+  Color? black = Color(0xFF0E1424);
+  Color? green = Color(0xFFFF11BB70);
+  Color? blue = Color(0xFFFF4480FF);
+  Color? lightBlue = Color(0xFFFF54C6EF);
+  Color? purple = Color(0xFFFF846BF8);
+  Color? divider = Color(0xFFDEDFDE);
   ThemeColor({
-    this.disable,
-    this.active,
-    this.black,
-    this.red,
+    this.headline1,
+    this.headline2,
+    this.headline3,
+    this.headline4,
+    this.headline5,
+    this.primary,
+    this.primary1,
+    this.primary2,
     this.white,
-    this.background,
-    this.line,
-    this.border,
-    this.gray,
-  }) {
-    disable = disable ?? Color(0xFFC4C4C4);
-    active = active ?? Color(0xFF3399FF);
-    black = black ?? Color(0x010101);
-    red = red ?? Color(0xFFFFC4F32);
-    primary = primary ?? Color(0xFFFF4300);
-    gray = gray ?? Color(0xFF6C7480);
-    white = white ?? Color(0xFFFFFFFF);
-    background = background ?? Color(0xFFEEEFF3);
-    line = line ?? Color(0xFFD9D9D9);
-    border = border ?? Color(0xFFD9D9D9);
-  }
+    this.black,
+    this.green,
+    this.blue,
+    this.lightBlue,
+    this.purple,
+    this.divider,
+  });
 }
 
 TextStyle font(double value,

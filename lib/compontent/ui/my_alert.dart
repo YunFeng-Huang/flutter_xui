@@ -5,6 +5,7 @@ import '../index.dart';
 class XAlert {
   BuildContext context;
   Color backgroundColor = Color.fromRGBO(0, 0, 0, 0.5);
+  Color backgroundColorDark = Color.fromRGBO(0, 0, 0, 0.4);
   XAlert(this.context);
 
   /// 底部弹出提示框
@@ -12,7 +13,7 @@ class XAlert {
     return showCupertinoModalPopup(
       barrierColor: CupertinoDynamicColor.withBrightness(
         color: backgroundColor,
-        darkColor: Color(0x7A000000),
+        darkColor: backgroundColorDark,
       ),
       context: context,
       builder: (context) {
@@ -26,7 +27,7 @@ class XAlert {
     return showCupertinoModalPopup(
       barrierColor: CupertinoDynamicColor.withBrightness(
         color: backgroundColor,
-        darkColor: Color(0x7A000000),
+        darkColor: backgroundColorDark,
       ),
       context: context,
       builder: (context) {
@@ -50,7 +51,7 @@ class XAlert {
     return showCupertinoModalPopup(
       barrierColor: CupertinoDynamicColor.withBrightness(
         color: backgroundColor,
-        darkColor: Color(0x7A000000),
+        darkColor: backgroundColorDark,
       ),
       context: context,
       builder: (BuildContext context) {
@@ -103,13 +104,13 @@ class _ShowTipsAlterWidgetState extends State<ShowTipsAlterWidget> {
             Expanded(
               child: widget.child ?? _textView(),
             ),
-            Divider(height: 1.w, color: themeColor.line),
+            Divider(height: 1.w, color: globalConfig.theme.dividerColor),
             _buttonView(),
           ],
         ).background(
           width: widget.width ?? 560.w,
           height: widget.height ?? 330.w,
-          colorA: Colors.white,
+          colorA: globalConfig.theme.primaryColorLight,
           radius: 16.w,
         ),
       ),
@@ -120,7 +121,7 @@ class _ShowTipsAlterWidgetState extends State<ShowTipsAlterWidget> {
     return Center(
       child: Text(
         widget.title ?? '提示',
-        style: font(36, color: '#333333', weight: FontWeight.w500),
+        style: font(36, colorA: (themeColor.white!), weight: FontWeight.w500),
       ),
     ).background(height: 50.w).margin(top: 40.w);
   }
@@ -129,7 +130,7 @@ class _ShowTipsAlterWidgetState extends State<ShowTipsAlterWidget> {
     return Center(
       child: Text(
         widget.info ?? '',
-        style: font(28, color: '#3D3B48', height: 40 / 28),
+        style: font(28, colorA: (themeColor.headline2!), height: 40 / 28),
       ),
     );
   }
@@ -145,7 +146,7 @@ class _ShowTipsAlterWidgetState extends State<ShowTipsAlterWidget> {
             ),
           new Container(
             width: 1.w,
-            color: themeColor.line,
+            color: themeColor.divider,
           ),
           if (widget.sureBtn!)
             new Expanded(
@@ -160,7 +161,7 @@ class _ShowTipsAlterWidgetState extends State<ShowTipsAlterWidget> {
     return XButton(
       text: widget.cancalText ?? '取消',
       callback: () => Navigator.pop(context, false),
-      style: font(32, colorA: themeColor.gray, weight: FontWeight.w400),
+      style: font(32, colorA: themeColor.headline3, weight: FontWeight.w400),
     ).center;
   }
 
@@ -170,7 +171,7 @@ class _ShowTipsAlterWidgetState extends State<ShowTipsAlterWidget> {
       text: widget.sureText ?? '确认',
       style: font(
         32,
-        colorA: themeColor.active,
+        colorA: themeColor.primary,
         weight: FontWeight.w400,
       ),
       callback: () async {
@@ -214,7 +215,7 @@ class _showBottomAlertCustomWidgetState
             children: [
               Text(
                 '选择图片',
-                style: font(26, color: '#9EA6AE'),
+                style: font(26, colorA: themeColor.headline4),
               ).center.background(height: 110.w),
               Column(
                 children: List.generate(
@@ -225,7 +226,7 @@ class _showBottomAlertCustomWidgetState
                       widget.confirmCallback(index);
                     },
                     child: Text(widget.list[index],
-                            style: font(32, color: '#0E0D15'))
+                            style: font(32, colorA: themeColor.headline1))
                         .center
                         .background(height: 110.w),
                   ),
@@ -237,12 +238,13 @@ class _showBottomAlertCustomWidgetState
                 },
                 child: Text(
                   '取消',
-                  style: font(32, color: '#0E0D15'),
+                  style: font(32, colorA: themeColor.headline1),
                 ).center.background(height: 110.w, borderTop: 1.w),
               )
             ],
           )
-              .background(colorA: Colors.white, topRight: 16.w, topLeft: 16.w)
+              .background(
+                  colorA: themeColor.white, topRight: 16.w, topLeft: 16.w)
               .bottomCenter
         ]),
       ),
@@ -342,7 +344,7 @@ showLoading(context, [String text = "加载中，请等待..."]) {
       return Center(
         child: Container(
           decoration: BoxDecoration(
-              color: Colors.white,
+              color: themeColor.white,
               borderRadius: BorderRadius.circular(20.w),
               boxShadow: [
                 BoxShadow(
@@ -395,7 +397,7 @@ Future<dynamic>? showConfirmDialog(
           ),
           titlePadding: EdgeInsets.all(0),
           contentPadding: EdgeInsets.all(0),
-          backgroundColor: Colors.white,
+          backgroundColor: themeColor.white,
           elevation: 0,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.all(

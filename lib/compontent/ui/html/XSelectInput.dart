@@ -51,7 +51,7 @@ class _XSelectInputState extends State<XSelectInput> {
     // if (value == null) return SizedBox(height: 0, width: 0);
     return Theme(
       data: Theme.of(context).copyWith(
-        cardColor: Colors.white,
+        cardColor: themeColor.white,
         highlightColor: Colors.transparent,
         hoverColor: Colors.transparent,
       ),
@@ -64,9 +64,9 @@ class _XSelectInputState extends State<XSelectInput> {
           widget.onSelected!(c);
           setState(() {});
         },
-        elevation:0,
+        elevation: 0,
         shape: RoundedRectangleBorder(
-          side: BorderSide(color: Colors.white),
+          side: BorderSide(color: themeColor.white!),
           borderRadius: BorderRadius.circular(10.w),
         ),
         child: child,
@@ -81,7 +81,7 @@ class _XSelectInputState extends State<XSelectInput> {
                   top: index == 0 || hiddenDivider
                       ? BorderSide.none
                       : BorderSide(
-                          color: themeColor.line!,
+                          color: themeColor.divider!,
                           width: 1.w,
                         ),
                 ),

@@ -13,19 +13,9 @@
 设置颜色
 ````
 //默认
-  disable   Color(0xFFC4C4C4);  // 禁用色
-  active  Color(0xFF3399FF); // 主题色
-  black   Color(0x010101);
-  red    Color(0xFFFFC4F32);
-  white  Color(0xFFFFFFFF);
-  background   Color(0xFFEEEFF3); // 背景色
-  line   Color(0xFFD9D9D9); // 线条
-  border  Color(0xFFD9D9D9);// 边框
-  addFont   0.w;// 所有字体大小控制
-  fontWeight  FontWeight.w400; 
 
 //设置
-eg: themeColor..line = Color(0xFFEEEEEE); 放在 ScreenUtil.init 后面执行
+eg: 放在 ScreenUtil.init 后面执行
 Api.context = context; 放在入口页面执行
 ````
  
@@ -110,7 +100,7 @@ Api.context = context; 放在入口页面执行
         keyboardType: TextInputType.visiblePassword,
         labelWidth: 0.w,
         hintText: '请输入编号',
-        border: themeColor.border,
+        border: themeColor.divider,
         radius: 4.w,
         onChanged: (v) {
             print(v);
