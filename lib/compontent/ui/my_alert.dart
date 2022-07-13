@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../index.dart';
@@ -97,23 +99,26 @@ class _ShowTipsAlterWidgetState extends State<ShowTipsAlterWidget> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.transparent,
-      body: Center(
-        child: new Column(
-          children: <Widget>[
-            if (widget.title != null) _titleView(),
-            Expanded(
-              child: widget.child ?? _textView(),
+      body: Transform.translate(
+          offset:
+              Offset(0, -(MediaQueryData.fromWindow(window).padding.top) / 2),
+          child: Center(
+            child: new Column(
+              children: <Widget>[
+                if (widget.title != null) _titleView(),
+                Expanded(
+                  child: widget.child ?? _textView(),
+                ),
+                Divider(height: 1.w, color: globalConfig.theme.dividerColor),
+                _buttonView(),
+              ],
+            ).background(
+              width: widget.width ?? 560.w,
+              height: widget.height ?? 330.w,
+              colorA: globalConfig.theme.primaryColorLight,
+              radius: 16.w,
             ),
-            Divider(height: 1.w, color: globalConfig.theme.dividerColor),
-            _buttonView(),
-          ],
-        ).background(
-          width: widget.width ?? 560.w,
-          height: widget.height ?? 330.w,
-          colorA: globalConfig.theme.primaryColorLight,
-          radius: 16.w,
-        ),
-      ),
+          )),
     );
   }
 
