@@ -25,7 +25,7 @@ class XAlert {
   }
 
   /// 底部弹出提示框
-  showBottomAlert_ios({required list, callback, title}) {
+  showBottomAlertIos({required list, callback, title}) {
     return showCupertinoModalPopup(
       barrierColor: CupertinoDynamicColor.withBrightness(
         color: backgroundColor,
@@ -34,6 +34,65 @@ class XAlert {
       context: context,
       builder: (context) {
         return ShowCustomAlterWidget(callback, list, title);
+      },
+    );
+  }
+
+  /// 底部弹出提示框
+  showBottomAlertAndroid({required list, callback, title}) {
+    return showCupertinoModalPopup(
+      barrierColor: CupertinoDynamicColor.withBrightness(
+        color: backgroundColor,
+        darkColor: backgroundColorDark,
+      ),
+      context: context,
+      builder: (context) {
+        return XButton(
+          callback: () {
+            Navigator.pop(context);
+          },
+          child: Scaffold(
+            backgroundColor: Colors.transparent,
+            body: Column(mainAxisAlignment: MainAxisAlignment.end, children: [
+              Column(
+                children: [
+                  Column(
+                    children: List.generate(
+                      list.length,
+                      (index) => XButton(
+                        callback: () {
+                          Navigator.pop(context);
+                          callback(index);
+                        },
+                        child: Text(list[index],
+                                style: font(32, colorA: themeColor.headline1))
+                            .center
+                            .background(
+                                height: 112.w, borderTop: index == 0 ? 0 : 1.w),
+                      ),
+                    ),
+                  ),
+                  Container(
+                    height: 20.w,
+                    color: themeColor.background,
+                  ),
+                  XButton(
+                    callback: () {
+                      Navigator.pop(context);
+                    },
+                    child: Text(
+                      '取消',
+                      style: font(32, colorA: themeColor.headline1),
+                    ).center.background(height: 110.w),
+                  )
+                ],
+              )
+                  .background(
+                      color: themeColor.white, topRight: 16.w, topLeft: 16.w)
+                  .bottomCenter
+            ]),
+          ),
+        );
       },
     );
   }
@@ -115,7 +174,7 @@ class _ShowTipsAlterWidgetState extends State<ShowTipsAlterWidget> {
             ).background(
               width: widget.width ?? 560.w,
               height: widget.height ?? 330.w,
-              colorA: globalConfig.theme.primaryColorLight,
+              color: globalConfig.theme.primaryColorLight,
               radius: 16.w,
             ),
           )),
@@ -249,7 +308,7 @@ class _showBottomAlertCustomWidgetState
             ],
           )
               .background(
-                  colorA: themeColor.white, topRight: 16.w, topLeft: 16.w)
+                  color: themeColor.white, topRight: 16.w, topLeft: 16.w)
               .bottomCenter
         ]),
       ),

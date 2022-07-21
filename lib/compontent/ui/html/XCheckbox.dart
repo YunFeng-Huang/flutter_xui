@@ -79,7 +79,7 @@ class _XCheckBoxState extends State<XCheckBox> {
                   : XImage(image: defaultImg!, width: size, height: size))
               : _icon.background(
                   radius: 4.w,
-                  colorA: color,
+                  color: color,
                   border: 1.w,
                   borderColor: themeColor.divider,
                 ),

@@ -825,7 +825,7 @@ class _PopupMenuRoute<T> extends PopupRoute<T> {
                 mediaQuery.padding,
               ),
               child: capturedThemes.wrap(menu),
-            ).background(colorA: Color.fromRGBO(0, 0, 0, 0.5)),
+            ).background(color: Color.fromRGBO(0, 0, 0, 0.5)),
             onTap: () {
               if (Navigator.canPop(context)) {
                 Navigator.pop(context);

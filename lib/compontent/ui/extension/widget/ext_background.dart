@@ -6,8 +6,7 @@ import '../../css.dart';
 
 extension ExtBg on Widget {
   Widget background({
-    String? color,
-    Color? colorA,
+    Color? color,
     String? bgImage,
     BoxFit? fitBgImage,
     BoxShape shape = BoxShape.rectangle,
@@ -40,7 +39,6 @@ extension ExtBg on Widget {
         borderRight == null &&
         borderBottom == null;
 
-    Color? _color = color != null ? HexToColor(color) : colorA;
     return ClipRRect(
         borderRadius: BorderRadius.all(Radius.circular(0)),
         // borderRadius: !allBorderRadius ? BorderRadius.only(
@@ -69,7 +67,7 @@ extension ExtBg on Widget {
           decoration: decoration != null
               ? decoration
               : BoxDecoration(
-                  color: _color,
+                  color: color,
                   shape: shape,
                   image: bgImage == null
                       ? null

@@ -122,7 +122,7 @@ class _XTableState extends State<XTable> {
                   .margin(vertical: config!.defaultItemPadding),
             ),
           ).padding(horizontal: 10.w).background(
-                colorA: HexToColor(headerBackground!),
+                color: HexToColor(headerBackground!),
               ),
           data.length == 0
               ? Center(
@@ -170,8 +170,8 @@ class _XTableState extends State<XTable> {
     );
     return isNotNull(onRefresh)
         ? SmartRefresher(
-            enablePullDown: onRefresh !=null,
-            enablePullUp: onLoading!=null,
+            enablePullDown: onRefresh != null,
+            enablePullUp: onLoading != null,
             controller: _refreshController,
             onRefresh: _onRefresh,
             onLoading: _onLoading,

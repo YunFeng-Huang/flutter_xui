@@ -298,7 +298,7 @@ class _TextSelectionControlsToolbarState
           clipBehavior: Clip.none,
           children: [
             child.background(
-              colorA: Color.fromRGBO(0, 0, 0, 0.8),
+              color: Color.fromRGBO(0, 0, 0, 0.8),
               radius: 8.w,
             ),
             Positioned(

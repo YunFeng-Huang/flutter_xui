@@ -85,7 +85,7 @@ class _XSelectDateTimeState extends State<XSelectDateTime> {
             ],
           )
               .padding(horizontal: 24.w)
-              .background(colorA: Colors.white, height: 100.w),
+              .background(color: Colors.white, height: 100.w),
           Container(
             color: Colors.white,
             height: 600.w,

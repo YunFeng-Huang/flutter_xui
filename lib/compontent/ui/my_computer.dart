@@ -112,7 +112,7 @@ Widget IconAdd(b, {size, radius}) {
   ).background(
       width: size ?? 32.w,
       height: size ?? 32.w,
-      colorA: colorBg,
+      color: colorBg,
       radius: radius ?? 1.w);
 }
 
@@ -131,6 +131,6 @@ Widget IconRemove(b, {size, radius}) {
   ).background(
       width: size ?? 32.w,
       height: size ?? 32.w,
-      colorA: colorBg,
+      color: colorBg,
       radius: radius ?? 1.w);
 }

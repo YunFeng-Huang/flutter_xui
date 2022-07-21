@@ -225,7 +225,7 @@ class XCustomScrollViewState extends State<XCustomScrollView> {
                 appbarHeight: appbarHeight,
                 color: Colors.white.withOpacity(1 - opacity),
               ).background(
-                colorA: Colors.white.withOpacity(opacity),
+                color: Colors.white.withOpacity(opacity),
               ),
             if (!isNotNull(appbar?.customAppBar) && isNotNull(appbar))
               XAppBarWidget(

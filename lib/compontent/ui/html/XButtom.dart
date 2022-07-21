@@ -13,8 +13,7 @@ class XButton extends StatefulWidget {
   double? vertical;
   double? borderSize;
   String? borderColor;
-  String? color;
-  Color? colorA;
+  Color? color;
   double? radius;
   Map? params;
   Function? paramsFn;
@@ -42,7 +41,6 @@ class XButton extends StatefulWidget {
     this.api,
     required this.callback,
     this.color,
-    this.colorA,
   }) {
     type = type ?? XButtonType.btn;
   }
@@ -61,9 +59,7 @@ class _XButtonState extends State<XButton> {
   double? get borderSize => widget.borderSize;
   Color? get borderColor =>
       widget.borderColor != null ? HexToColor(widget.borderColor!) : null;
-  Color? get color =>
-      widget.colorA ??
-      (widget.color != null ? HexToColor(widget.color!) : null);
+  Color? get color => widget.color;
   Widget? get child => widget.child;
   Map? get params =>
       isNotNull(widget.paramsFn) ? widget.paramsFn?.call() : widget.params;
@@ -127,7 +123,7 @@ class _XButtonState extends State<XButton> {
                 ],
               ).padding(horizontal: horizontal, vertical: vertical),
             ).background(
-                colorA: _color,
+                color: _color,
                 border: borderSize,
                 borderColor: borderColor ?? themeColor.divider,
                 width: width,

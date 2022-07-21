@@ -1,13 +1,12 @@
 import 'package:flutter/cupertino.dart';
+import 'package:xui/compontent/index.dart';
 
+/// 处理安卓 单行是字体下掉问题
 // ignore: must_be_immutable
 class XText extends StatefulWidget {
   String? msg = '';
   TextStyle? style;
-  int? maxLines;
-  TextOverflow? overflow;
-  XText(this.msg, {Key? key, required this.style, this.maxLines, this.overflow})
-      : super(key: key);
+  XText(this.msg, {Key? key, required this.style}) : super(key: key);
 
   @override
   State<XText> createState() => _XTextState();
@@ -28,8 +27,8 @@ class _XTextState extends State<XText> {
         leading: ((widget.style?.height ?? 0.0) - 1.0) / 2,
         forceStrutHeight: true,
       ),
-      maxLines: widget.maxLines,
-      overflow: widget.overflow,
-    );
+    ).center.background(
+        height:
+            (widget.style?.height ?? 0.0) * (widget.style?.fontSize ?? 0.0));
   }
 }
