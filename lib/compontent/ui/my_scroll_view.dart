@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
@@ -184,35 +185,38 @@ class XCustomScrollViewState extends State<XCustomScrollView> {
             Column(
               children: [
                 Expanded(
-                  child: SmartRefresher(
-                    // ignore: unnecessary_null_comparison
-                    enablePullDown: onRefresh != null,
-                    // ignore: unnecessary_null_comparison
-                    enablePullUp: onLoading != null,
-                    header: headerLoading,
-                    footer: widget.footer ?? XSmartRefresherCustomFooter(),
-                    controller: _refreshController,
-                    onRefresh: _onRefresh,
-                    onLoading: _onLoading,
-                    child: status == PageStatus.loading
-                        ? Center(child: loadingWidget ?? Loading())
-                        : status == PageStatus.error
-                            ? Transform.translate(
-                                offset: Offset(0, -90.w),
-                                child: Center(
-                                  child: errorWidget ??
-                                      Center(
-                                        child: Text('错误页面'),
-                                      ),
-                                ),
-                              )
-                            : slivers.length == 0
-                                ? Center(child: EmptyWidget)
-                                : CustomScrollView(
-                                    physics: ClampingScrollPhysics(),
-                                    controller: controller,
-                                    slivers: slivers,
+                  child: ScrollConfiguration(
+                    behavior: CusBehavior(), // 自定义的 behavior
+                    child: SmartRefresher(
+                      // ignore: unnecessary_null_comparison
+                      enablePullDown: onRefresh != null,
+                      // ignore: unnecessary_null_comparison
+                      enablePullUp: onLoading != null,
+                      header: headerLoading,
+                      footer: widget.footer ?? XSmartRefresherCustomFooter(),
+                      controller: _refreshController,
+                      onRefresh: _onRefresh,
+                      onLoading: _onLoading,
+                      child: status == PageStatus.loading
+                          ? Center(child: loadingWidget ?? Loading())
+                          : status == PageStatus.error
+                              ? Transform.translate(
+                                  offset: Offset(0, -90.w),
+                                  child: Center(
+                                    child: errorWidget ??
+                                        Center(
+                                          child: Text('错误页面'),
+                                        ),
                                   ),
+                                )
+                              : slivers.length == 0
+                                  ? Center(child: EmptyWidget)
+                                  : CustomScrollView(
+                                      physics: ClampingScrollPhysics(),
+                                      controller: controller,
+                                      slivers: slivers,
+                                    ),
+                    ),
                   ),
                 ),
                 // if (bottomAppBar != null) SizedBox(height: bottomAppBarHeight)
@@ -272,5 +276,14 @@ class XBottomAppBarConfig {
     bottomAppBarColor = this.bottomAppBarColor ?? Colors.white;
     bottomAppBarHeight = this.bottomAppBarHeight ?? 0.0;
     bottomAppBarHeightAuto = this.bottomAppBarHeightAuto ?? false;
+  }
+}
+
+class CusBehavior extends ScrollBehavior {
+  @override
+  Widget buildViewportChrome(
+      BuildContext context, Widget child, AxisDirection axisDirection) {
+    if (Platform.isAndroid || Platform.isFuchsia) return child;
+    return super.buildViewportChrome(context, child, axisDirection);
   }
 }
