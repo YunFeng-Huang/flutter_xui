@@ -32,12 +32,14 @@ class XCustomScrollView extends StatefulWidget {
   double? appbarHeight;
   Widget? footer;
   XBottomAppBarConfig? bottomAppBarConfig;
+  bool? resizeToAvoidBottomInset;
   XCustomScrollView(
       {Key? key,
       this.onRefresh,
       this.appbarHeight,
       this.onLoading,
       this.init,
+        this.resizeToAvoidBottomInset,
       required this.status,
       required this.slivers,
       required this.emptyWidget,
@@ -172,6 +174,7 @@ class XCustomScrollViewState extends State<XCustomScrollView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset:widget.resizeToAvoidBottomInset,
       backgroundColor: backgroundColor,
       appBar: xAppBar,
       // floatingActionButton: bottomAppBar == null ? null : _footerBottom(),
