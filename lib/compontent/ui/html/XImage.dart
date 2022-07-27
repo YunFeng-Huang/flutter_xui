@@ -88,7 +88,7 @@ class _XImageState extends State<XImage> {
       child: widget.image == null ||
               widget.image == '' ||
               widget.image!.contains('http')||
-              widget.image!.contains('assets') == true
+              widget.image!.contains('assets') == false
           ? _network()
           : Image.asset(
               widget.image ?? '',
