@@ -87,7 +87,8 @@ class _XImageState extends State<XImage> {
     return ClipRRect(
       child: widget.image == null ||
               widget.image == '' ||
-              widget.image!.contains('http')
+              widget.image!.contains('http')||
+              widget.image!.contains('assets') == true
           ? _network()
           : Image.asset(
               widget.image ?? '',
