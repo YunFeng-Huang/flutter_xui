@@ -30,6 +30,7 @@ class XInput extends StatelessWidget {
   late bool _autofocus;
   TextSelectionControls? _selectionControls;
   FocusNode? _focusNode = new FocusNode();
+  String? _counterText;
   XInput({
     row = true,
     label,
@@ -60,7 +61,9 @@ class XInput extends StatelessWidget {
     fillColor,
     hintMaxLines,
     expands,
+    counterText,
   }) {
+    _counterText = counterText;
     _row = row ?? false;
     _focusNode = focusNode;
     _label = label;
@@ -133,6 +136,7 @@ class XInput extends StatelessWidget {
         maxLength: _maxLength,
         onChanged: _onChanged,
         decoration: InputDecoration(
+          counterText: _counterText,
           isCollapsed: true, //重点，相当于高度包裹的意思，必须设置为true，不然有默认奇妙的最小高度
           contentPadding: _contentPadding,
           fillColor: _fillColor ?? Colors.white,
