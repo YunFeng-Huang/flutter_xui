@@ -33,13 +33,15 @@ class XCustomScrollView extends StatefulWidget {
   Widget? footer;
   XBottomAppBarConfig? bottomAppBarConfig;
   bool? resizeToAvoidBottomInset;
+  bool? scrollbar;
   XCustomScrollView(
       {Key? key,
+      this.scrollbar = true,
       this.onRefresh,
       this.appbarHeight,
       this.onLoading,
       this.init,
-        this.resizeToAvoidBottomInset,
+      this.resizeToAvoidBottomInset,
       required this.status,
       required this.slivers,
       required this.emptyWidget,
@@ -173,8 +175,50 @@ class XCustomScrollViewState extends State<XCustomScrollView> {
 
   @override
   Widget build(BuildContext context) {
+    var _scrollWidget = () {
+      return Column(
+        children: [
+          Expanded(
+            child: ScrollConfiguration(
+              behavior: CusBehavior(), // 自定义的 behavior
+              child: SmartRefresher(
+                // ignore: unnecessary_null_comparison
+                enablePullDown: onRefresh != null,
+                // ignore: unnecessary_null_comparison
+                enablePullUp: onLoading != null,
+                header: headerLoading,
+                footer: widget.footer ?? XSmartRefresherCustomFooter(),
+                controller: _refreshController,
+                onRefresh: _onRefresh,
+                onLoading: _onLoading,
+                child: status == PageStatus.loading
+                    ? Center(child: loadingWidget ?? Loading())
+                    : status == PageStatus.error
+                        ? Transform.translate(
+                            offset: Offset(0, -90.w),
+                            child: Center(
+                              child: errorWidget ??
+                                  Center(
+                                    child: Text('错误页面'),
+                                  ),
+                            ),
+                          )
+                        : slivers.length == 0
+                            ? Center(child: EmptyWidget)
+                            : CustomScrollView(
+                                physics: ClampingScrollPhysics(),
+                                controller: controller,
+                                slivers: slivers,
+                              ),
+              ),
+            ),
+          ),
+          // if (bottomAppBar != null) SizedBox(height: bottomAppBarHeight)
+        ],
+      );
+    };
     return Scaffold(
-      resizeToAvoidBottomInset:widget.resizeToAvoidBottomInset,
+      resizeToAvoidBottomInset: widget.resizeToAvoidBottomInset,
       backgroundColor: backgroundColor,
       appBar: xAppBar,
       // floatingActionButton: bottomAppBar == null ? null : _footerBottom(),
@@ -185,46 +229,11 @@ class XCustomScrollViewState extends State<XCustomScrollView> {
       body: SafeArea(
         child: Stack(
           children: [
-            Column(
-              children: [
-                Expanded(
-                  child: ScrollConfiguration(
-                    behavior: CusBehavior(), // 自定义的 behavior
-                    child: SmartRefresher(
-                      // ignore: unnecessary_null_comparison
-                      enablePullDown: onRefresh != null,
-                      // ignore: unnecessary_null_comparison
-                      enablePullUp: onLoading != null,
-                      header: headerLoading,
-                      footer: widget.footer ?? XSmartRefresherCustomFooter(),
-                      controller: _refreshController,
-                      onRefresh: _onRefresh,
-                      onLoading: _onLoading,
-                      child: status == PageStatus.loading
-                          ? Center(child: loadingWidget ?? Loading())
-                          : status == PageStatus.error
-                              ? Transform.translate(
-                                  offset: Offset(0, -90.w),
-                                  child: Center(
-                                    child: errorWidget ??
-                                        Center(
-                                          child: Text('错误页面'),
-                                        ),
-                                  ),
-                                )
-                              : slivers.length == 0
-                                  ? Center(child: EmptyWidget)
-                                  : CustomScrollView(
-                                      physics: ClampingScrollPhysics(),
-                                      controller: controller,
-                                      slivers: slivers,
-                                    ),
-                    ),
-                  ),
-                ),
-                // if (bottomAppBar != null) SizedBox(height: bottomAppBarHeight)
-              ],
-            ),
+            widget.scrollbar ?? false
+                ? Scrollbar(
+                    child: _scrollWidget(),
+                  )
+                : _scrollWidget(),
             if (!isNotNull(appbar?.customAppBar) && isNotNull(appbar))
               XAppBarWidget(
                 context,
