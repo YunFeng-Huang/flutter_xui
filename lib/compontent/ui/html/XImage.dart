@@ -52,42 +52,49 @@ class _XImageState extends State<XImage> {
   }
 
   _network() {
-    try {
-      return CachedNetworkImage(
-        useOldImageOnUrlChange: true,
-        fadeInDuration: Duration(milliseconds: 0),
-        fadeOutDuration: Duration(milliseconds: 0),
-        fadeInCurve: Curves.linear,
-        fadeOutCurve: Curves.linear,
-        imageUrl: widget.image ?? '',
-        fit: widget.fit ?? BoxFit.contain,
-        width: widget.width,
-        height: widget.height,
-        placeholder: (context, url) => Container(
-          color: widget.background,
-          child: _errorWidget(),
+    CachedNetworkImage cachedNetworkImage = CachedNetworkImage(
+      useOldImageOnUrlChange: true,
+      fadeInDuration: Duration(milliseconds: 0),
+      fadeOutDuration: Duration(milliseconds: 0),
+      fadeInCurve: Curves.linear,
+      fadeOutCurve: Curves.linear,
+      imageUrl: widget.image ?? '',
+      imageBuilder: (context, imageProvider) => Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: imageProvider,
+            fit: widget.fit ?? BoxFit.contain,
+          ),
         ),
-        errorWidget: (context, url, error) => Container(
-          color: widget.background,
-          child: _errorWidget(),
-        ),
-      );
-    } catch (e) {
-      return Image(
-        width: widget.width,
-        height: widget.height,
-        image: AssetImage(widget.image!),
-      );
-    }
+      ),
+      fit: widget.fit ?? BoxFit.contain,
+      width: widget.width,
+      height: widget.height,
+      placeholder: (context, url) => Container(
+        color: widget.background,
+        child: _errorWidget(),
+      ),
+      errorWidget: (context, url, error) => Container(
+        color: widget.background,
+        child: _errorWidget(),
+      ),
+    );
 
+    return cachedNetworkImage;
   }
 
   @override
   Widget build(BuildContext context) {
+    if (widget.image == null || widget.image == '') {
+      return Container(
+        color: widget.background,
+        child: _errorWidget(),
+      );
+    }
     return ClipRRect(
       child: widget.image == null ||
               widget.image == '' ||
-              widget.image!.contains('http')||
+              widget.image!.contains('http') ||
               widget.image!.contains('assets') == false
           ? _network()
           : Image.asset(
