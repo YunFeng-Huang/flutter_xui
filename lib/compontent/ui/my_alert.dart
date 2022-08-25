@@ -280,7 +280,7 @@ class _showBottomAlertCustomWidgetState
               Text(
                 '选择图片',
                 style: font(26, colorA: themeColor.headline4),
-              ).center.background(height: 110.w),
+              ).center.background(height: 53),
               Column(
                 children: List.generate(
                   widget.list.length,
@@ -289,10 +289,11 @@ class _showBottomAlertCustomWidgetState
                       Navigator.pop(context);
                       widget.confirmCallback(index);
                     },
+
                     child: Text(widget.list[index],
                             style: font(32, colorA: themeColor.headline1))
                         .center
-                        .background(height: 110.w),
+                        .background(height: 56),
                   ),
                 ),
               ),
@@ -303,7 +304,7 @@ class _showBottomAlertCustomWidgetState
                 child: Text(
                   '取消',
                   style: font(32, colorA: themeColor.headline1),
-                ).center.background(height: 110.w, borderTop: 1.w),
+                ).center.background(height: 56, borderTop: 1.w),
               )
             ],
           )
