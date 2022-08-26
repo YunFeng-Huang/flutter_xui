@@ -85,24 +85,23 @@ class _XImageState extends State<XImage> {
 
   @override
   Widget build(BuildContext context) {
-    if (widget.image == null || widget.image == '') {
-      return Container(
-        color: widget.background,
-        child: _errorWidget(),
-      );
-    }
     return ClipRRect(
-      child: widget.image == null ||
-              widget.image == '' ||
-              widget.image!.contains('http') ||
-              widget.image!.contains('assets') == false
-          ? _network()
-          : Image.asset(
-              widget.image ?? '',
-              fit: widget.fit ?? BoxFit.contain,
+      child: widget.image == null || widget.image == ''
+          ? Container(
               width: widget.width,
               height: widget.height,
-            ),
+              color: widget.background,
+              child: _errorWidget(),
+            )
+          : widget.image!.contains('http') ||
+                  widget.image!.contains('assets') == false
+              ? _network()
+              : Image.asset(
+                  widget.image ?? '',
+                  fit: widget.fit ?? BoxFit.contain,
+                  width: widget.width,
+                  height: widget.height,
+                ),
       borderRadius: BorderRadius.circular(widget.borderRadius ?? 0),
     );
   }
