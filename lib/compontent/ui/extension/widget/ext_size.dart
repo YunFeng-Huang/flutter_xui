@@ -3,7 +3,8 @@
 // import 'package:xui/compontent/js/screem.dart';
 
 extension SizeExtension on num {
-  double get w => w / 2;
+  double get w => this / 2;
+  double get h => this / 2;
   // ///[ScreenUtil.setWidth]
   // double get w => ScreenUtil().setWidth(this);
 
