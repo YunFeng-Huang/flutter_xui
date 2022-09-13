@@ -55,7 +55,7 @@ class XCustomScrollView extends StatefulWidget {
       this.loadingWidget,
       this.footer})
       : super(key: key) {
-    headerLoading = this.headerLoading ?? HeaderWidget();
+    headerLoading = this.headerLoading;
     list = [];
     if (status != PageStatus.loading) {
       list = List.from(slivers!());
@@ -82,7 +82,7 @@ class XCustomScrollViewState extends State<XCustomScrollView> {
   Widget? get errorWidget => widget.errorWidget;
   Widget? get loadingWidget => widget.loadingWidget;
   XCustomScrollViewAppbar? get appbar => widget.appbar;
-  Widget get headerLoading => widget.headerLoading!;
+  Widget? get headerLoading => widget.headerLoading;
   Color get backgroundColor => widget.backgroundColor;
   List<Widget> get slivers => widget.list;
   Widget? get bottomAppBar => widget.bottomAppBar;
@@ -187,7 +187,7 @@ class XCustomScrollViewState extends State<XCustomScrollView> {
                 // ignore: unnecessary_null_comparison
                 enablePullUp: onLoading != null,
                 header: headerLoading,
-                footer: widget.footer ?? XSmartRefresherCustomFooter(),
+                footer: widget.footer,
                 controller: _refreshController,
                 onRefresh: _onRefresh,
                 onLoading: _onLoading,
@@ -221,11 +221,9 @@ class XCustomScrollViewState extends State<XCustomScrollView> {
       resizeToAvoidBottomInset: widget.resizeToAvoidBottomInset,
       backgroundColor: backgroundColor,
       appBar: xAppBar,
-      // floatingActionButton: bottomAppBar == null ? null : _footerBottom(),
-      // floatingActionButtonAnimator:
-      //     bottomAppBar == null ? null : CustomFloatingActionButtonAnimator(),
-      // floatingActionButtonLocation:
-      //     bottomAppBar == null ? null : CustomFloatingActionButtonLocation(0),
+      // floatingActionButton: Text('xAppBar.title'),
+      // floatingActionButtonAnimator: CustomFloatingActionButtonAnimator(),
+      // floatingActionButtonLocation: FloatingActionButtonLocation.miniCenterDocked,
       body: SafeArea(
         child: Stack(
           children: [
