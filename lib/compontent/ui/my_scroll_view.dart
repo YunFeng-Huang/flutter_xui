@@ -34,8 +34,12 @@ class XCustomScrollView extends StatefulWidget {
   XBottomAppBarConfig? bottomAppBarConfig;
   bool? resizeToAvoidBottomInset;
   bool? scrollbar;
+  bool? bottom;
+  bool? top;
   XCustomScrollView(
       {Key? key,
+      this.bottom = true,
+      this.top,
       this.scrollbar = true,
       this.onRefresh,
       this.appbarHeight,
@@ -259,8 +263,8 @@ class XCustomScrollViewState extends State<XCustomScrollView> {
               ),
           ],
         ),
-        bottom: true,
-        top: false,
+        bottom: widget.bottom ?? false,
+        top: widget.top ?? false,
       ),
     );
   }
