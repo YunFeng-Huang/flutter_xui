@@ -527,15 +527,16 @@ class _CheckedPopupMenuItemState<T>
 }
 
 class _PopupMenu<T> extends StatelessWidget {
-  const _PopupMenu({
+  _PopupMenu({
     Key? key,
     required this.route,
     required this.semanticLabel,
+    this.offset,
   }) : super(key: key);
 
   final _PopupMenuRoute<T> route;
   final String? semanticLabel;
-
+  ArrowDropUpOffset? offset = ArrowDropUpOffset();
   @override
   Widget build(BuildContext context) {
     final double unit = 1.0 /
@@ -604,8 +605,8 @@ class _PopupMenu<T> extends StatelessWidget {
                     size: 60,
                   ),
                   top: -30,
-                  left: 0,
-                  right: 0,
+                  left: offset?.left ?? 0,
+                  right: offset?.right ?? 0,
                 ),
                 ListBody(children: children),
               ],
@@ -637,6 +638,12 @@ class _PopupMenu<T> extends StatelessWidget {
       child: child,
     );
   }
+}
+
+class ArrowDropUpOffset {
+  double? left = 0;
+  double? right = 0;
+  ArrowDropUpOffset({this.left, this.right});
 }
 
 // Positioning of the menu on the screen.
@@ -688,6 +695,8 @@ class _PopupMenuRouteLayout extends SingleChildLayoutDelegate {
     final double buttonHeight = size.height - position.top - position.bottom;
     // Find the ideal vertical position.
     double y = position.top;
+    print(y);
+    print('selectedItemIndex==$selectedItemIndex');
     if (selectedItemIndex != null && itemSizes != null) {
       double selectedItemOffset = _kMenuVerticalPadding;
       for (int index = 0; index < selectedItemIndex!; index += 1)
@@ -695,7 +704,7 @@ class _PopupMenuRouteLayout extends SingleChildLayoutDelegate {
       selectedItemOffset += itemSizes[selectedItemIndex!]!.height / 2;
       y = y + buttonHeight / 2.0 - selectedItemOffset;
     }
-
+    print(y);
     // Find the ideal horizontal position.
     double x;
     if (position.left > position.right) {
@@ -729,7 +738,7 @@ class _PopupMenuRouteLayout extends SingleChildLayoutDelegate {
     else if (y + childSize.height >
         size.height - _kMenuScreenPadding - padding.bottom)
       y = size.height - padding.bottom - _kMenuScreenPadding - childSize.height;
-
+    print(Offset(x, y));
     return Offset(x, y);
   }
 
@@ -739,7 +748,6 @@ class _PopupMenuRouteLayout extends SingleChildLayoutDelegate {
     // we expect them to have the same length because there's no practical
     // way to change length of the items list once the menu has been shown.
     assert(itemSizes.length == oldDelegate.itemSizes.length);
-
     return position != oldDelegate.position ||
         selectedItemIndex != oldDelegate.selectedItemIndex ||
         textDirection != oldDelegate.textDirection ||
@@ -758,6 +766,7 @@ class _PopupMenuRoute<T> extends PopupRoute<T> {
     this.semanticLabel,
     this.shape,
     this.color,
+    this.offset,
     required this.capturedThemes,
   }) : itemSizes = List<Size?>.filled(items.length, null);
 
@@ -770,7 +779,7 @@ class _PopupMenuRoute<T> extends PopupRoute<T> {
   final ShapeBorder? shape;
   final Color? color;
   final CapturedThemes capturedThemes;
-
+  ArrowDropUpOffset? offset;
   @override
   Animation<double> createAnimation() {
     return CurvedAnimation(
@@ -795,17 +804,17 @@ class _PopupMenuRoute<T> extends PopupRoute<T> {
   @override
   Widget buildPage(BuildContext context, Animation<double> animation,
       Animation<double> secondaryAnimation) {
-    int? selectedItemIndex;
-    if (initialValue != null) {
-      for (int index = 0;
-          selectedItemIndex == null && index < items.length;
-          index += 1) {
-        if (items[index].represents(initialValue)) selectedItemIndex = index;
-      }
-    }
+    // int? selectedItemIndex;
+    // if (initialValue != null) {
+    //   for (int index = 0;
+    //       selectedItemIndex == null && index < items.length;
+    //       index += 1) {
+    //     if (items[index].represents(initialValue)) selectedItemIndex = index;
+    //   }
+    // }
 
-    final Widget menu =
-        _PopupMenu<T>(route: this, semanticLabel: semanticLabel);
+    final Widget menu = _PopupMenu<T>(
+        route: this, semanticLabel: semanticLabel, offset: offset);
     final MediaQueryData mediaQuery = MediaQuery.of(context);
     return MediaQuery.removePadding(
       context: context,
@@ -820,7 +829,7 @@ class _PopupMenuRoute<T> extends PopupRoute<T> {
               delegate: _PopupMenuRouteLayout(
                 position,
                 itemSizes,
-                selectedItemIndex,
+                0,
                 Directionality.of(context),
                 mediaQuery.padding,
               ),
@@ -903,6 +912,7 @@ Future<T?> showMenu<T>({
   ShapeBorder? shape,
   Color? color,
   bool useRootNavigator = false,
+  ArrowDropUpOffset? offset,
 }) {
   assert(context != null);
   assert(position != null);
@@ -924,17 +934,17 @@ Future<T?> showMenu<T>({
   final NavigatorState navigator =
       Navigator.of(context, rootNavigator: useRootNavigator);
   return navigator.push(_PopupMenuRoute<T>(
-    position: position,
-    items: items,
-    initialValue: initialValue,
-    elevation: elevation,
-    semanticLabel: semanticLabel,
-    barrierLabel: MaterialLocalizations.of(context).modalBarrierDismissLabel,
-    shape: shape,
-    color: color,
-    capturedThemes:
-        InheritedTheme.capture(from: context, to: navigator.context),
-  ));
+      position: position,
+      items: items,
+      initialValue: initialValue,
+      elevation: elevation,
+      semanticLabel: semanticLabel,
+      barrierLabel: MaterialLocalizations.of(context).modalBarrierDismissLabel,
+      shape: shape,
+      color: color,
+      capturedThemes:
+          InheritedTheme.capture(from: context, to: navigator.context),
+      offset: offset));
 }
 
 /// Signature for the callback invoked when a menu item is selected. The
@@ -1012,7 +1022,7 @@ class PopupMenuButton<T> extends StatefulWidget {
   /// Creates a button that shows a popup menu.
   ///
   /// The [itemBuilder] argument must not be null.
-  const PopupMenuButton({
+  PopupMenuButton({
     Key? key,
     required this.itemBuilder,
     this.initialValue,
@@ -1029,6 +1039,7 @@ class PopupMenuButton<T> extends StatefulWidget {
     this.shape,
     this.color,
     this.enableFeedback,
+    this.arrowDropUpOffset,
   })  : assert(itemBuilder != null),
         assert(offset != null),
         assert(enabled != null),
@@ -1040,6 +1051,7 @@ class PopupMenuButton<T> extends StatefulWidget {
 
   /// Called when the button is pressed to create the items to show in the menu.
   final PopupMenuItemBuilder<T> itemBuilder;
+  ArrowDropUpOffset? arrowDropUpOffset;
 
   /// The value of the menu item, if any, that should be highlighted when the menu opens.
   final T? initialValue;
@@ -1175,18 +1187,18 @@ class PopupMenuButtonState<T> extends State<PopupMenuButton<T>> {
     );
     final List<PopupMenuEntry<T>> items = widget.itemBuilder(context);
     // Only show the menu if there is something to show
-    Log.d(items, 'items');
+    print('position===$position');
     if (items.isNotEmpty) {
-      Log.d(position, 'position');
       showMenu<T?>(
-        context: context,
-        elevation: widget.elevation ?? popupMenuTheme.elevation,
-        items: items,
-        initialValue: widget.initialValue,
-        position: position,
-        shape: widget.shape ?? popupMenuTheme.shape,
-        color: widget.color ?? popupMenuTheme.color,
-      ).then<void>((T? newValue) {
+              context: context,
+              elevation: widget.elevation ?? popupMenuTheme.elevation,
+              items: items,
+              initialValue: widget.initialValue,
+              position: position,
+              shape: widget.shape ?? popupMenuTheme.shape,
+              color: widget.color ?? popupMenuTheme.color,
+              offset: widget.arrowDropUpOffset)
+          .then<void>((T? newValue) {
         if (!mounted) return null;
         if (newValue == null) {
           widget.onCanceled?.call();

@@ -14,6 +14,7 @@ class XSelectInput extends StatefulWidget {
   Function itemBuilder;
   bool? hiddenDivider;
   Offset? offset;
+  ArrowDropUpOffset? arrowDropUpOffset;
   XSelectInput({
     this.initialValue,
     required this.onSelected,
@@ -22,6 +23,7 @@ class XSelectInput extends StatefulWidget {
     required this.itemBuilder,
     this.hiddenDivider,
     this.offset,
+    this.arrowDropUpOffset
   });
   @override
   _XSelectInputState createState() => _XSelectInputState();
@@ -56,6 +58,7 @@ class _XSelectInputState extends State<XSelectInput> {
         hoverColor: Colors.transparent,
       ),
       child: PopupMenuButton(
+        arrowDropUpOffset:widget.arrowDropUpOffset,
         offset: widget.offset ?? Offset.zero,
         initialValue: widget.initialValue,
         onSelected: (c) {
