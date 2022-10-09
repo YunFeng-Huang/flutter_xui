@@ -12,7 +12,41 @@
 ````
 设置颜色
 ````
-//默认
+
+/// 默认ui配置
+  static configInit() {
+    ///图片 默认样式支持svg 和 静态图片
+    globalConfig.imgList = {
+      XImageType.general: Icon(const IconData(0xe63f, fontFamily: 'iconfont')),
+      XImageType.avatar: 'assets/common/avatar.png',
+    };
+    /// 对 XButton 的 按钮拦截 ,也可以在这里做数据埋点 
+    XButtonInterceptor = () async {
+      ApiClient.hideToast = false;
+    };
+  }
+/// 支持换肤配置
+  static themeColorInit() {
+    globalConfig.theme = FontTextColor.theme;
+    themeColor = ThemeColor(
+      ff0E0D15: FontTextColor.ff0E0D15,
+      ff3D3B48: FontTextColor.ff3D3B48,
+      ff6C7480: FontTextColor.ff6C7480,
+      ff9EA6AE: FontTextColor.ff9EA6AE,
+      ffC1C6CB: FontTextColor.ffC1C6CB,
+      ffFF4300: FontTextColor.ffFF4300,
+      ffFF9538: FontTextColor.ffFF9538,
+      ffFE424A: FontTextColor.ffFE424A,
+      ffFFFFFF: FontTextColor.ffFFFFFF,
+      ff0E1424: FontTextColor.ff0E1424,
+      ff11BB70: FontTextColor.ff11BB70,
+      ff4480FF: FontTextColor.ff4480FF,
+      ff54C6EF: FontTextColor.ff54C6EF,
+      ff846BF8: FontTextColor.ff846BF8,
+      ffDEDFDE: FontTextColor.ffDEDFDE,
+      ffF3F6F9: FontTextColor.ffF3F6F9,
+    );
+  }
 
 //设置
 eg: 放在 ScreenUtil.init 后面执行
