@@ -8,7 +8,15 @@
 
 进入页面先设置下尺寸
 ````dart
-    ScreenUtil.init(context, designSize: Size(750, 1334), allowFontScaling: false);
+   
+
+      builder: (context, child) {
+          ScreenUtil.init(context, designSize: Size(750, 1334), allowFontScaling: false);
+          return MediaQuery(
+            data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
+            child: child!,
+          );
+        },
 ````
 设置颜色
 ````
