@@ -23,7 +23,7 @@ class XCustomScrollView extends StatefulWidget {
   Function? slivers;
   Widget? bottomAppBar;
   Widget? headerLoading;
-  Widget emptyWidget;
+  Widget? emptyWidget;
   Widget? errorWidget;
   Widget? loadingWidget;
   Function? onRefresh;
@@ -48,7 +48,7 @@ class XCustomScrollView extends StatefulWidget {
       this.resizeToAvoidBottomInset,
       required this.status,
       required this.slivers,
-      required this.emptyWidget,
+       this.emptyWidget,
       this.errorWidget,
       this.appbar,
       this.backgroundColor = Colors.transparent,
@@ -82,7 +82,7 @@ class XCustomScrollView extends StatefulWidget {
 
 class XCustomScrollViewState extends State<XCustomScrollView> {
   PageStatus get status => widget.status;
-  Widget get EmptyWidget => widget.emptyWidget;
+  Widget? get EmptyWidget => widget.emptyWidget;
   Widget? get errorWidget => widget.errorWidget;
   Widget? get loadingWidget => widget.loadingWidget;
   XCustomScrollViewAppbar? get appbar => widget.appbar;
@@ -233,6 +233,7 @@ class XCustomScrollViewState extends State<XCustomScrollView> {
           children: [
             widget.scrollbar ?? false
                 ? Scrollbar(
+                    controller: controller,
                     child: _scrollWidget(),
                   )
                 : _scrollWidget(),

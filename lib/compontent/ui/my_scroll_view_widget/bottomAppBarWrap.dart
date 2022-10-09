@@ -6,14 +6,14 @@ XBottomAppBarWrap({child, color, height, boxShadow, heightAuto}) {
   return Container(
     height: heightAuto ? null : height,
     decoration: BoxDecoration(
-      color: color ?? Colors.white,
-      border: Border(
-          top:  BorderSide(
-            color:  themeColor.divider!,
+        color: color ?? Colors.white,
+        border: Border(
+          top: BorderSide(
+            color: themeColor.ffDEDFDE!,
             width: 1.w,
-          ),bottom:BorderSide.none,
-      )
-    ),
+          ),
+          bottom: BorderSide.none,
+        )),
     child: child,
   );
 }

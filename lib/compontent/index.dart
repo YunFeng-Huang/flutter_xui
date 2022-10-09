@@ -5,9 +5,11 @@ export 'ui/extension/widget/ext_align.dart';
 export 'ui/extension/widget/ext_background.dart';
 export 'ui/extension/widget/ext_space.dart';
 export 'ui/extension/widget/ext_size.dart';
+export 'ui/extension/widget/ext_build_context.dart';
 
 export 'ui/default/x_tab_indicator.dart';
 
+export 'ui/my_alert_widget/alert.dart';
 export 'ui/my_alert.dart';
 export 'ui/html/XButtom.dart';
 export 'ui/html/XCheckbox.dart';

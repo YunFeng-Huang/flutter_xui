@@ -36,14 +36,14 @@ class XAppBar extends StatelessWidget implements PreferredSizeWidget {
                   },
             child: Icon(
               Icons.chevron_left,
-              color: color ?? themeColor.black,
+              color: color ?? themeColor.ff0E1424,
             ).background(width: 88.w, height: 88.w),
           ).centerLeft.margin(left: 24.w),
           Text(
             title,
             style: TextStyle(
               fontSize: 32.w,
-              color: color ?? themeColor.black,
+              color: color ?? themeColor.ff0E1424,
               fontWeight: FontWeight.bold,
             ),
             // font(32, color: color ?? '#010101', bold: true),

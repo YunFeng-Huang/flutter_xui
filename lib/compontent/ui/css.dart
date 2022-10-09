@@ -7,55 +7,55 @@ ThemeColor themeColor = ThemeColor();
 
 class ThemeColor {
   ///字体颜色
-  Color? headline1;
-  Color? headline2;
-  Color? headline3;
-  Color? headline4;
-  Color? headline5;
-  Color? primary;
-  Color? primary1;
-  Color? primary2;
-  Color? white;
-  Color? black;
-  Color? green;
-  Color? blue;
-  Color? lightBlue;
-  Color? purple;
-  Color? divider;
-  Color? background;
+  Color? ff0E0D15;
+  Color? ff3D3B48;
+  Color? ff6C7480;
+  Color? ff9EA6AE;
+  Color? ffC1C6CB;
+  Color? ffFF4300;
+  Color? ffFF9538;
+  Color? ffFE424A;
+  Color? ffFFFFFF;
+  Color? ff0E1424;
+  Color? ff11BB70;
+  Color? ff4480FF;
+  Color? ff54C6EF;
+  Color? ff846BF8;
+  Color? ffDEDFDE;
+  Color? ffF3F6F9;
   ThemeColor(
-      {this.headline1,
-      this.headline2,
-      this.headline3,
-      this.headline4,
-      this.headline5,
-      this.primary,
-      this.primary1,
-      this.primary2,
-      this.white,
-      this.black,
-      this.green,
-      this.blue,
-      this.lightBlue,
-      this.purple,
-      this.divider,
-      this.background}) {
-    headline1 = this.headline1 ?? Color(0xFF0E0D15);
-    headline2 = this.headline2 ?? Color(0xFF3D3B48);
-    headline3 = this.headline3 ?? Color(0xFF6C7480);
-    headline4 = this.headline4 ?? Color(0xFF9EA6AE);
-    headline5 = this.headline5 ?? Color(0xFFC1C6CB);
-    primary = this.primary ?? Color(0xFFFF4300);
-    primary1 = this.primary1 ?? Color(0xFFFF9538);
-    primary2 = this.primary2 ?? Color(0xFFFE424A);
-    white = this.white ?? Color(0xFFFFFFFF);
-    black = this.black ?? Color(0xFF0E1424);
-    green = this.green ?? Color(0xFFFF11BB70);
-    blue = this.blue ?? Color(0xFFFF4480FF);
-    lightBlue = this.lightBlue ?? Color(0xFFFF54C6EF);
-    purple = this.purple ?? Color(0xFFFF846BF8);
-    divider = this.divider ?? Color(0xFFDEDFDE);
-    background = this.background ?? Color(0xFFF3F6F9);
+      {this.ff0E0D15,
+      this.ff3D3B48,
+      this.ff6C7480,
+      this.ff9EA6AE,
+      this.ffC1C6CB,
+      this.ffFF4300,
+      this.ffFF9538,
+      this.ffFE424A,
+      this.ffFFFFFF,
+      this.ff0E1424,
+      this.ff11BB70,
+      this.ff4480FF,
+      this.ff54C6EF,
+      this.ff846BF8,
+      this.ffDEDFDE,
+      this.ffF3F6F9}) {
+    ff0E0D15 = this.ff0E0D15 ?? Color(0xff0E0D15);
+    ff3D3B48 = this.ff3D3B48 ?? Color(0xFF3D3B48);
+    ff6C7480 = this.ff6C7480 ?? Color(0xFF6C7480);
+    ff9EA6AE = this.ff9EA6AE ?? Color(0xFF9EA6AE);
+    ffC1C6CB = this.ffC1C6CB ?? Color(0xFFC1C6CB);
+    ffFF4300 = this.ffFF4300 ?? Color(0xFFFF4300);
+    ffFF9538 = this.ffFF9538 ?? Color(0xFFFF9538);
+    ffFE424A = this.ffFE424A ?? Color(0xFFFE424A);
+    ffFFFFFF = this.ffFFFFFF ?? Color(0xFFFFFFFF);
+    ff0E1424 = this.ff0E1424 ?? Color(0xFF0E1424);
+    ff11BB70 = this.ff11BB70 ?? Color(0xFFFF11BB70);
+    ff4480FF = this.ff4480FF ?? Color(0xFFFF4480FF);
+    ff54C6EF = this.ff54C6EF ?? Color(0xFFFF54C6EF);
+    ff846BF8 = this.ff846BF8 ?? Color(0xFFFF846BF8);
+    ffDEDFDE = this.ffDEDFDE ?? Color(0xFFDEDFDE);
+    ffF3F6F9 = this.ffF3F6F9 ?? Color(0xFFF3F6F9);
   }
 }
 

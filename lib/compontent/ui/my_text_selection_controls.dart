@@ -68,7 +68,7 @@ class XTextSelectionControls extends TextSelectionControls {
       BuildContext context, TextSelectionHandleType type, double textLineHeight,
       [VoidCallback? onTap, double? startGlyphHeight, double? endGlyphHeight]) {
     // final ThemeData theme = Theme.of(context);
-    final Color handleColor = themeColor.primary!;
+    final Color handleColor = themeColor.ffFF4300!;
     final Widget handle = SizedBox(
         width: _kHandleSize,
         height: _kHandleSize,

@@ -601,7 +601,7 @@ class _PopupMenu<T> extends StatelessWidget {
                 Positioned(
                   child: Icon(
                     Icons.arrow_drop_up,
-                    color: themeColor.white,
+                    color: themeColor.ffFFFFFF,
                     size: 60,
                   ),
                   top: -30,

@@ -82,25 +82,25 @@ extension ExtBg on Widget {
                           left: borderLeft == null
                               ? BorderSide.none
                               : BorderSide(
-                                  color: borderColor ?? themeColor.divider!,
+                                  color: borderColor ?? themeColor.ffDEDFDE!,
                                   width: borderLeft,
                                 ),
                           top: borderTop == null
                               ? BorderSide.none
                               : BorderSide(
-                                  color: borderColor ?? themeColor.divider!,
+                                  color: borderColor ?? themeColor.ffDEDFDE!,
                                   width: borderTop,
                                 ),
                           right: borderRight == null
                               ? BorderSide.none
                               : BorderSide(
-                                  color: borderColor ?? themeColor.divider!,
+                                  color: borderColor ?? themeColor.ffDEDFDE!,
                                   width: borderRight,
                                 ),
                           bottom: borderBottom == null
                               ? BorderSide.none
                               : BorderSide(
-                                  color: borderColor ?? themeColor.divider!,
+                                  color: borderColor ?? themeColor.ffDEDFDE!,
                                   width: borderBottom,
                                 ),
                         )
@@ -108,7 +108,7 @@ extension ExtBg on Widget {
                           ? null
                           : Border.all(
                               width: border,
-                              color: borderColor ?? themeColor.divider!),
+                              color: borderColor ?? themeColor.ffDEDFDE!),
                   borderRadius: !allBorder
                       ? null
                       : allBorderRadius

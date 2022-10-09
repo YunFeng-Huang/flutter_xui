@@ -13,7 +13,7 @@ class XDivision extends StatelessWidget {
     return Container(
       width: width,
       height: height,
-      color: themeColor.divider,
+      color: themeColor.ffDEDFDE,
     );
   }
 }

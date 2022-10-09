@@ -15,16 +15,15 @@ class XSelectInput extends StatefulWidget {
   bool? hiddenDivider;
   Offset? offset;
   ArrowDropUpOffset? arrowDropUpOffset;
-  XSelectInput({
-    this.initialValue,
-    required this.onSelected,
-    required this.list,
-    required this.child,
-    required this.itemBuilder,
-    this.hiddenDivider,
-    this.offset,
-    this.arrowDropUpOffset
-  });
+  XSelectInput(
+      {this.initialValue,
+      required this.onSelected,
+      required this.list,
+      required this.child,
+      required this.itemBuilder,
+      this.hiddenDivider,
+      this.offset,
+      this.arrowDropUpOffset});
   @override
   _XSelectInputState createState() => _XSelectInputState();
 }
@@ -53,12 +52,12 @@ class _XSelectInputState extends State<XSelectInput> {
     // if (value == null) return SizedBox(height: 0, width: 0);
     return Theme(
       data: Theme.of(context).copyWith(
-        cardColor: themeColor.white,
+        cardColor: themeColor.ffFFFFFF,
         highlightColor: Colors.transparent,
         hoverColor: Colors.transparent,
       ),
       child: PopupMenuButton(
-        arrowDropUpOffset:widget.arrowDropUpOffset,
+        arrowDropUpOffset: widget.arrowDropUpOffset,
         offset: widget.offset ?? Offset.zero,
         initialValue: widget.initialValue,
         onSelected: (c) {
@@ -69,7 +68,7 @@ class _XSelectInputState extends State<XSelectInput> {
         },
         elevation: 0,
         shape: RoundedRectangleBorder(
-          side: BorderSide(color: themeColor.white!),
+          side: BorderSide(color: themeColor.ffFFFFFF!),
           borderRadius: BorderRadius.circular(10.w),
         ),
         child: child,
@@ -84,7 +83,7 @@ class _XSelectInputState extends State<XSelectInput> {
                   top: index == 0 || hiddenDivider
                       ? BorderSide.none
                       : BorderSide(
-                          color: themeColor.divider!,
+                          color: themeColor.ffDEDFDE!,
                           width: 1.w,
                         ),
                 ),

@@ -81,7 +81,7 @@ class _XCheckBoxState extends State<XCheckBox> {
                   radius: 4.w,
                   color: color,
                   border: 1.w,
-                  borderColor: themeColor.divider,
+                  borderColor: themeColor.ffDEDFDE,
                 ),
           if (isNotNull(right)) right!.margin(left: 10.w)
         ],

@@ -100,7 +100,7 @@ Api.context = context; 放在入口页面执行
         keyboardType: TextInputType.visiblePassword,
         labelWidth: 0.w,
         hintText: '请输入编号',
-        border: themeColor.divider,
+        border: themeColor.ffDEDFDE,
         radius: 4.w,
         onChanged: (v) {
             print(v);

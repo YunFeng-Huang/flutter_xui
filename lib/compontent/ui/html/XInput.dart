@@ -1,6 +1,7 @@
 // ignore: must_be_immutable
 import 'package:flutter/material.dart';
 import '../../index.dart';
+import 'package:flutter/services.dart';
 
 // ignore: must_be_immutable
 class XInput extends StatelessWidget {
@@ -31,9 +32,12 @@ class XInput extends StatelessWidget {
   TextSelectionControls? _selectionControls;
   FocusNode? _focusNode = new FocusNode();
   String? _counterText;
+  Widget? _suffixIcon;
+  List<TextInputFormatter>? _inputFormatters;
   XInput({
     row = true,
     label,
+    inputFormatters,
     labelWidget,
     labelAlign,
     labelWidth,
@@ -62,14 +66,17 @@ class XInput extends StatelessWidget {
     hintMaxLines,
     expands,
     counterText,
+    suffixIcon,
   }) {
+    _inputFormatters = inputFormatters;
+    _suffixIcon = suffixIcon;
     _counterText = counterText;
     _row = row ?? false;
     _focusNode = focusNode;
     _label = label;
     _labelWidget = labelWidget;
     _labelAlign = labelAlign ?? Alignment.centerLeft;
-    _labelWidth = _row! ? (labelWidth ?? 120.w) : null;
+    _labelWidth = _row! ? (labelWidth ?? 0.w) : null;
     _labelStyle = labelStyle;
     _hintText = hintText;
     _hintStyle = hintStyle;
@@ -122,8 +129,9 @@ class XInput extends StatelessWidget {
     // ignore: non_constant_identifier_names
     _InputWidget() {
       return TextField(
+        inputFormatters: _inputFormatters,
         expands: _expands ?? false,
-        cursorColor: themeColor.primary,
+        cursorColor: themeColor.ffFF4300,
         autofocus: _autofocus,
         maxLines: _maxLines,
         obscureText: _obscureText ?? false,
@@ -137,6 +145,7 @@ class XInput extends StatelessWidget {
         onChanged: _onChanged,
         decoration: InputDecoration(
           counterText: _counterText,
+          suffixIcon: _suffixIcon,
           isCollapsed: true, //重点，相当于高度包裹的意思，必须设置为true，不然有默认奇妙的最小高度
           contentPadding: _contentPadding,
           fillColor: _fillColor ?? Colors.white,
@@ -177,6 +186,54 @@ class XInput extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [_LabelWidget(), _InputWidget()],
                 )),
+    );
+  }
+}
+
+class MyNumberTextInputFormatter extends TextInputFormatter {
+  static const defaultDouble = 0.001;
+
+  ///允许的小数位数，-1代表不限制位数
+  int digit;
+  MyNumberTextInputFormatter({this.digit = -1});
+  static double strToFloat(String str, [double defaultValue = defaultDouble]) {
+    try {
+      return double.parse(str);
+    } catch (e) {
+      return defaultValue;
+    }
+  }
+
+  ///获取目前的小数位数
+  static int getValueDigit(String value) {
+    if (value.contains(".")) {
+      return value.split(".")[1].length;
+    } else {
+      return -1;
+    }
+  }
+
+  @override
+  TextEditingValue formatEditUpdate(
+      TextEditingValue oldValue, TextEditingValue newValue) {
+    String value = newValue.text;
+    int selectionIndex = newValue.selection.end;
+    if (value == ".") {
+      value = "0.";
+      selectionIndex++;
+    } else if (value == "-") {
+      value = "-";
+      selectionIndex++;
+    } else if (value != "" &&
+            value != defaultDouble.toString() &&
+            strToFloat(value, defaultDouble) == defaultDouble ||
+        getValueDigit(value) > digit) {
+      value = oldValue.text;
+      selectionIndex = oldValue.selection.end;
+    }
+    return new TextEditingValue(
+      text: value,
+      selection: new TextSelection.collapsed(offset: selectionIndex),
     );
   }
 }
