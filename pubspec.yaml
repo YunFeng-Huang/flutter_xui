@@ -1,6 +1,6 @@
 name: xui
 description: flutter ui库.
-version: 3.0.0
+version: 3.3.4
 homepage: https://github.com/YunFeng-Huang/flutter_xui.git
 
 # The following defines the version and build number for your application.
@@ -18,8 +18,7 @@ homepage: https://github.com/YunFeng-Huang/flutter_xui.git
 # a `flutter run` or a `flutter make-host-app-editable`. It has no impact
 # on any other native host app that you embed your Flutter project into.
 environment:
-  sdk: ">=2.14.0 <3.0.0"
-  flutter: ">=2.10.0"
+  sdk: '>=2.18.2 <3.0.0'
 
 dependencies:
   flutter:
