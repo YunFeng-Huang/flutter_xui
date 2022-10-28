@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
-import 'package:xui/compontent/index.dart';
+import 'package:xui/component/index.dart';
 
 class XSmartRefresherCustomFooter extends StatelessWidget {
   final String? page;

@@ -1,7 +1,7 @@
 // import 'package:flutter/cupertino.dart';
 // import 'package:flutter/gestures.dart';
 // import 'package:flutter/material.dart';
-// import 'package:xui/compontent/js/color_utils.dart';
+// import 'package:xui/component/js/color_utils.dart';
 
 // import '../../index.dart';
 

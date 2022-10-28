@@ -1,7 +1,8 @@
 // ignore: must_be_immutable
 import 'package:flutter/material.dart';
-import '../../index.dart';
 import 'package:flutter/services.dart';
+
+import '../../index.dart';
 
 // ignore: must_be_immutable
 class XInput extends StatelessWidget {
@@ -85,8 +86,7 @@ class XInput extends StatelessWidget {
     _onChanged = onChanged;
     _textAlign = textAlign;
     _border = border;
-    _contentPadding =
-        contentPadding ?? EdgeInsets.only(top: 10.w, bottom: 10.w);
+    _contentPadding = contentPadding ?? EdgeInsets.only(top: 10.w, bottom: 10.w);
     _enabled = enabled;
     _radius = radius ?? 10.w;
     _obscureText = obscureText;
@@ -155,7 +155,7 @@ class XInput extends StatelessWidget {
           hintMaxLines: _hintMaxLines,
           border: OutlineInputBorder(borderSide: BorderSide.none),
         ),
-        selectionControls: _selectionControls ?? XTextSelectionControls(),
+        selectionControls: _selectionControls,
       );
     }
 
@@ -164,14 +164,7 @@ class XInput extends StatelessWidget {
       child: Container(
           // padding:
           //     _padding ?? EdgeInsets.symmetric(vertical: 4.w, horizontal: 10.w),
-          decoration: _border == null
-              ? null
-              : BoxDecoration(
-                  borderRadius: _radius == null
-                      ? null
-                      : BorderRadius.all(Radius.circular(_radius!)),
-                  border: Border.all(width: 1, color: _border ?? Colors.white),
-                  color: Colors.red),
+          decoration: _border == null ? null : BoxDecoration(borderRadius: _radius == null ? null : BorderRadius.all(Radius.circular(_radius!)), border: Border.all(width: 1, color: _border ?? Colors.white), color: Colors.red),
           child: _row!
               ? Row(
                   children: [
@@ -214,8 +207,7 @@ class MyNumberTextInputFormatter extends TextInputFormatter {
   }
 
   @override
-  TextEditingValue formatEditUpdate(
-      TextEditingValue oldValue, TextEditingValue newValue) {
+  TextEditingValue formatEditUpdate(TextEditingValue oldValue, TextEditingValue newValue) {
     String value = newValue.text;
     int selectionIndex = newValue.selection.end;
     if (value == ".") {
@@ -224,10 +216,7 @@ class MyNumberTextInputFormatter extends TextInputFormatter {
     } else if (value == "-") {
       value = "-";
       selectionIndex++;
-    } else if (value != "" &&
-            value != defaultDouble.toString() &&
-            strToFloat(value, defaultDouble) == defaultDouble ||
-        getValueDigit(value) > digit) {
+    } else if (value != "" && value != defaultDouble.toString() && strToFloat(value, defaultDouble) == defaultDouble || getValueDigit(value) > digit) {
       value = oldValue.text;
       selectionIndex = oldValue.selection.end;
     }

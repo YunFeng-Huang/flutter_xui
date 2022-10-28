@@ -1,9 +1,6 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
-import 'package:xui/compontent/js/index.dart';
 
-import '../../js/color_utils.dart';
 import '../../index.dart';
 
 // var data = [
@@ -48,13 +45,7 @@ class XTable extends StatefulWidget {
   Function? onLoading;
   List<TableColumn> tableColumn;
   TableConfig? config;
-  XTable(
-      {required this.data,
-      required this.tableColumn,
-      this.config,
-      this.onLoading,
-      this.onRefresh,
-      this.expanded});
+  XTable({required this.data, required this.tableColumn, this.config, this.onLoading, this.onRefresh, this.expanded});
   @override
   _XTableState createState() => _XTableState();
 }
@@ -75,8 +66,7 @@ class _XTableState extends State<XTable> {
     // headerBackground = widget.config?.headerBackground ?? headerBackground;
   }
 
-  RefreshController _refreshController =
-      RefreshController(initialRefresh: false);
+  RefreshController _refreshController = RefreshController(initialRefresh: false);
   void _onRefresh() async {
     var data = await onRefresh?.call();
     if (data == null) {
@@ -154,11 +144,7 @@ class _XTableState extends State<XTable> {
                           width: _width,
                         ));
                       });
-                      return Row(
-                              children: itemList,
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween)
-                          .padding(vertical: config!.defaultItemPadding)
-                          .background(
+                      return Row(children: itemList, mainAxisAlignment: MainAxisAlignment.spaceBetween).padding(vertical: config!.defaultItemPadding).background(
                             borderBottom: 1.w,
                             borderColor: HexToColor('#E9E9E9'),
                           );
@@ -208,13 +194,7 @@ class TableColumn {
   int? maxLines;
   Function? widget;
   Alignment? alignment;
-  TableColumn(
-      {this.prop,
-      this.label,
-      this.width,
-      this.widget,
-      this.maxLines,
-      this.alignment}) {
+  TableColumn({this.prop, this.label, this.width, this.widget, this.maxLines, this.alignment}) {
     alignment = this.alignment ?? Alignment.center;
   }
 }
@@ -225,12 +205,7 @@ class TableConfig {
   TextStyle? headerStyle;
   double? defaultWidth;
   double? defaultItemPadding;
-  TableConfig(
-      {this.headerBackground,
-      this.style,
-      this.headerStyle,
-      this.defaultWidth,
-      this.defaultItemPadding}) {
+  TableConfig({this.headerBackground, this.style, this.headerStyle, this.defaultWidth, this.defaultItemPadding}) {
     headerBackground = this.headerBackground ?? '#FAFAFA';
     defaultWidth = this.defaultWidth ?? 150.w;
     defaultItemPadding = this.defaultItemPadding ?? 10.w;

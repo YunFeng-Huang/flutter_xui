@@ -5,8 +5,8 @@
 // import 'package:dio/dio.dart';
 // import 'package:flutter/cupertino.dart';
 //
-// import 'package:flutter_huanhu/compontent/ui/toast.dart';
-// import 'package:flutter_huanhu/compontent/ui/my_loading.dart';
+// import 'package:flutter_huanhu/component/ui/toast.dart';
+// import 'package:flutter_huanhu/component/ui/my_loading.dart';
 // import 'package:image_picker/image_picker.dart';
 //
 // class XupLoadFile {

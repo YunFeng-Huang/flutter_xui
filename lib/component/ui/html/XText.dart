@@ -1,5 +1,5 @@
 import 'package:flutter/cupertino.dart';
-import 'package:xui/compontent/index.dart';
+import 'package:xui/component/index.dart';
 
 /// 处理安卓 单行是字体下掉问题
 // ignore: must_be_immutable
@@ -27,8 +27,6 @@ class _XTextState extends State<XText> {
         leading: ((widget.style?.height ?? 0.0) - 1.0) / 2,
         forceStrutHeight: true,
       ),
-    ).center.background(
-        height:
-            (widget.style?.height ?? 0.0) * (widget.style?.fontSize ?? 0.0));
+    ).center.background(height: (widget.style?.height ?? 0.0) * (widget.style?.fontSize ?? 0.0));
   }
 }

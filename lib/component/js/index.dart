@@ -1,10 +1,10 @@
 import 'dart:async';
 import 'dart:convert';
-import 'dart:io';
 import 'dart:ui' as ui;
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:xui/compontent/ui/index.dart';
+import 'package:xui/component/ui/index.dart';
 
 import 'local_storage.dart';
 
@@ -77,8 +77,7 @@ Future staticStorage({cookieName, api, params, callback, type = 0}) async {
 
   _getCookie() async {
     data = await Sesstion().getStorage(cookieName);
-    if (data != null && paramsToJson == null)
-      paramsToJson = callback.call(data);
+    if (data != null && paramsToJson == null) paramsToJson = callback.call(data);
     return paramsToJson;
   }
 
@@ -105,13 +104,9 @@ formatNum(double num, int postion) {
   if ((num.toString().length - num.toString().lastIndexOf(".") - 1) < postion) {
     //小数点后有几位小数
 
-    print(num.toStringAsFixed(postion)
-        .substring(0, num.toString().lastIndexOf(".") + postion + 1)
-        .toString());
+    print(num.toStringAsFixed(postion).substring(0, num.toString().lastIndexOf(".") + postion + 1).toString());
   } else {
-    print(num.toString()
-        .substring(0, num.toString().lastIndexOf(".") + postion + 1)
-        .toString());
+    print(num.toString().substring(0, num.toString().lastIndexOf(".") + postion + 1).toString());
   }
 }
 
@@ -164,8 +159,7 @@ recursive(data, keys) {
 // GlobalConfig.TimerCancel = null; 销毁
 countdown(time, callback) {
   if (time.isAfter(DateTime.now())) {
-    GlobalConfig.timerCancel =
-        Timer.periodic(const Duration(seconds: 1), (timer) {
+    GlobalConfig.timerCancel = Timer.periodic(const Duration(seconds: 1), (timer) {
       var difference = time.difference(DateTime.now());
       print('difference: $difference');
       if (time.isBefore(DateTime.now())) {
@@ -205,8 +199,7 @@ filterList(data, key) {
 Future<ui.Image> loadImage(String url) async {
   Completer<ui.Image> completer = Completer<ui.Image>();
   ImageStreamListener? listener;
-  ImageStream stream =
-      CachedNetworkImageProvider(url).resolve(ImageConfiguration.empty);
+  ImageStream stream = CachedNetworkImageProvider(url).resolve(ImageConfiguration.empty);
   listener = ImageStreamListener((ImageInfo frame, bool sync) {
     final ui.Image image = frame.image;
     completer.complete(image);

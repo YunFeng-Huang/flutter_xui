@@ -1,5 +1,5 @@
 import 'package:flutter/cupertino.dart';
-import 'package:xui/compontent/index.dart';
+import 'package:xui/component/index.dart';
 
 // ignore: must_be_immutable
 class XPaginatedTable extends StatefulWidget {
@@ -32,7 +32,7 @@ class _XPaginatedTableState extends State<XPaginatedTable> {
         if (isNotNull(totalNum)) Text('共${(totalNum! / pageSize).ceil()}页 $totalNum 条数据 , 当前在第 $pageIndex 页'),
         SizedBox(width: 50.w),
         XButton(
-          text:  '上一页',
+          text: '上一页',
           type: XButtonType.text,
           // params: widget.params,
           // api: widget.api,
@@ -50,7 +50,7 @@ class _XPaginatedTableState extends State<XPaginatedTable> {
         ),
         SizedBox(width: 20.w),
         XButton(
-          text:  '下一页',
+          text: '下一页',
           type: XButtonType.text,
           // params: widget.params,
           // api: widget.api,

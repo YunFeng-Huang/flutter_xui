@@ -1,5 +1,5 @@
 // import 'package:flutter/material.dart';
-// import 'package:xui/compontent/js/screem.dart';
+// import 'package:xui/component/js/screem.dart';
 
 // class ScreenInit extends StatelessWidget {
 //   ScreenInit({

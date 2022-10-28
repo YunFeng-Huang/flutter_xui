@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart' hide PopupMenuItem, PopupMenuButton;
-import 'package:xui/compontent/ui/default/popup_menu.dart';
-import 'package:xui/compontent/ui/extension/widget/ext_size.dart';
+import 'package:xui/component/ui/default/popup_menu.dart';
+import 'package:xui/component/ui/extension/widget/ext_size.dart';
 
 import '../../index.dart';
 
@@ -15,15 +15,7 @@ class XSelectInput extends StatefulWidget {
   bool? hiddenDivider;
   Offset? offset;
   ArrowDropUpOffset? arrowDropUpOffset;
-  XSelectInput(
-      {this.initialValue,
-      required this.onSelected,
-      required this.list,
-      required this.child,
-      required this.itemBuilder,
-      this.hiddenDivider,
-      this.offset,
-      this.arrowDropUpOffset});
+  XSelectInput({this.initialValue, required this.onSelected, required this.list, required this.child, required this.itemBuilder, this.hiddenDivider, this.offset, this.arrowDropUpOffset});
   @override
   _XSelectInputState createState() => _XSelectInputState();
 }

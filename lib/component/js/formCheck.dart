@@ -1,5 +1,5 @@
 import 'package:flutter/cupertino.dart';
-import 'package:xui/compontent/ui/my_toast.dart';
+import 'package:xui/component/ui/my_toast.dart';
 
 import 'index.dart';
 

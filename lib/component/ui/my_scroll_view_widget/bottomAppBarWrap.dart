@@ -1,6 +1,6 @@
 // ignore: non_constant_identifier_names
 import 'package:flutter/material.dart';
-import 'package:xui/compontent/index.dart';
+import 'package:xui/component/index.dart';
 
 XBottomAppBarWrap({child, color, height, boxShadow, heightAuto}) {
   return Container(
