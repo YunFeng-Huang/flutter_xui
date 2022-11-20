@@ -2,7 +2,6 @@ import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
 import 'package:xui/xui.dart';
 
 class TipsAlterHeightAutoWidget extends StatefulWidget {
@@ -47,9 +46,7 @@ class _TipsAlterWidgetState extends State<TipsAlterHeightAutoWidget> {
       : widget.elevation ?? false
           ? 107.w
           : 112.w;
-  double? get _centerViewHeight => widget.height == null
-      ? null
-      : ((widget.height ?? 0.0) - _topViewHeight - _buttonViewHeight + 1.w);
+  double? get _centerViewHeight => widget.height == null ? null : ((widget.height ?? 0.0) - _topViewHeight - _buttonViewHeight + 1.w);
 
   @override
   Widget build(BuildContext context) {
@@ -71,39 +68,27 @@ class _TipsAlterWidgetState extends State<TipsAlterHeightAutoWidget> {
                         )
                         .background(
                           borderBottom: widget.elevation ?? false ? 1.w : null,
-                          border:widget.elevation ?? false? 1.w:null,
+                          border: widget.elevation ?? false ? 1.w : null,
                         )
-                        .background(
-                          color: globalConfig.theme.primaryColorLight,
-                          topLeft: 16.w,
-                          topRight: 16.w,
-                          height: _topViewHeight,
-                        ),
-                  (widget.child ??
-                          Center(
-                            child: _textView(),
-                          ))
-                      .background(
-                    width: widget.width ?? 550.w,
-                    maxHeight: widget.maxHeight,
-                    minHeight: widget.minHeight,
-                    height: _centerViewHeight,
+                        .background(color: themeColor.ffFFFFFF, topLeft: 16.w, topRight: 16.w, height: _topViewHeight),
+                  SingleChildScrollView(child: (widget.child ?? ((widget.elevation ?? false) ? (_textView().center) : (_textView().topCenter))).padding(left: 30.w, right: 30.w, bottom: 60.w)).background(
+                    maxHeight: widget.width ?? 550.w,
+                    minHeight: widget.height,
                   ),
                 ],
               ).background(
                 width: widget.width ?? 550.w,
-                color: globalConfig.theme.primaryColorLight,
+                color: themeColor.ffFFFFFF,
                 topLeft: 16.w,
                 topRight: 16.w,
               ),
-              Divider(height: 1.w, color: globalConfig.theme.dividerColor)
-                  .background(
+              Divider(height: 1.w, color: globalConfig.theme.dividerColor).background(
                 width: widget.width ?? 550.w,
-                color: globalConfig.theme.primaryColorLight,
+                color: themeColor.ffFFFFFF,
               ),
               _buttonView().background(
                 width: widget.width ?? 550.w,
-                color: globalConfig.theme.primaryColorLight,
+                color: themeColor.ffFFFFFF,
                 bottomLeft: 16.w,
                 bottomRight: 16.w,
                 height: _buttonViewHeight,
@@ -121,7 +106,7 @@ class _TipsAlterWidgetState extends State<TipsAlterHeightAutoWidget> {
         widget.title ?? '提示',
         style: font(
           32,
-          colorA: (themeColor.ff0E0D15!),
+          colorA: (themeColor.ff3D3B48!),
           weight: FontWeight.w500,
           height: 1.2,
         ),
@@ -133,10 +118,8 @@ class _TipsAlterWidgetState extends State<TipsAlterHeightAutoWidget> {
     return Center(
       child: Text(
         widget.info ?? '',
-        style: font(32,
-            colorA: (themeColor.ff0E0D15),
-            height: 1.2,
-            weight: FontWeight.w500),
+        textAlign: TextAlign.justify,
+        style: font(32, colorA: (themeColor.ff3D3B48), height: 1.2, weight: FontWeight.w500),
       ),
     );
   }
@@ -162,26 +145,30 @@ class _TipsAlterWidgetState extends State<TipsAlterHeightAutoWidget> {
 
   Widget _getLiftBtn() {
     return XButton(
-      text: widget.cancelText ?? '取消',
+      child: Text(
+        widget.cancelText ?? '取消',
+        style: font(32, colorA: themeColor.ff6C7480, weight: FontWeight.w400),
+      ),
       callback: () => Navigator.pop(context, false),
-      style: font(32, colorA: themeColor.ff6C7480, weight: FontWeight.w400),
     ).center;
   }
 
   Widget _getRightBtn() {
     return XButton(
-      disabled: disabled,
-      text: widget.sureText ?? '确认',
-      style: font(
-        32,
-        colorA: themeColor.ffFF4300,
-        weight: FontWeight.w400,
+      child: Text(
+        widget.sureText ?? '确认',
+        style: font(
+          32,
+          colorA: themeColor.primary,
+          weight: FontWeight.w400,
+        ),
       ),
+      // disabled: disabled,
       callback: () async {
-        disabled = true;
+        // disabled = true;
         setState(() {});
         bool? value = await widget.callback?.call();
-        disabled = false;
+        // disabled = false;
         setState(() {});
         if (value == null || value) Navigator.pop(context, true);
       },
@@ -189,16 +176,7 @@ class _TipsAlterWidgetState extends State<TipsAlterHeightAutoWidget> {
   }
 }
 
-SafeArea AlertModalPopupWidget(
-    BuildContext context,
-    child,
-    Widget? bottom,
-    double? bottomHeight,
-    Function? leftCallBack,
-    String? leftText,
-    String? title,
-    bool? elevation,
-    double? height) {
+SafeArea AlertModalPopupWidget(BuildContext context, child, Widget? bottom, double? bottomHeight, Function? leftCallBack, String? leftText, String? title, bool? elevation, double? height) {
   return SafeArea(
     bottom: true,
     child: AnimatedPadding(
@@ -214,9 +192,7 @@ SafeArea AlertModalPopupWidget(
               children: [
                 Container(
                   child: child(context),
-                  margin: EdgeInsets.only(
-                      top: 92.w,
-                      bottom: bottom == null ? 0 : (bottomHeight ?? 88.w)),
+                  margin: EdgeInsets.only(top: 92.w, bottom: bottom == null ? 0 : (bottomHeight ?? 88.w)),
                 ),
                 Positioned(
                   width: ScreenUtil().screenWidth,
@@ -232,23 +208,13 @@ SafeArea AlertModalPopupWidget(
                         callback: () => leftCallBack?.call(),
                         child: Text(
                           '${leftText ?? ''}',
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodyLarge
-                              ?.copyWith(color: themeColor.ff3D3B48),
+                          style: Theme.of(context).textTheme.bodyLarge?.copyWith(color: themeColor.ff3D3B48),
                         ).centerLeft.background(width: 150.w),
                       ),
                       Text(
                         '${title ?? ''}',
-                        style: Theme.of(context)
-                            .textTheme
-                            .titleLarge
-                            ?.copyWith(color: themeColor.ff0E0D15),
-                      )
-                          .center
-                          .background(height: 44.w)
-                          .padding(vertical: 24.w)
-                          .center,
+                        style: Theme.of(context).textTheme.titleLarge?.copyWith(color: themeColor.primary),
+                      ).center.background(height: 44.w).padding(vertical: 24.w).center,
                       XButton(
                         callback: () => Navigator.pop(context),
                         child: Icon(
@@ -256,31 +222,15 @@ SafeArea AlertModalPopupWidget(
                           const IconData(0xe648, fontFamily: 'iconfont'),
                           size: 24.w,
                           color: themeColor.ff9EA6AE,
-                        )
-                            .center
-                            .background(height: 40.w, width: 40.w)
-                            .centerRight
-                            .background(width: 150.w),
+                        ).center.background(height: 40.w, width: 40.w).centerRight.background(width: 150.w),
                       )
                     ],
-                  ).padding(horizontal: 32.w).background(
-                      height: 92.w,
-                      topRight: 16.w,
-                      topLeft: 16.w,
-                      borderBottom: elevation ?? false ? 1.w : null,
-                      width: ScreenUtil().screenWidth),
+                  ).padding(horizontal: 32.w).background(height: 92.w, topRight: 16.w, topLeft: 16.w, borderBottom: elevation ?? false ? 1.w : null, width: ScreenUtil().screenWidth),
                   top: 0,
                   left: 0,
                 ),
               ],
-            )
-                .background(
-                    topRight: 16.w,
-                    topLeft: 16.w,
-                    color: Theme.of(context).primaryColorLight,
-                    width: ScreenUtil().screenHeight,
-                    height: ScreenUtil().screenHeight / 2)
-                .bottomCenter,
+            ).background(topRight: 16.w, topLeft: 16.w, color: themeColor.ffFFFFFF, width: ScreenUtil().screenHeight, height: ScreenUtil().screenHeight / 2).bottomCenter,
           ],
         ),
       ).background(height: height ?? ScreenUtil().screenHeight * 0.5),
@@ -324,8 +274,7 @@ class _ShowTipsAlterWidgetState extends State<ShowTipsAlterWidget> {
     return Scaffold(
       backgroundColor: Colors.transparent,
       body: Transform.translate(
-          offset:
-              Offset(0, -(MediaQueryData.fromWindow(window).padding.top) / 2),
+          offset: Offset(0, -(MediaQueryData.fromWindow(window).padding.top) / 2),
           child: Center(
             child: new Column(
               children: <Widget>[
@@ -339,7 +288,7 @@ class _ShowTipsAlterWidgetState extends State<ShowTipsAlterWidget> {
             ).background(
               width: widget.width ?? 560.w,
               height: widget.height ?? 330.w,
-              color: globalConfig.theme.primaryColorLight,
+              color: themeColor.ffFFFFFF,
               radius: 16.w,
             ),
           )),
@@ -350,8 +299,7 @@ class _ShowTipsAlterWidgetState extends State<ShowTipsAlterWidget> {
     return Center(
       child: Text(
         widget.title ?? '提示',
-        style:
-            font(36, colorA: (themeColor.ffFFFFFF!), weight: FontWeight.w500),
+        style: font(36, colorA: (themeColor.ffFFFFFF!), weight: FontWeight.w500),
       ),
     ).background(height: 50.w).margin(top: 40.w);
   }
@@ -389,27 +337,26 @@ class _ShowTipsAlterWidgetState extends State<ShowTipsAlterWidget> {
 
   Widget _getLiftBtn() {
     return XButton(
-      text: widget.cancelText ?? '取消',
+      child: Text(widget.cancelText ?? '取消', style: font(32, colorA: themeColor.ff6C7480, weight: FontWeight.w400)),
       callback: () => Navigator.pop(context, false),
-      style: font(32, colorA: themeColor.ff6C7480, weight: FontWeight.w400),
     ).center;
   }
 
   Widget _getRightBtn() {
     return XButton(
-      disabled: disabled,
-      text: widget.sureText ?? '确认',
-      style: font(
-        32,
-        colorA: themeColor.ffFF4300,
-        weight: FontWeight.w400,
-      ),
+      // disabled: disabled,
+      child: Text(widget.sureText ?? '确认',
+          style: font(
+            32,
+            colorA: themeColor.ffFF4300,
+            weight: FontWeight.w400,
+          )),
       callback: () async {
-        disabled = true;
-        setState(() {});
+        // disabled = true;
+        // setState(() {});
         bool? value = await widget.callback?.call();
-        disabled = false;
-        setState(() {});
+        // disabled = false;
+        // setState(() {});
         if (value == null || value) Navigator.pop(context, true);
       },
     ).center;
@@ -421,16 +368,13 @@ class showBottomAlertCustomWidget extends StatefulWidget {
   final list;
   final title;
 
-  const showBottomAlertCustomWidget(
-      this.confirmCallback, this.list, this.title);
+  const showBottomAlertCustomWidget(this.confirmCallback, this.list, this.title);
 
   @override
-  State<showBottomAlertCustomWidget> createState() =>
-      _showBottomAlertCustomWidgetState();
+  State<showBottomAlertCustomWidget> createState() => _showBottomAlertCustomWidgetState();
 }
 
-class _showBottomAlertCustomWidgetState
-    extends State<showBottomAlertCustomWidget> {
+class _showBottomAlertCustomWidgetState extends State<showBottomAlertCustomWidget> {
   @override
   Widget build(BuildContext context) {
     // widget.list.add('取消');
@@ -455,10 +399,7 @@ class _showBottomAlertCustomWidgetState
                       Navigator.pop(context);
                       widget.confirmCallback(index);
                     },
-                    child: Text(widget.list[index],
-                            style: font(32, colorA: themeColor.ff0E0D15))
-                        .center
-                        .background(height: 56),
+                    child: Text(widget.list[index], style: font(32, colorA: themeColor.primary)).center.background(height: 56),
                   ),
                 ),
               ),
@@ -468,14 +409,11 @@ class _showBottomAlertCustomWidgetState
                 },
                 child: Text(
                   '取消',
-                  style: font(32, colorA: themeColor.ff0E0D15),
+                  style: font(32, colorA: themeColor.primary),
                 ).center.background(height: 56, borderTop: 1.w),
               )
             ],
-          )
-              .background(
-                  color: themeColor.ffFFFFFF, topRight: 16.w, topLeft: 16.w)
-              .bottomCenter
+          ).background(color: themeColor.ffFFFFFF, topRight: 16.w, topLeft: 16.w).bottomCenter
         ]),
       ),
     );

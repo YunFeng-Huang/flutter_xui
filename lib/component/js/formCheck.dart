@@ -77,8 +77,8 @@ formCheck(FormKeyEnum key, value, [required = false]) {
 //[required]: 是否必填
 bool formCheckToast(BuildContext context, FormKeyEnum key, value, [info = '', required = false]) {
   var v = formCheck(key, value, required);
-  if (typeOf(v) == 'String') {
-    showToast(context, '${isNotNull(info) && info.length > 0 ? info : v}');
+  if (XUtil.typeOf(v) == 'String') {
+    showToast(context, '${info!=null && info.length > 0 ? info : v}');
     return false;
   } else {
     return true;

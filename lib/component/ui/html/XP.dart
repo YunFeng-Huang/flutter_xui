@@ -31,6 +31,7 @@ class XP extends StatelessWidget {
                       text: e.title,
                       style: e.style,
                       recognizer: new TapGestureRecognizer()..onTap = e.onTap,
+                
                     )
                   : WidgetSpan(child: e.child!),
             )

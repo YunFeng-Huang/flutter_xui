@@ -1,6 +1,7 @@
 // ignore: import_of_legacy_library_into_null_safe
 
-import 'package:xui/component/js/screem.dart';
+
+import '../../../index.dart';
 
 extension SizeExtension on num {
   double get w => this / 2;
@@ -22,9 +23,9 @@ extension SizeExtension on num {
 
   // ///屏幕宽度的倍数
   // ///Multiple of screen width
-  // double get sw => ScreenUtil().screenWidth * this;
+  double get sw => ScreenUtil().screenWidth * this;
 
   // ///屏幕高度的倍数
   // ///Multiple of screen height
-  // double get sh => ScreenUtil().screenHeight * this;
+  double get sh => ScreenUtil().screenHeight * this;
 }

@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+
 import '../../index.dart';
 
 enum XImageType { general, avatar }
@@ -15,19 +16,9 @@ class XImage extends StatefulWidget {
   Color? background;
   double iconSize = 0.0;
   bool hideIcon = false;
-  XImage(
-      {Key? key,
-      required this.image,
-      this.fit,
-      this.width,
-      this.height,
-      this.borderRadius,
-      this.type = XImageType.general,
-      this.background,
-      this.hideIcon = false})
-      : super(key: key) {
+  XImage({Key? key, required this.image, this.fit, this.width, this.height, this.borderRadius, this.type = XImageType.general, this.background, this.hideIcon = false}) : super(key: key) {
     iconSize = (this.height == null ? 40.w : this.height!) / 2;
-    background = this.background ?? globalConfig.theme.backgroundColor;
+    background = this.background ?? Colors.transparent;
   }
 
   @override
@@ -37,14 +28,21 @@ class XImage extends StatefulWidget {
 class _XImageState extends State<XImage> {
   _errorWidget() {
     var _icon = globalConfig.imgList[widget.type];
-    if (typeOf(_icon) == 'Icon') {
+    if (XUtil.typeOf(_icon) == 'Null') {
+      return Center(
+        child: CircularProgressIndicator(
+          valueColor: new AlwaysStoppedAnimation<Color>(Colors.orange),
+          strokeWidth: 2.w,
+        ),
+      ).background(width: widget.iconSize, height: widget.iconSize);
+    } else if (XUtil.typeOf(_icon) == 'Icon') {
       if (widget.hideIcon) {
         return SizedBox(width: 0, height: 0);
       }
       return Icon(
         _icon.icon,
         size: widget.iconSize,
-        color: globalConfig.theme.primaryColorLight,
+        color: themeColor.ffFFFFFF,
       );
     } else {
       return Center(child: XImage(image: _icon));
@@ -93,8 +91,7 @@ class _XImageState extends State<XImage> {
               color: widget.background,
               child: _errorWidget(),
             )
-          : widget.image!.contains('http') ||
-                  widget.image!.contains('assets') == false
+          : widget.image!.contains('http') || widget.image!.contains('assets') == false
               ? _network()
               : Image.asset(
                   widget.image ?? '',

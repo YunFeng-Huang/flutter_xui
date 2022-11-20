@@ -12,12 +12,8 @@ class TimeFormat {
     String newStartYear = '$yearNow' + '-' + '01' + '-' + '01';
     String newEndtYear = (yearNow + 1).toString() + '-' + '01' + '-' + '00';
 
-    mapDate['startTime'] = DateUtil.formatDate(
-        DateTime.fromMillisecondsSinceEpoch(turnTimestamp(newStartYear)),
-        format: 'yyyy-MM-dd');
-    mapDate['endTime'] = DateUtil.formatDate(
-        DateTime.fromMillisecondsSinceEpoch(turnTimestamp(newEndtYear)),
-        format: 'yyyy-MM-dd');
+    mapDate['startTime'] = DateUtil.formatDate(DateTime.fromMillisecondsSinceEpoch(turnTimestamp(newStartYear)), format: 'yyyy-MM-dd');
+    mapDate['endTime'] = DateUtil.formatDate(DateTime.fromMillisecondsSinceEpoch(turnTimestamp(newEndtYear)), format: 'yyyy-MM-dd');
 
     mapDate['startStamp'] = turnTimestamp(mapDate['startTime'] + ' 00:00:00');
     mapDate['endStamp'] = turnTimestamp(mapDate['endTime'] + ' 23:59:59');
@@ -31,8 +27,7 @@ class TimeFormat {
     //获取当前日期
     var currentDate = new DateTime.now();
     if (iMonth + currentDate.month > 0) {
-      return timeConversion(
-          iMonth + currentDate.month, (currentDate.year).toString());
+      return timeConversion(iMonth + currentDate.month, (currentDate.year).toString());
     } else {
       int beforeYear = (iMonth + currentDate.month) ~/ 12;
       String yearNew = (currentDate.year + beforeYear - 1).toString();
@@ -43,35 +38,17 @@ class TimeFormat {
 
   static timeConversion(int monthTime, String yearTime) {
     Map<String, String> dateMap = Map();
-    dateMap['startDate'] = '$yearTime' +
-        '-' +
-        (monthTime < 10 ? '0' + monthTime.toString() : '$monthTime') +
-        '-' +
-        '01';
+    dateMap['startDate'] = '$yearTime' + '-' + (monthTime < 10 ? '0' + monthTime.toString() : '$monthTime') + '-' + '01';
     //转时间戳再转时间格式 防止出错
-    dateMap['startDate'] = DateUtil.formatDate(
-        DateTime.fromMillisecondsSinceEpoch(
-            turnTimestamp(dateMap['startDate']!)),
-        format: 'yyyy-MM-dd');
+    dateMap['startDate'] = DateUtil.formatDate(DateTime.fromMillisecondsSinceEpoch(turnTimestamp(dateMap['startDate']!)), format: 'yyyy-MM-dd');
     //某个月结束时间，转时间戳再转
-    String endMonth = '$yearTime' +
-        '-' +
-        ((monthTime + 1) < 10
-                ? '0' + (monthTime + 1).toString()
-                : (monthTime + 1))
-            .toString() +
-        '-' +
-        '00';
+    String endMonth = '$yearTime' + '-' + ((monthTime + 1) < 10 ? '0' + (monthTime + 1).toString() : (monthTime + 1)).toString() + '-' + '00';
     var endMonthTimeStamp = turnTimestamp(endMonth);
-    endMonth = DateUtil.formatDate(
-        DateTime.fromMillisecondsSinceEpoch(endMonthTimeStamp),
-        format: 'yyyy-MM-dd');
+    endMonth = DateUtil.formatDate(DateTime.fromMillisecondsSinceEpoch(endMonthTimeStamp), format: 'yyyy-MM-dd');
     dateMap['endDate'] = endMonth;
     //这里是为了公司后台接口 需加时间段的时间戳 但不显示在格式化实践中
-    dateMap['startDateStamp'] =
-        turnTimestamp(dateMap['startDate']! + ' 00:00:00').toString();
-    dateMap['endDateStamp'] =
-        turnTimestamp(dateMap['endDate']! + ' 23:59:59').toString();
+    dateMap['startDateStamp'] = turnTimestamp(dateMap['startDate']! + ' 00:00:00').toString();
+    dateMap['endDateStamp'] = turnTimestamp(dateMap['endDate']! + ' 23:59:59').toString();
     print('过去未来某个月初月末：$dateMap');
     return dateMap;
   }
@@ -81,6 +58,13 @@ class TimeFormat {
    */
   static int turnTimestamp(String timestamp) {
     return DateTime.parse(timestamp).millisecondsSinceEpoch;
+  }
+
+  /// 返回当前时间戳
+  static int currentTimeMillis() {
+    //获取当前时间的毫秒数
+    int nowDateMilliseconds = DateUtil.getNowDateMs();
+    return nowDateMilliseconds;
   }
 
   /**
@@ -94,12 +78,8 @@ class TimeFormat {
     var sunDay = getTimestampLatest(false, 7 - weekday + weeks * 7); //周末
     var monDay = getTimestampLatest(true, -weekday + 1 + weeks * 7); //周一
 
-    mapTime['monDay'] = DateUtil.formatDate(
-        DateTime.fromMillisecondsSinceEpoch(sunDay),
-        format: 'yyyy-MM-dd'); //周一 时间格式化
-    mapTime['sunDay'] = DateUtil.formatDate(
-        DateTime.fromMillisecondsSinceEpoch(monDay),
-        format: 'yyyy-MM-dd'); //周一 时间格式化
+    mapTime['monDay'] = DateUtil.formatDate(DateTime.fromMillisecondsSinceEpoch(sunDay), format: 'yyyy-MM-dd'); //周一 时间格式化
+    mapTime['sunDay'] = DateUtil.formatDate(DateTime.fromMillisecondsSinceEpoch(monDay), format: 'yyyy-MM-dd'); //周一 时间格式化
     mapTime['monDayStamp'] = '$monDay'; //周一 时间戳
     mapTime['sunDayStamp'] = '$sunDay'; //周日 时间戳
     print('某个周的周一和周日：$mapTime');
@@ -113,8 +93,7 @@ class TimeFormat {
     String newHours;
     DateTime now = new DateTime.now();
     DateTime sixtyDaysFromNow = now.add(new Duration(days: day));
-    String formattedDate =
-        DateUtil.formatDate(sixtyDaysFromNow, format: 'yyyy-MM-dd');
+    String formattedDate = DateUtil.formatDate(sixtyDaysFromNow, format: 'yyyy-MM-dd');
     if (phase) {
       newHours = formattedDate + ' 00:00:00';
     } else {
@@ -122,8 +101,7 @@ class TimeFormat {
     }
 
     DateTime newDate = DateTime.parse(newHours);
-    String newFormattedDate =
-        DateUtil.formatDate(newDate, format: 'yyyy-MM-dd HH:mm:ss');
+    String newFormattedDate = DateUtil.formatDate(newDate, format: 'yyyy-MM-dd HH:mm:ss');
     int timeStamp = newDate.millisecondsSinceEpoch;
     // print('时间' + newFormattedDate);
     return timeStamp;

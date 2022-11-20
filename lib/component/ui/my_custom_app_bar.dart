@@ -1,74 +1,72 @@
 import 'package:flutter/material.dart';
+
 import '../index.dart';
 
-// ignore: must_be_immutable
-class XAppBar extends StatelessWidget implements PreferredSizeWidget {
-  late String title;
-  TextStyle? textStyle;
-  Color? backgroundColor;
-  Color? color;
-  List<Widget>? actions;
-  late Function leftCallback;
-  XAppBar({
-    required String title,
-    TextStyle? textStyle,
-    Color? backgroundColor,
-    Color? color,
-    List<Widget>? actions,
-    leftCallback,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.only(top: ScreenUtil().statusBarHeight),
-      color: backgroundColor ?? Colors.transparent,
-      height: 88.w + ScreenUtil().statusBarHeight,
-      width: 750.w,
-      child: Stack(
-        children: [
-          GestureDetector(
-            behavior: HitTestBehavior.opaque,
-            onTap: isNotNull(leftCallback)
-                ? leftCallback.call()
-                : () {
-                    Navigator.pop(context);
-                  },
-            child: Icon(
-              Icons.chevron_left,
-              color: color ?? themeColor.ff0E1424,
-            ).background(width: 88.w, height: 88.w),
-          ).centerLeft.margin(left: 24.w),
-          Text(
-            title,
-            style: TextStyle(
-              fontSize: 32.w,
-              color: color ?? themeColor.ff0E1424,
-              fontWeight: FontWeight.bold,
-            ),
-            // font(32, color: color ?? '#010101', bold: true),
-          ).center,
-          if (isNotNull(actions?.length))
-            Row(
-              children: List.generate(
-                actions!.length,
-                (index) => Container(
-                  child: actions![index],
-                  width: 88.w,
-                ),
-              ),
-            )
-                .background(width: 88.w * actions!.length)
-                .centerRight
-                .margin(right: 24.w),
-        ],
-      ),
-    );
+AppBar XAppBar(
+  context, {
+  String? title,
+  PreferredSizeWidget? bottom,
+  Widget? subTitle,
+  Widget? titleWidget,
+  double? tWidth,
+  double? tHeight,
+  Function? willPopFn,
+  Widget? backWidget,
+  Function? backWidgetFn,
+  List<Widget>? actions,
+  bool? elevation,
+  bool? hiddenLeading,
+      double? LeadingWidth,
+}) {
+  onPressed() async {
+    if (backWidgetFn == null) {
+      var pop = await willPopFn?.call();
+      var canPop = pop == null || pop;
+      if (Navigator.canPop(context) && canPop) {
+        Navigator.pop(context);
+      } else {
+        if (canPop) {
+          XUtil.flutterPop();
+        }
+      }
+    } else {
+      backWidgetFn.call();
+    }
   }
 
-  @override
-  // TODO: implement preferredSize
-  Size get preferredSize => new Size.fromHeight(kToolbarHeight);
+  return AppBar(
+    backgroundColor: themeColor.ffFFFFFF,
+    title: titleWidget ??
+        (Stack(
+          alignment: AlignmentDirectional.center,
+          children: [
+            subTitle ?? const SizedBox(width: 0, height: 0),
+            Text(
+              '$title',
+              style: Theme.of(context).textTheme.titleLarge?.copyWith(color: themeColor.ff0E1424, fontWeight: FontWeight.w500),
+            ),
+          ],
+        ).background(width: tWidth, height: tHeight)),
+    centerTitle: titleWidget == null ? true : false,
+    elevation: elevation ?? false ? 1.w : 0,
+    toolbarHeight: bottom == null ? 44 : 88,
+    leadingWidth: hiddenLeading == true ?0: LeadingWidth,
+    leading: hiddenLeading == true
+        ? Container()
+        : (backWidget == null
+            ? IconButton(
+                color: Colors.black,
+                icon: Icon(
+                  Icons.arrow_back_ios,
+                  size: 20,
+                ),
+                onPressed: onPressed,
+              )
+            : XButton(
+                callback: backWidgetFn ?? onPressed,
+                child: backWidget,
+              )),
+    actions: actions ?? [const SizedBox(width: 44)],
+    bottom: bottom,
+  );
 }
-
-class XAppBarX extends AppBar {}

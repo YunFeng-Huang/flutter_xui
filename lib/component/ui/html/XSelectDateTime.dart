@@ -1,7 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import '../css.dart';
+
 import '../../index.dart';
+import '../css.dart';
 
 // ignore: must_be_immutable
 class XSelectDateTime extends StatefulWidget {
@@ -18,20 +19,7 @@ class XSelectDateTime extends StatefulWidget {
   bool? showIcon;
   TextStyle? style;
   Widget? child;
-  XSelectDateTime(
-      {this.currentTime,
-      this.format = 'yyyy-MM-dd HH:mm',
-      this.style,
-      this.onConfirm,
-      this.onChanged,
-      this.maxTime,
-      this.minTime,
-      this.textAlign,
-      this.height,
-      this.mode,
-      this.showIcon = true,
-      this.child,
-      this.width});
+  XSelectDateTime({this.currentTime, this.format = 'yyyy-MM-dd HH:mm', this.style, this.onConfirm, this.onChanged, this.maxTime, this.minTime, this.textAlign, this.height, this.mode, this.showIcon = true, this.child, this.width});
   @override
   _XSelectDateTimeState createState() => _XSelectDateTimeState();
 }
@@ -45,8 +33,7 @@ class _XSelectDateTimeState extends State<XSelectDateTime> {
   DateTime? get minTime => widget.minTime;
   DateTime? get maxTime => widget.maxTime;
   CupertinoDatePickerMode? get mode => widget.mode;
-  String? get currentTime =>
-      widget.currentTime == null ? null : widget.currentTime!;
+  String? get currentTime => widget.currentTime == null ? null : widget.currentTime!;
   TextAlign? get textAlign => widget.textAlign;
   bool? get showIcon => widget.showIcon;
   // DateTime? get value => DateTime.parse(widget.currentTime!);
@@ -57,8 +44,7 @@ class _XSelectDateTimeState extends State<XSelectDateTime> {
   void initState() {
     super.initState();
     // print(widget.currentTime);
-    _dateTime =
-        widget.currentTime == null ? null : DateTime.parse(widget.currentTime!);
+    _dateTime = widget.currentTime == null ? null : DateTime.parse(widget.currentTime!);
   }
 
   @override
@@ -70,22 +56,19 @@ class _XSelectDateTimeState extends State<XSelectDateTime> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               XButton(
-                text: '取消',
+                child: Text('取消'),
                 callback: () {
                   Navigator.pop(context);
                 },
               ),
               XButton(
-                text: '确定',
+                child: Text('确定'),
                 callback: () {
-                  onConfirm?.call(
-                      DateUtil.formatDate(_dateTime, format: widget.format));
+                  onConfirm?.call(DateUtil.formatDate(_dateTime, format: widget.format));
                 },
               ),
             ],
-          )
-              .padding(horizontal: 24.w)
-              .background(color: Colors.white, height: 100.w),
+          ).padding(horizontal: 24.w).background(color: Colors.white, height: 100.w),
           Container(
             color: Colors.white,
             height: 600.w,
@@ -152,7 +135,6 @@ class SelectDateTimeEntity {
 //     style: TextStyle(color: Colors.blue),
 //   ),
 // ),
-
 
 //  Future showDateSelect(context) async {
 //   //获取当前的时间

@@ -37,7 +37,7 @@
   static themeColorInit() {
     globalConfig.theme = FontTextColor.theme;
     themeColor = ThemeColor(
-      ff0E0D15: FontTextColor.ff0E0D15,
+      primary: FontTextColor.primary,
       ff3D3B48: FontTextColor.ff3D3B48,
       ff6C7480: FontTextColor.ff6C7480,
       ff9EA6AE: FontTextColor.ff9EA6AE,

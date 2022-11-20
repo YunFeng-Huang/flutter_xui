@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/cupertino.dart';
 
 class Log {
@@ -9,8 +11,7 @@ class Log {
   static String _startLine = "$_split$_title$_split";
   static String _endLine = "$_split$_separator$_separator$_separator$_split";
 
-  static void init({required String title,  required bool isDebug,
-       int? limitLength}) {
+  static void init({required String title, required bool isDebug, int? limitLength}) {
     _title = title;
     _isDebug = isDebug;
     _limitLength = limitLength ??= _limitLength;
@@ -68,5 +69,9 @@ class Log {
 
   static void _logEmpyLine() {
     print("");
+  }
+
+  static void write(String text, {bool isError = false}) {
+    Future.microtask(() => log('** $text. isError: [$isError]'));
   }
 }

@@ -41,7 +41,7 @@ class XInput extends StatelessWidget {
     inputFormatters,
     labelWidget,
     labelAlign,
-    labelWidth,
+    labelWidth = 0.0,
     labelStyle,
     padding,
     radius,

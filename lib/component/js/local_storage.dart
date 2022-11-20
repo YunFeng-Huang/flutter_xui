@@ -25,7 +25,7 @@ class Sesstion {
   }
 
   /// 设置存储
-  setStorage(String key, dynamic value) async {
+   setStorage(String key, dynamic value) async {
     await _initStorage();
     String type;
     // 监测value的类型 如果是Map和List,则转换成JSON，以字符串进行存储
@@ -37,6 +37,7 @@ class Sesstion {
     else {
       type = value.runtimeType.toString();
     }
+
     // 根据value不同的类型 用不同的方法进行存储
     switch (type) {
       case 'String':
@@ -61,7 +62,8 @@ class Sesstion {
     dynamic value = _storage!.get(key);
     // 判断value是不是一个json的字符串 是 则解码
     if (_isJson(value)) {
-      return JsonDecoder().convert(value);
+      var v = JsonDecoder().convert(value);
+      return (v is Map || v is List)?v:value;
     } else {
       // 不是 则直接返回
       return value;

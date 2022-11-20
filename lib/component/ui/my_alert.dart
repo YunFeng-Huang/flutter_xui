@@ -56,7 +56,7 @@ class XAlert {
                           callback(index);
                         },
                         child: Text(list[index],
-                                style: font(32, colorA: themeColor.ff0E0D15))
+                                style: font(32, colorA: themeColor.primary))
                             .center
                             .background(
                                 height: 112.w, borderTop: index == 0 ? 0 : 1.w),
@@ -73,7 +73,7 @@ class XAlert {
                     },
                     child: Text(
                       '取消',
-                      style: font(32, colorA: themeColor.ff0E0D15),
+                      style: font(32, colorA: themeColor.primary),
                     ).center.background(height: 110.w),
                   )
                 ],
@@ -102,9 +102,10 @@ class XAlert {
       heightAuto,
       elevation,
       minHeight,
-      maxHeight,
+      maxHeight, barrierDismissible:false,
       child}) {
     return showDialog(
+      barrierDismissible: barrierDismissible,
       barrierColor: barrierColor,
       context: context,
       builder: (BuildContext context) {

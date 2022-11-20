@@ -68,8 +68,8 @@ class _XCheckBoxState extends State<XCheckBox> {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          if (isNotNull(left)) left!.margin(right: 10.w),
-          isNotNull(activeImg)
+          if (left!=null) left!.margin(right: 10.w),
+          activeImg!=null
               ? (_value
                   ? XImage(
                       image: activeImg!,

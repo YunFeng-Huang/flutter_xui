@@ -1,19 +1,24 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:io';
 import 'dart:ui' as ui;
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:xui/component/ui/index.dart';
 
 import 'local_storage.dart';
+
+
+class XUtil {
 
 /// 函数防抖
 ///
 /// [func]: 要执行的方法
 /// [delay]: 要迟延的时长
-Timer? timer;
-debounce(
+static Timer? timer;
+static debounce(
   Function func, [
   Duration delay = const Duration(milliseconds: 500),
 ]) {
@@ -28,9 +33,9 @@ debounce(
 /// 函数节流
 ///
 /// [func]: 要执行的方法
-bool enable = true;
+static bool enable = true;
 
-throttle(
+static throttle(
   Function func, [
   Duration delay = const Duration(milliseconds: 2000),
 ]) {
@@ -44,8 +49,8 @@ throttle(
 }
 
 // ignore: unused_element
-String? _key = '';
-throttle2(
+static String? _key = '';
+static throttle2(
   Function func, [
   String? key,
 ]) {
@@ -55,42 +60,11 @@ throttle2(
   }
 }
 
-//[cookieName]: 'cookieName'
-//[api]: 接口地址
-//[params]: 参数
-//[callback]: 要执行的方法
-//[type]: 0 等待cookie和api 都请求结束  1 谁快用谁
-Future staticStorage({cookieName, api, params, callback, type = 0}) async {
-  var data;
-  var paramsToJson;
-  var date = DateTime.now();
-  _post() async {
-    data = await api(Map<String, dynamic>.from(params));
-    if (data != null) {
-      if (type == 0 || (type == 1 && paramsToJson == null)) {
-        paramsToJson = callback.call(data);
-        Sesstion().setStorage(cookieName, data);
-        return paramsToJson;
-      }
-    }
-  }
-
-  _getCookie() async {
-    data = await Sesstion().getStorage(cookieName);
-    if (data != null && paramsToJson == null) paramsToJson = callback.call(data);
-    return paramsToJson;
-  }
-
-  _getCookie();
-  await _post();
-  return paramsToJson;
-}
-
-String typeOf(element) {
+static String typeOf(element) {
   return element.runtimeType.toString();
 }
 
-bool isJson(source) {
+static bool isJson(source) {
   var isJson = false;
   try {
     jsonDecode(source);
@@ -100,7 +74,7 @@ bool isJson(source) {
   return isJson;
 }
 
-formatNum(double num, int postion) {
+static formatNum(double num, int postion) {
   if ((num.toString().length - num.toString().lastIndexOf(".") - 1) < postion) {
     //小数点后有几位小数
 
@@ -111,7 +85,7 @@ formatNum(double num, int postion) {
 }
 
 //数组分组
-List splitList(xList, [chunk = 2]) {
+static List splitList(xList, [chunk = 2]) {
   var list = [];
   var len = xList.length;
   for (var i = 0; i < len; i += chunk as int) {
@@ -121,11 +95,9 @@ List splitList(xList, [chunk = 2]) {
   return list;
 }
 
-bool isNotNull(params) {
-  return params != null && params != '';
-}
 
-intParse(params) {
+
+static intParse(params) {
   if (typeOf(params) != 'int' && params != null) {
     return int.parse(params);
   } else {
@@ -134,7 +106,7 @@ intParse(params) {
 }
 
 // 1.00 => 1
-toInt(value) {
+static toInt(value) {
   if (typeOf(value) == 'double') {
     return value == value.toInt() ? value.toInt() : value;
   } else {
@@ -142,11 +114,11 @@ toInt(value) {
   }
 }
 
-filterKey(params, key) {
+static filterKey(params, key) {
   return params.containsKey(key) ? params[key] : null;
 }
 
-recursive(data, keys) {
+static recursive(data, keys) {
   if (data == null) return;
   keys.forEach((e) {
     data = data[e];
@@ -157,7 +129,7 @@ recursive(data, keys) {
 //[time]: 结束时间
 //[callback]: 回调
 // GlobalConfig.TimerCancel = null; 销毁
-countdown(time, callback) {
+static countdown(time, callback) {
   if (time.isAfter(DateTime.now())) {
     GlobalConfig.timerCancel = Timer.periodic(const Duration(seconds: 1), (timer) {
       var difference = time.difference(DateTime.now());
@@ -173,11 +145,8 @@ countdown(time, callback) {
   }
 }
 
-Iterable mapData(List list) {
-  return list.asMap().entries;
-}
 
-filterList(data, key) {
+static filterList(data, key) {
   // List data=[{'name':'1','id':1},{'name':'1','id':1},{'name':'2','id':2},{'name':'2','id':2}];
   var _a = new Set(); //将_a带上去重属性
   List _h = [];
@@ -196,7 +165,7 @@ filterList(data, key) {
   return _h;
 }
 
-Future<ui.Image> loadImage(String url) async {
+static Future<ui.Image> loadImage(String url) async {
   Completer<ui.Image> completer = Completer<ui.Image>();
   ImageStreamListener? listener;
   ImageStream stream = CachedNetworkImageProvider(url).resolve(ImageConfiguration.empty);
@@ -211,13 +180,20 @@ Future<ui.Image> loadImage(String url) async {
   return completer.future;
 }
 
-double getY(BuildContext buildContext) {
+static double getY(BuildContext buildContext) {
   final RenderBox box = buildContext.findRenderObject() as RenderBox;
   final offset = box.localToGlobal(Offset.zero);
   return offset.dy;
 }
+static  flutterPop() {
+  if (Platform.isAndroid) {
+    SystemNavigator.pop();
+  } else {
+    exit(0);
+  }
+}
 
-deepClone(obj) {
+static deepClone(obj) {
   dynamic newObj = obj is Map ? {} : [];
   if (obj is Map) {
     obj.forEach((key, value) {
@@ -237,4 +213,10 @@ deepClone(obj) {
     }
   }
   return newObj;
+}
+
+}
+
+isNotNull(v){
+return v!=null;
 }

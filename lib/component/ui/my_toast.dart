@@ -4,21 +4,12 @@ import 'package:flutter/material.dart';
 
 //用法  showToast('删除成功！') icon 为图标
 showToast(context, String text) {
-  return Toast.makeText(
-          context: context,
-          content: text,
-          animated: Toast.ANIMATED_MOVEMENT_TWEEN)
-      .show();
+  return Toast.makeText(context: context, content: text, animated: Toast.ANIMATED_MOVEMENT_TWEEN).show();
 }
 
 debugInfo(context, String text) {
   bool isDev = !bool.fromEnvironment("dart.vm.product");
-  if (isDev)
-    return Toast.makeText(
-        context: context,
-        content: text,
-        animated: Toast.ANIMATED_MOVEMENT_TWEEN)
-        .show();
+  if (isDev) return Toast.makeText(context: context, content: text, animated: Toast.ANIMATED_MOVEMENT_TWEEN).show();
 }
 
 class Toast {
@@ -52,8 +43,7 @@ class Toast {
 
   // 自定义 显示内容
   static Widget? _toastWidget;
-  static ToastLayoutStyle style = ToastLayoutStyle(
-      fontSize: 14, height: 20 / 14, horizontal: 15, vertical: 10);
+  static ToastLayoutStyle style = ToastLayoutStyle(fontSize: 14, height: 20 / 14, horizontal: 15, vertical: 10);
   // 动画
   static int _animated = 0;
   // 执行动画时间
@@ -130,9 +120,7 @@ class Toast {
                   //目标透明度
                   opacity: _showing ? 1.0 : 0.0,
                   //执行时间
-                  duration: _showing
-                      ? Duration(milliseconds: _millisecondsShow)
-                      : Duration(milliseconds: _millisecondsHide),
+                  duration: _showing ? Duration(milliseconds: _millisecondsShow) : Duration(milliseconds: _millisecondsHide),
                   child: _toastWidget,
                 ),
               ),
@@ -143,8 +131,7 @@ class Toast {
     await Future.delayed(Duration(milliseconds: _milliseconds));
 
     //2秒后 到底消失不消失
-    if (DateTime.now().difference(_startedTime).inMilliseconds >=
-        _milliseconds) {
+    if (DateTime.now().difference(_startedTime).inMilliseconds >= _milliseconds) {
       _showing = false;
       //重新绘制UI，类似setState
       _overlayEntry.markNeedsBuild();
@@ -193,24 +180,18 @@ class Toast {
     );
 
     //透明显示动画
-    Animation<double> opacityShow =
-        new Tween(begin: 0.0, end: 1.0).animate(showAnimationController);
+    Animation<double> opacityShow = new Tween(begin: 0.0, end: 1.0).animate(showAnimationController);
     //提供一个曲线，使动画感觉更流畅
-    CurvedAnimation ffsetCurvedAnimation = new CurvedAnimation(
-        parent: offsetAnimationController, curve: Curves.fastOutSlowIn);
+    CurvedAnimation ffsetCurvedAnimation = new CurvedAnimation(parent: offsetAnimationController, curve: Curves.fastOutSlowIn);
 
-    CurvedAnimation hideFfsetCurvedAnimation = new CurvedAnimation(
-        parent: hideOffsetAnimationController, curve: Curves.fastOutSlowIn);
+    CurvedAnimation hideFfsetCurvedAnimation = new CurvedAnimation(parent: hideOffsetAnimationController, curve: Curves.fastOutSlowIn);
 
     //平移动画
-    Animation<double> offsetAnim =
-        new Tween(begin: 50.0, end: 0.0).animate(ffsetCurvedAnimation);
+    Animation<double> offsetAnim = new Tween(begin: 50.0, end: 0.0).animate(ffsetCurvedAnimation);
 
-    Animation<double> offsetAnimHide =
-        new Tween(begin: 0.0, end: -40.0).animate(hideFfsetCurvedAnimation);
+    Animation<double> offsetAnimHide = new Tween(begin: 0.0, end: -40.0).animate(hideFfsetCurvedAnimation);
     //透明隐藏动画
-    Animation<double> opacityHide =
-        new Tween(begin: 1.0, end: 0.0).animate(hideAnimationController);
+    Animation<double> opacityHide = new Tween(begin: 1.0, end: 0.0).animate(hideAnimationController);
     OverlayEntry? _overlayEntry = OverlayEntry(builder: (BuildContext context) {
       return Positioned(
         //top值，可以改变这个值来改变toast在屏幕中的位置
@@ -274,7 +255,6 @@ class Toast {
 
   //toast绘制
   static _defaultToastLayout() {
-    print(style.fontSize);
     return ConstrainedBox(
       constraints: BoxConstraints(
         //限制 最大宽度
@@ -283,13 +263,12 @@ class Toast {
       child: Card(
         color: _backgroundColor,
         child: Padding(
-          padding: EdgeInsets.symmetric(
-              horizontal: style.horizontal, vertical: style.vertical),
+          padding: EdgeInsets.symmetric(horizontal: style.horizontal, vertical: style.vertical),
           child: Text(_content!,
               style: TextStyle(
-                  fontSize: style.fontSize,
-                  color: _contentColor,
-                  height: style.height,
+                fontSize: style.fontSize,
+                color: _contentColor,
+                height: style.height,
               ),
               maxLines: 2,
               overflow: TextOverflow.ellipsis),
@@ -327,9 +306,5 @@ class ToastLayoutStyle {
   late double vertical;
   late double fontSize;
   late double height;
-  ToastLayoutStyle(
-      {required this.horizontal,
-      required this.vertical,
-      required this.fontSize,
-      required this.height});
+  ToastLayoutStyle({required this.horizontal, required this.vertical, required this.fontSize, required this.height});
 }
