@@ -43,7 +43,7 @@ AppBar XAppBar(
             subTitle ?? const SizedBox(width: 0, height: 0),
             Text(
               '$title',
-              style: Theme.of(context).textTheme.titleLarge?.copyWith(color: themeColor.ff0E1424, fontWeight: FontWeight.w500),
+              style: TextStyle(fontSize: 16).copyWith(color: themeColor.ff0E1424, fontWeight: FontWeight.w500),
             ),
           ],
         ).background(width: tWidth, height: tHeight)),
