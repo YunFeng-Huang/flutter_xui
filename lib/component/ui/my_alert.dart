@@ -90,7 +90,7 @@ class XAlert {
 
   /// 中间弹出提示框
   showCenterTipsAlter(
-      {required Function callback,
+      { Function? callback,
       title,
       info,
       cancelText,

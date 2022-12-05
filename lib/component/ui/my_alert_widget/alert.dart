@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:xui/xui.dart';
 
 class TipsAlterHeightAutoWidget extends StatefulWidget {
-  final callback;
-  final info;
+  final Function? callback;
+  final String? info;
   final String? title;
   final String? cancelText;
   final String? sureText;
