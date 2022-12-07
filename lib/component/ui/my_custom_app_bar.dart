@@ -43,7 +43,7 @@ AppBar XAppBar(
             subTitle ?? const SizedBox(width: 0, height: 0),
             Text(
               '$title',
-              style: TextStyle(fontSize: 16).copyWith(color: themeColor.ff0E1424, fontWeight: FontWeight.w500),
+              style: TextStyle(fontSize: 36.w).copyWith(color: themeColor.ff0E1424, fontWeight: FontWeight.w500),
             ),
           ],
         ).background(width: tWidth, height: tHeight)),
@@ -63,7 +63,7 @@ AppBar XAppBar(
       callback: backWidgetFn ?? onPressed,
       child: backWidget,
     )),
-    actions: actions ?? [const SizedBox(width: 44)],
+    actions: actions ??(automaticallyImplyLeading==false?null: [const SizedBox(width: 44)]),
     bottom: bottom,
   );
 }
