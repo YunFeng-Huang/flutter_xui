@@ -15,8 +15,7 @@ AppBar XAppBar(
   Function? backWidgetFn,
   List<Widget>? actions,
   bool? elevation,
-  bool? hiddenLeading,
-      double? LeadingWidth,
+      bool automaticallyImplyLeading = true,
 }) {
   onPressed() async {
     if (backWidgetFn == null) {
@@ -35,6 +34,7 @@ AppBar XAppBar(
   }
 
   return AppBar(
+    automaticallyImplyLeading:automaticallyImplyLeading,
     backgroundColor: themeColor.ffFFFFFF,
     title: titleWidget ??
         (Stack(
@@ -50,22 +50,19 @@ AppBar XAppBar(
     centerTitle: titleWidget == null ? true : false,
     elevation: elevation ?? false ? 1.w : 0,
     toolbarHeight: bottom == null ? 44 : 88,
-    leadingWidth: hiddenLeading == true ?0: LeadingWidth,
-    leading: hiddenLeading == true
-        ? Container()
-        : (backWidget == null
-            ? IconButton(
-                color: Colors.black,
-                icon: Icon(
-                  Icons.arrow_back_ios,
-                  size: 20,
-                ),
-                onPressed: onPressed,
-              )
-            : XButton(
-                callback: backWidgetFn ?? onPressed,
-                child: backWidget,
-              )),
+    leading:( backWidget == null
+        ? IconButton(
+      color: Colors.black,
+      icon: Icon(
+        Icons.arrow_back_ios,
+        size: 20,
+      ),
+      onPressed: onPressed,
+    )
+        : XButton(
+      callback: backWidgetFn ?? onPressed,
+      child: backWidget,
+    )),
     actions: actions ?? [const SizedBox(width: 44)],
     bottom: bottom,
   );
