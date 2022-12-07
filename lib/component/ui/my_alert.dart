@@ -102,10 +102,10 @@ class XAlert {
       heightAuto,
       elevation,
       minHeight,
-      maxHeight, barrierDismissible:false,
+      maxHeight,
+        barrierDismissible:false,
       child}) {
     return showDialog(
-      barrierDismissible: barrierDismissible,
       barrierColor: barrierColor,
       context: context,
       builder: (BuildContext context) {
@@ -131,7 +131,7 @@ class XAlert {
 
 //用法 showLoading('加载中，请等待... ...')
 showLoading(context, [String text = "加载中，请等待..."]) {
-  return showCupertinoModalPopup(
+  return showDialog(
     barrierDismissible: false,
     context: context,
     builder: (context) {
