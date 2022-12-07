@@ -50,7 +50,7 @@ AppBar XAppBar(
     centerTitle: titleWidget == null ? true : false,
     elevation: elevation ?? false ? 1.w : 0,
     toolbarHeight: bottom == null ? 44 : 88,
-    leading:( backWidget == null
+    leading:automaticallyImplyLeading==false?null:(backWidget == null
         ? IconButton(
       color: Colors.black,
       icon: Icon(
