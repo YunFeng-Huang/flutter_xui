@@ -6,6 +6,7 @@ import '../../index.dart';
 
 // ignore: must_be_immutable
 class XInput extends StatelessWidget {
+  Key? key;
   String? _label;
   Widget? _labelWidget;
   double? _labelWidth;
@@ -36,6 +37,7 @@ class XInput extends StatelessWidget {
   Widget? _suffixIcon;
   List<TextInputFormatter>? _inputFormatters;
   XInput({
+    Key? key,
     row = true,
     label,
     inputFormatters,
@@ -129,6 +131,7 @@ class XInput extends StatelessWidget {
     // ignore: non_constant_identifier_names
     _InputWidget() {
       return TextField(
+         key:key,
         inputFormatters: _inputFormatters,
         expands: _expands ?? false,
         cursorColor: themeColor.ffFF4300,
