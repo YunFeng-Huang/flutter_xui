@@ -8,10 +8,7 @@
 
 进入页面先设置下尺寸
 ````dart
-   
-
       builder: (context, child) {
-          ScreenUtil.init(context, designSize: Size(750, 1334), allowFontScaling: false);
           return MediaQuery(
             data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
             child: child!,
@@ -57,8 +54,8 @@
   }
 
 //设置
-eg: 放在 ScreenUtil.init 后面执行
-Api.context = context; 放在入口页面执行
+
+
 ````
  
 
@@ -75,20 +72,12 @@ Api.context = context; 放在入口页面执行
 #### XButton 按钮:
 ````dart
     XButton(
-        text: '扫码收款',
-        style: font(14, color: '#333333', weight: FontWeight.w400),
-        color: HexToColor('#F0F2F5'),
-        borderColor: HexToColor('#D7DBE0'),
-        radius: 3.w,
-        height: 58.w,
-        horizontal: 20.w,
-        params: {},
-        api: params.submit,
-        callback: (v) {
-            // params: params.toJson(),
-            // api: params.submit,
-        },
-    ),
+      callback: () => Get.back(),
+      child: Text(
+        '确定',
+        style: FontText.h26.copyWith(color: FontTextColor.ff333333),
+      ).center.margin(right: 40.w),
+    )
     
 
 ````
@@ -132,22 +121,27 @@ Api.context = context; 放在入口页面执行
 
 #### XImage 图片:
 ````dart
-   XImage(image: 'img', width: 64.w, height: 64.w),
+   XImage(
+    type: XImageType.avatar,
+    image: LoginService.userInfo?.driverPhotoUrl,
+    width: 75.w,
+    height: 75.w,
+    borderRadius: 100,
+  )
 ````
 
 #### XInput 输入框:
 ````dart
   XInput(
-        controller: nameController,
-        keyboardType: TextInputType.visiblePassword,
-        labelWidth: 0.w,
-        hintText: '请输入编号',
-        border: themeColor.ffDEDFDE,
-        radius: 4.w,
-        onChanged: (v) {
-            print(v);
-        },
-    ).background(width: 200.w, height: 37.w),
+  controller: state.code,
+  keyboardType: TextInputType.number,
+  hintText: '请输入验证码',
+  hintStyle: FontText.h32.copyWith(color: FontTextColor.ffCCCCCC),
+  style: FontText.h32.copyWith(color: FontTextColor.ff333333),
+  validator: FormKeyEnum.empty,
+  contentPadding: EdgeInsets.only(top: 30.w, bottom: 30.w),
+  onChanged: (v) {},
+)
 ````
 
 
@@ -179,10 +173,19 @@ Api.context = context; 放在入口页面执行
 #### XP 多个text拼接:
 ````dart
   XP([
-    XPConfig('总额', font(28, color: '#273143')),
-    XPConfig(' ￥', font(24, color: '#FF6A09')),
-    XPConfig(_create.allPrice, font(34, color: '#FF6A09')),
-  ]),
+    XPConfig(
+      title: '预估价格：',
+      style: FontText.h30.copyWith(color: FontTextColor.ff333333),
+    ),
+    XPConfig(
+      title: '${XChangePrice(state.orderEstimatedPriceData.value.price)}',
+      style: FontText.h36.copyWith(color: FontTextColor.ff333333),
+    ),
+    XPConfig(
+      title: ' 元',
+      style: FontText.h30.copyWith(color: FontTextColor.ff333333),
+    ),
+  ])
 ````
 
 #### XForm 表单布局:
@@ -317,28 +320,19 @@ Api.context = context; 放在入口页面执行
 #### XCustomScrollView sliver 布局 包含 loading 上拉 下拉刷新:
 ````dart
     XCustomScrollView(
-      XAppBar: defaultAppbar(shipWharfItem?.shipName),
-      slivers: () => [
-        SliverList(
-          delegate: new SliverChildBuilderDelegate(
-            (BuildContext context, int index) {
-              SchedulingItemEntity item = list![index];
-              return buildColumn(context, item);
-            },
-            childCount: list!.length,
-          ),
-        )
-      ],
-      onRefresh: () {
-        _search!.pageIndex = 1;
-        _shipWharfList();
-      },
-      onLoading: () {
-        _search!.pageIndex++;
-        _shipWharfList();
-      },
-      loading: shipWharfList == null || list == null,
-    )   
+      loadingWidget: const LoadingWidget(),
+      emptyWidget: const EmptyWidget(status: EmptyStatus.empty),
+      errorWidget: EmptyWidget(
+        status: EmptyStatus.error,
+        onTap: () {},
+      ),
+      backgroundColor: Theme.of(context).backgroundColor,
+      onRefresh: () {},
+      onLoading: () {},
+      xAppBar: XAppBar(context, title: '模版'),
+      slivers: () => [],
+      status: PageStatus.success,
+    )  
 ````
 
 
