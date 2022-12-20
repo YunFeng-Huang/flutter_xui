@@ -32,7 +32,6 @@ export 'ui/html/XSelectInput.dart';
 export 'ui/html/XSlider.dart';
 export 'ui/html/XTable.dart';
 export 'ui/html/XText.dart';
-export 'ui/icon.dart';
 export 'ui/index.dart';
 export 'ui/my_alert.dart';
 export 'ui/my_alert_widget/alert.dart';

@@ -31,7 +31,7 @@ class _XImageState extends State<XImage> {
     if (XUtil.typeOf(_icon) == 'Null') {
       return Center(
         child: CircularProgressIndicator(
-          valueColor: new AlwaysStoppedAnimation<Color>(Colors.orange),
+          valueColor: new AlwaysStoppedAnimation<Color>(themeColor.primary!),
           strokeWidth: 2.w,
         ),
       ).background(width: widget.iconSize, height: widget.iconSize);

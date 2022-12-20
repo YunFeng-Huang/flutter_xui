@@ -61,7 +61,7 @@ class _LoadingState extends State<Loading> {
       children: <Widget>[
         CircularProgressIndicator(
           // backgroundColor: Colors.orange[100],
-          valueColor: new AlwaysStoppedAnimation<Color>(Colors.orange),
+          valueColor: new AlwaysStoppedAnimation<Color>(themeColor.primary!),
           // value: _value/ 190,
           strokeWidth: 2.w,
         ),
