@@ -45,11 +45,11 @@ formCheck(FormKeyEnum key, value, [required = false]) {
       }
       break;
     case FormKeyEnum.phone:
-      RegExp reg = new RegExp(r'^\d{11}$');
+      RegExp reg = new RegExp(r'^1(3\d|4[5-9]|5[0-35-9]|6[567]|7[0-8]|8\d|9[0-35-9])\d{8}$');
       if (isEmpty) {
         str = required ? '手机号码不能为空' : null;
       } else if (!reg.hasMatch(value)) {
-        str = '请输入11位手机号码';
+        str = '请输入正确手机号码';
       }
       break;
     case FormKeyEnum.idCard:
