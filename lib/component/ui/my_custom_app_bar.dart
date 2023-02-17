@@ -14,7 +14,9 @@ AppBar XAppBar(
   Widget? backWidget,
   Function? backWidgetFn,
   List<Widget>? actions,
+      Color?  backgroundColor,
   bool? elevation,
+      String?   theme= "light",
       bool automaticallyImplyLeading = true,
 }) {
   onPressed() async {
@@ -35,7 +37,7 @@ AppBar XAppBar(
 
   return AppBar(
     automaticallyImplyLeading:automaticallyImplyLeading,
-    backgroundColor: themeColor.ffFFFFFF,
+    backgroundColor:theme == 'light'? themeColor.ffFFFFFF : themeColor.primary,
     title: titleWidget ??
         (Stack(
           alignment: AlignmentDirectional.center,
@@ -43,7 +45,7 @@ AppBar XAppBar(
             subTitle ?? const SizedBox(width: 0, height: 0),
             Text(
               '$title',
-              style: TextStyle(fontSize: 36.w).copyWith(color: themeColor.ff0E1424, fontWeight: FontWeight.w500),
+              style: TextStyle(fontSize: 36.w).copyWith(color:theme == 'light'?  themeColor.ff0E1424:themeColor.ffFFFFFF, fontWeight: FontWeight.w500),
             ),
           ],
         ).background(width: tWidth, height: tHeight)),
@@ -52,7 +54,7 @@ AppBar XAppBar(
     toolbarHeight: bottom == null ? 44 : 88,
     leading:automaticallyImplyLeading==false?null:(backWidget == null
         ? IconButton(
-      color: Colors.black,
+      color:theme == 'light'?  Colors.black:themeColor.ffFFFFFF,
       icon: Icon(
         Icons.arrow_back_ios,
         size: 20,
