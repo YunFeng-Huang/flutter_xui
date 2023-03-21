@@ -104,7 +104,11 @@ class XAlert {
       minHeight,
       maxHeight,
         barrierDismissible:false,
-      child}) {
+        cancelBtnBackgroundColor,
+        sureBtnBackgroundColor,
+        cancelBtnTextColor,
+        sureBtnTextColor,
+      child,}) {
     return showDialog(
       barrierColor: barrierColor,
       context: context,
@@ -123,6 +127,10 @@ class XAlert {
           minHeight: minHeight,
           elevation: elevation,
           maxHeight: maxHeight,
+          sureBtnBackgroundColor:sureBtnBackgroundColor,
+          cancelBtnBackgroundColor:cancelBtnBackgroundColor,
+            cancelBtnTextColor:cancelBtnTextColor,
+            sureBtnTextColor:sureBtnTextColor
         );
       },
     );

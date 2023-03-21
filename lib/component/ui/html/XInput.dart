@@ -26,6 +26,7 @@ class XInput extends StatelessWidget {
   bool? _obscureText;
   bool? _row;
   bool? _expands;
+  bool? _readOnly;
   TextStyle? _style;
   int? _maxLines;
   int? _maxLength;
@@ -40,6 +41,7 @@ class XInput extends StatelessWidget {
     Key? key,
     row = true,
     label,
+    readOnly,
     inputFormatters,
     labelWidget,
     labelAlign,
@@ -74,6 +76,7 @@ class XInput extends StatelessWidget {
     _inputFormatters = inputFormatters;
     _suffixIcon = suffixIcon;
     _counterText = counterText;
+    _readOnly = readOnly;
     _row = row ?? false;
     _focusNode = focusNode;
     _label = label;
@@ -144,6 +147,7 @@ class XInput extends StatelessWidget {
         textAlign: _textAlign ?? TextAlign.start,
         enabled: _enabled ?? true,
         style: _style,
+        readOnly:_readOnly??false,
         maxLength: _maxLength,
         onChanged: _onChanged,
         decoration: InputDecoration(

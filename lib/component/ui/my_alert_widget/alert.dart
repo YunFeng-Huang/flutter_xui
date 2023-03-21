@@ -18,6 +18,11 @@ class TipsAlterHeightAutoWidget extends StatefulWidget {
   final double? maxHeight;
   final double? minHeight;
   final bool? elevation;
+  final Color? cancelBtnBackgroundColor;
+  final Color? sureBtnBackgroundColor;
+  final Color? cancelBtnTextColor;
+  final Color? sureBtnTextColor;
+  
   TipsAlterHeightAutoWidget(
     this.callback,
     this.cancelText,
@@ -32,6 +37,10 @@ class TipsAlterHeightAutoWidget extends StatefulWidget {
     this.maxHeight,
     this.minHeight,
     this.elevation,
+        this.cancelBtnBackgroundColor,
+        this.sureBtnBackgroundColor,
+        this.cancelBtnTextColor,
+        this.sureBtnTextColor,
   });
   @override
   _TipsAlterWidgetState createState() => _TipsAlterWidgetState();
@@ -129,7 +138,8 @@ class _TipsAlterWidgetState extends State<TipsAlterHeightAutoWidget> {
       children: <Widget>[
         if (widget.cancelBtn!)
           new Expanded(
-            child: _getLiftBtn(),
+            child: _getLiftBtn().background(color: widget.cancelBtnBackgroundColor??Colors.transparent, bottomLeft: 16.w,
+             ),
           ),
         new Container(
           width: 1.w,
@@ -137,7 +147,7 @@ class _TipsAlterWidgetState extends State<TipsAlterHeightAutoWidget> {
         ),
         if (widget.sureBtn!)
           new Expanded(
-            child: _getRightBtn(),
+            child: _getRightBtn().background(color:widget.sureBtnBackgroundColor??Colors.transparent, bottomRight: 16.w,),
           ),
       ],
     );
@@ -147,7 +157,7 @@ class _TipsAlterWidgetState extends State<TipsAlterHeightAutoWidget> {
     return XButton(
       child: Text(
         widget.cancelText ?? '取消',
-        style: font(32, colorA: themeColor.ff6C7480, weight: FontWeight.w400),
+        style: font(32, colorA:widget.cancelBtnTextColor?? themeColor.ff6C7480, weight: FontWeight.w400),
       ),
       callback: () => Navigator.pop(context, false),
     ).center;
@@ -159,7 +169,7 @@ class _TipsAlterWidgetState extends State<TipsAlterHeightAutoWidget> {
         widget.sureText ?? '确认',
         style: font(
           32,
-          colorA: themeColor.primary,
+          colorA:widget.sureBtnTextColor?? themeColor.primary,
           weight: FontWeight.w400,
         ),
       ),
