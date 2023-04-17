@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:collection';
 import 'dart:convert';
 import 'dart:io';
+import 'dart:math';
 import 'dart:ui' as ui;
 
 import 'package:cached_network_image/cached_network_image.dart';
@@ -69,20 +70,6 @@ class XUtil {
     return isJson;
   }
 
-  static formatNum(double num, int postion) {
-    if ((num.toString().length - num.toString().lastIndexOf(".") - 1) <
-        postion) {
-      //小数点后有几位小数
-
-      print(num.toStringAsFixed(postion)
-          .substring(0, num.toString().lastIndexOf(".") + postion + 1)
-          .toString());
-    } else {
-      print(num.toString()
-          .substring(0, num.toString().lastIndexOf(".") + postion + 1)
-          .toString());
-    }
-  }
 
 //数组分组
   static List splitList(xList, [chunk = 2]) {
@@ -144,17 +131,17 @@ class XUtil {
     }
   }
 
-  static filterList(data, key) {
+  static filterList(data) {
     // List data=[{'name':'1','id':1},{'name':'1','id':1},{'name':'2','id':2},{'name':'2','id':2}];
     var _a = new Set(); //将_a带上去重属性
     List _h = [];
     for (int i = 0; i < data.length; i++) {
-      _a.add(data[i][key]); //_a会自动将重复的去掉  _a=[1,2]
+      _a.add(data[i].id); //_a会自动将重复的去掉  _a=[1,2]
     }
     List _b = _a.toList();
     for (int j = 0; j < _a.length; j++) {
       for (int i = 0; i < data.length; i++) {
-        if (_b[j] == data[i][key]) {
+        if (_b[j] == data[i].id) {
           _h.add(data[i]);
           break;
         }
@@ -214,8 +201,63 @@ class XUtil {
     }
     return newObj;
   }
+ 
+  static String formatName(String text, {type: "text"}) {
+    if (text == "" || text == null) return "";
+    if (type == 'phone') {
+      return text.replaceFirst(new RegExp(r'\d{4}'), '****', 3);
+    } else {
+      if (text.length > 2) {
+        return text.replaceFirst(new RegExp('.'), '*', 1);
+      }
+      return text.substring(0, 1) + '*';
+    }
+  }
+ static String renderSize(double value,[fix=2]) {
+    // ignore: unnecessary_null_comparison
+    if (value == null) {
+      return '0.0';
+    }
+    List<String> unitArr = []
+      ..add('B')
+      ..add('K')
+      ..add('M')
+      ..add('G');
+    int index = 0;
+    while (value > 1024) {
+      index++;
+      value = value / 1024;
+    }
+    String size = value.toStringAsFixed(fix);
+    return size + unitArr[index];
+  }
+  //循环获取缓存大小
+  static Future getTotalSizeOfFilesInDir(final FileSystemEntity file) async {
+    //  File
+
+    if (file is File && file.existsSync()) {
+      int length = await file.length();
+      return double.parse(length.toString());
+    }
+    if (file is Directory && file.existsSync()) {
+      List children = file.listSync();
+      double total = 0.0;
+      if (children.isNotEmpty) {
+        for (final FileSystemEntity child in children) {
+          total += await getTotalSizeOfFilesInDir(child);
+        }
+      }
+
+      return total;
+    }
+    return 0.0;
+  }
+
 }
 
 isNotNull(v) {
   return v != null;
 }
+
+
+

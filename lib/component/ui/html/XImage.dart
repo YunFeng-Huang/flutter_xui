@@ -58,7 +58,9 @@ class _XImageState extends State<XImage> {
       fadeOutCurve: Curves.linear,
       imageUrl: widget.image ?? '',
       imageBuilder: (context, imageProvider) => Container(
+
         decoration: BoxDecoration(
+          color: widget.background,
           image: DecorationImage(
             image: imageProvider,
             fit: widget.fit ?? BoxFit.contain,
@@ -98,7 +100,7 @@ class _XImageState extends State<XImage> {
                   fit: widget.fit ?? BoxFit.contain,
                   width: widget.width,
                   height: widget.height,
-                ),
+                ).background(color: widget.background),
       borderRadius: BorderRadius.circular(widget.borderRadius ?? 0),
     );
   }

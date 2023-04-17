@@ -33,7 +33,7 @@ class XAlert {
   }
 
   /// 底部弹出提示框
-  showBottomAlertAndroid({required list, callback, title}) {
+  showBottomAlertAndroid({required list, callback}) {
     return showCupertinoModalPopup(
       barrierColor: barrierColor,
       context: context,
@@ -127,6 +127,7 @@ class XAlert {
           minHeight: minHeight,
           elevation: elevation,
           maxHeight: maxHeight,
+            barrierDismissible:barrierDismissible,
           sureBtnBackgroundColor:sureBtnBackgroundColor,
           cancelBtnBackgroundColor:cancelBtnBackgroundColor,
             cancelBtnTextColor:cancelBtnTextColor,

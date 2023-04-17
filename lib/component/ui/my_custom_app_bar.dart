@@ -16,6 +16,7 @@ AppBar XAppBar(
   List<Widget>? actions,
       Color?  backgroundColor,
   bool? elevation,
+      double? toolbarHeight,
       String?   theme= "light",
       bool automaticallyImplyLeading = true,
 }) {
@@ -37,7 +38,7 @@ AppBar XAppBar(
 
   return AppBar(
     automaticallyImplyLeading:automaticallyImplyLeading,
-    backgroundColor:theme == 'light'? themeColor.ffFFFFFF : themeColor.primary,
+    backgroundColor:backgroundColor??(theme == 'light'? themeColor.ffFFFFFF : themeColor.primary),
     title: titleWidget ??
         (Stack(
           alignment: AlignmentDirectional.center,
@@ -51,7 +52,7 @@ AppBar XAppBar(
         ).background(width: tWidth, height: tHeight)),
     centerTitle: titleWidget == null ? true : false,
     elevation: elevation ?? false ? 1.w : 0,
-    toolbarHeight: bottom == null ? 44 : 88,
+    toolbarHeight:toolbarHeight??( bottom == null ? 44 : 88),
     leading:automaticallyImplyLeading==false?null:(backWidget == null
         ? IconButton(
       color:theme == 'light'?  Colors.black:themeColor.ffFFFFFF,

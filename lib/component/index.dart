@@ -8,6 +8,7 @@ export 'js/log_util.dart';
 export 'js/print_log.dart';
 export 'js/screem.dart';
 export 'js/time_format.dart';
+export 'js/cache.dart';
 export 'ui/css.dart';
 export 'ui/default/x_tab_indicator.dart';
 export 'ui/extension/utils/ext_iterable.dart';

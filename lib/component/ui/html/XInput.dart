@@ -106,16 +106,7 @@ class XInput extends StatelessWidget {
   }
   @override
   Widget build(BuildContext context) {
-    // FocusNode _focusNode = new FocusNode();
-    // _focusNode.addListener(() {
-    //   print(1123123);
-    //   if (!_focusNode.hasFocus && isNotNull(_validator)) {
-    //     // var str = formCheck(_validator, _controller?.text.toString(), _required);
-    //     // if (isNotNull(str)) {
-    //     //   showToast(str);
-    //     // }
-    //   }
-    // });
+
     // ignore: non_constant_identifier_names
     _LabelWidget() {
       return Container(

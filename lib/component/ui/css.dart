@@ -25,7 +25,9 @@ class ThemeColor {
   Color? ff846BF8;
   Color? ffDEDFDE;
   Color? ffF3F6F9;
-  ThemeColor({this.primary, this.ff3D3B48, this.ff6C7480, this.ff9EA6AE, this.ffC1C6CB, this.ffFF4300, this.ffFF9538, this.ffFE424A, this.ffFFFFFF, this.ff0E1424, this.ff11BB70, this.ff4480FF, this.ff54C6EF, this.ff846BF8, this.ffDEDFDE, this.ffF3F6F9}) {
+  Color? ffE0E4E8;
+
+  ThemeColor({this.primary, this.ff3D3B48, this.ff6C7480, this.ff9EA6AE, this.ffC1C6CB, this.ffFF4300, this.ffFF9538, this.ffFE424A, this.ffFFFFFF, this.ff0E1424, this.ff11BB70, this.ff4480FF, this.ff54C6EF, this.ff846BF8, this.ffDEDFDE,this.ffE0E4E8, this.ffF3F6F9}) {
     primary = this.primary ?? Color(0xff0E0D15);
     ff3D3B48 = this.ff3D3B48 ?? Color(0xFF3D3B48);
     ff6C7480 = this.ff6C7480 ?? Color(0xFF6C7480);
@@ -42,6 +44,7 @@ class ThemeColor {
     ff846BF8 = this.ff846BF8 ?? Color(0xFFFF846BF8);
     ffDEDFDE = this.ffDEDFDE ?? Color(0xFFDEDFDE);
     ffF3F6F9 = this.ffF3F6F9 ?? Color(0xFFF3F6F9);
+    ffE0E4E8=this.ffE0E4E8 ??  Color(0xffE0E4E8);
   }
 }
 

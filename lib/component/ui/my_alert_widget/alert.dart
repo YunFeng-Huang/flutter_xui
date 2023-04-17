@@ -22,7 +22,7 @@ class TipsAlterHeightAutoWidget extends StatefulWidget {
   final Color? sureBtnBackgroundColor;
   final Color? cancelBtnTextColor;
   final Color? sureBtnTextColor;
-  
+  final bool? barrierDismissible;
   TipsAlterHeightAutoWidget(
     this.callback,
     this.cancelText,
@@ -32,6 +32,7 @@ class TipsAlterHeightAutoWidget extends StatefulWidget {
     this.sureBtn,
     this.cancelBtn, {
     this.child,
+        this.barrierDismissible,
     this.info,
     this.title,
     this.maxHeight,
@@ -59,50 +60,54 @@ class _TipsAlterWidgetState extends State<TipsAlterHeightAutoWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.transparent,
-      body: Transform.translate(
-        offset: Offset(0, -(MediaQueryData.fromWindow(window).padding.top) / 2),
-        child: Center(
-          child: new Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Column(
-                children: [
-                  if (widget.title != null)
-                    _titleView()
-                        .padding(
-                          top: widget.elevation ?? false ? 34.w : 37.w,
-                          bottom: widget.elevation ?? false ? 34.w : 33.w,
-                        )
-                        .background(
-                          borderBottom: widget.elevation ?? false ? 1.w : null,
-                          border: widget.elevation ?? false ? 1.w : null,
-                        )
-                        .background(color: themeColor.ffFFFFFF, topLeft: 16.w, topRight: 16.w, height: _topViewHeight),
-                  SingleChildScrollView(child: (widget.child ?? ((widget.elevation ?? false) ? (_textView().center) : (_textView().topCenter))).padding(left: 30.w, right: 30.w, bottom: 60.w)).background(
-                    maxHeight: widget.width ?? 550.w,
-                    minHeight: widget.height,
-                  ),
-                ],
-              ).background(
-                width: widget.width ?? 550.w,
-                color: themeColor.ffFFFFFF,
-                topLeft: 16.w,
-                topRight: 16.w,
-              ),
-              Divider(height: 1.w, color: globalConfig.theme.dividerColor).background(
-                width: widget.width ?? 550.w,
-                color: themeColor.ffFFFFFF,
-              ),
-              _buttonView().background(
-                width: widget.width ?? 550.w,
-                color: themeColor.ffFFFFFF,
-                bottomLeft: 16.w,
-                bottomRight: 16.w,
-                height: _buttonViewHeight,
-              ),
-            ],
+    return WillPopScope(
+      onWillPop: () async {
+        return !(widget.barrierDismissible??false);
+      },
+      child:Scaffold(
+        backgroundColor: Colors.transparent,
+        body: Transform.translate(
+          offset: Offset(0, -(MediaQueryData.fromWindow(window).padding.top) / 2),
+          child: Center(
+            child: new Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Column(
+                  children: [
+                    if (widget.title != null)
+                      _titleView()
+                          .padding(
+                        top: widget.elevation ?? false ? 34.w : 37.w,
+                        bottom: widget.elevation ?? false ? 34.w : 33.w,
+                      )
+                          .background(
+                        borderBottom: widget.elevation ?? false ? 1.w : null,
+                        border: widget.elevation ?? false ? 1.w : null,
+                      )
+                          .background(color: themeColor.ffFFFFFF, topLeft: 16.w, topRight: 16.w, height: _topViewHeight),
+                    SingleChildScrollView(child: (widget.child ?? ((widget.elevation ?? false) ? (_textView().center) : (_textView().topCenter))).padding(left: 30.w, right: 30.w, bottom: 60.w)).background(
+                      maxHeight: widget.height ?? 550.w,
+                      minHeight: widget.height,
+                    ),
+                  ],
+                ).background(
+                  width: widget.width ?? 550.w,
+                  color: themeColor.ffFFFFFF,
+                  topLeft: 16.w,
+                  topRight: 16.w,
+                  bottomLeft:!(widget.cancelBtn! && widget.sureBtn!)? 16.w:null,
+                  bottomRight: !(widget.cancelBtn! && widget.sureBtn!)? 16.w:null,
+                ),
+                // Divider(height: 1.h, color: themeColor.ffFFFFFF),
+                if (widget.cancelBtn! || widget.sureBtn!)     _buttonView().background(
+                  width: widget.width ?? 550.w,
+                  color: themeColor.ffFFFFFF,
+                  bottomLeft: 16.w,
+                  bottomRight: 16.w,
+                  height: _buttonViewHeight,
+                ),
+              ],
+            ).background(   width: widget.width ?? 550.w,),
           ),
         ),
       ),
@@ -127,7 +132,7 @@ class _TipsAlterWidgetState extends State<TipsAlterHeightAutoWidget> {
     return Center(
       child: Text(
         widget.info ?? '',
-        textAlign: TextAlign.justify,
+        textAlign: TextAlign.center,
         style: font(32, colorA: (themeColor.ff3D3B48), height: 1.2, weight: FontWeight.w500),
       ),
     );

@@ -17,7 +17,7 @@ class XButton extends StatefulWidget {
   Map? params;
   Function? paramsFn;
   Function? api;
-  Function? callback;
+  Function callback;
   bool? disabled;
   XButtonType? type;
   Widget? child;
@@ -37,19 +37,19 @@ class XButton extends StatefulWidget {
 class _XButtonState extends State<XButton> {
   Color? get color => widget.color;
   Widget? get child => widget.child;
-  Function? get callback => widget.callback;
+  Function get callback => widget.callback;
   bool _disabled = false;
 
-  void onPressed() async {
-    setState(() {
-      _disabled = true;
-    });
-    await XButtonInterceptor();
-    await callback?.call();
-    setState(() {
-      _disabled = false;
-    });
-  }
+  // void onPressed() async {
+  //   setState(() {
+  //     _disabled = true;
+  //   });
+  //   await XButtonInterceptor();
+  //   await callback?.call();
+  //   setState(() {
+  //     _disabled = false;
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -57,7 +57,7 @@ class _XButtonState extends State<XButton> {
     return Center(
       child: GestureDetector(
         behavior: HitTestBehavior.opaque,
-        onTap: disabled ? null : onPressed,
+        onTap:()=>callback(),
         child: Center(
           child: child,
         ),
