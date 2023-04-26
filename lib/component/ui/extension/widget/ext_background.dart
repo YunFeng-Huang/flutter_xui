@@ -30,24 +30,24 @@ extension ExtBg on Widget {
     BoxDecoration? decoration,
     Alignment? alignment,
   }) {
-    bool allBorderRadius = topLeft == null &&
+    bool allBorderRadiusNull = topLeft == null &&
         topRight == null &&
         bottomLeft == null &&
         bottomRight == null;
-    bool allBorder = borderLeft == null &&
+    bool allBorderNull = borderLeft == null &&
         borderTop == null &&
         borderRight == null &&
         borderBottom == null;
 
     return ClipRRect(
-        borderRadius: BorderRadius.all(Radius.circular(0)),
-        // borderRadius: !allBorderRadius ? BorderRadius.only(
-        //             topLeft: Radius.circular(topLeft ?? 0),
-        //             topRight: Radius.circular(topRight ?? 0),
-        //             bottomLeft: Radius.circular(bottomLeft ?? 0),
-        //             bottomRight: Radius.circular(bottomRight ?? 0),
-        //           )
-        //         : BorderRadius.all(Radius.circular(0)),
+        // borderRadius: BorderRadius.all(Radius.circular(0)),
+        borderRadius: !allBorderRadiusNull && borderColor==null ? BorderRadius.only(
+                    topLeft: Radius.circular(topLeft ?? 0),
+                    topRight: Radius.circular(topRight ?? 0),
+                    bottomLeft: Radius.circular(bottomLeft ?? 0),
+                    bottomRight: Radius.circular(bottomRight ?? 0),
+                  )
+                : BorderRadius.all(Radius.circular(0)),
         child: Container(
           width: width,
           height: height,
@@ -77,7 +77,7 @@ extension ExtBg on Widget {
                               : AssetImage(bgImage) as ImageProvider<Object>,
                           fit: fitBgImage ?? BoxFit.contain,
                         ),
-                  border: !allBorder
+                  border: !allBorderNull
                       ? Border(
                           left: borderLeft == null
                               ? BorderSide.none
@@ -109,9 +109,9 @@ extension ExtBg on Widget {
                           : Border.all(
                               width: border,
                               color: borderColor ?? themeColor.ffDEDFDE!),
-                  borderRadius: !allBorder
+                  borderRadius: !allBorderNull
                       ? null
-                      : allBorderRadius
+                      : allBorderRadiusNull
                           ? BorderRadius.all(Radius.circular(radius ?? 0))
                           : BorderRadius.only(
                               topLeft: Radius.circular(topLeft ?? 0),

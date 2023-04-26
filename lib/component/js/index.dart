@@ -253,6 +253,31 @@ class XUtil {
     return 0.0;
   }
 
+///版本比较
+static bool versionDiff(String version, String version1) {
+    String _v = version.replaceAll('v', '').replaceAll('V', '');
+    List list1 = _v.split('.');
+    int version_1 = XUtil.intParse(list1[0]);
+    int version_2 = XUtil.intParse(list1[1]);
+    int version_3 = XUtil.intParse(list1[2]);
+    String _v1 = version1.replaceAll('v', '').replaceAll('V', '');
+    List list2 = _v1.split('.');
+    int version1_1 = XUtil.intParse(list2[0]);
+    int version1_2 = XUtil.intParse(list2[1]);
+    int version1_3 = XUtil.intParse(list2[2]);
+
+    if (version_1 > version1_1) {
+      return true;
+    }
+    if (version_2 > version1_2) {
+      return true;
+    }
+    if (version_3 >= version1_3) {
+      return true;
+    }
+    return false;
+  }
+
 }
 
 isNotNull(v) {

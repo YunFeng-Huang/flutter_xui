@@ -349,4 +349,7 @@ class DateUtil {
     }
     return value;
   }
+  static String getDate(time,{format}){
+    return formatDateMs(DateTime.parse("2022-01-01 00:00:00").add(Duration(seconds: time)).millisecondsSinceEpoch, format: format??'HH:mm:ss');
+  }
 }

@@ -49,7 +49,7 @@ class XAlert {
                 children: [
                   Column(
                     children: List.generate(
-                      list.length,
+                      list?.length??0,
                       (index) => XButton(
                         callback: () {
                           Navigator.pop(context);

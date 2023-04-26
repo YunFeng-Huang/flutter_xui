@@ -95,11 +95,11 @@ class _TipsAlterWidgetState extends State<TipsAlterHeightAutoWidget> {
                   color: themeColor.ffFFFFFF,
                   topLeft: 16.w,
                   topRight: 16.w,
-                  bottomLeft:!(widget.cancelBtn! && widget.sureBtn!)? 16.w:null,
-                  bottomRight: !(widget.cancelBtn! && widget.sureBtn!)? 16.w:null,
+                  bottomLeft:!(widget.cancelBtn! || widget.sureBtn!)? 16.w:null,
+                  bottomRight: !(widget.cancelBtn! || widget.sureBtn!)? 16.w:null,
                 ),
                 // Divider(height: 1.h, color: themeColor.ffFFFFFF),
-                if (widget.cancelBtn! || widget.sureBtn!)     _buttonView().background(
+                if (widget.cancelBtn! || widget.sureBtn!)  _buttonView().background(
                   width: widget.width ?? 550.w,
                   color: themeColor.ffFFFFFF,
                   bottomLeft: 16.w,
