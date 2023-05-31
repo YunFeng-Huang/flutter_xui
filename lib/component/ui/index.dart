@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:xui/xui.dart';
 
 GlobalConfig globalConfig = GlobalConfig();
@@ -24,4 +25,29 @@ class GlobalConfig {
     addFont = addFont ?? 0;
     fontWeight = fontWeight ?? FontWeight.w400;
   }
+}
+
+
+
+
+class SystemUiStyle {
+  static SystemUiOverlayStyle light  = SystemUiOverlayStyle(
+  statusBarColor: Colors.transparent,
+  statusBarIconBrightness: Brightness.light,
+    systemNavigationBarColor:  Color(0xFFFFFFFF),
+  systemNavigationBarIconBrightness: Brightness.light, //虚拟按键图标色
+  systemNavigationBarDividerColor: Colors.transparent,
+  statusBarBrightness: Brightness.light,
+);
+
+
+static SystemUiOverlayStyle dark  = SystemUiOverlayStyle(
+  statusBarColor: Colors.transparent,
+  statusBarIconBrightness: Brightness.dark,
+  systemNavigationBarColor:  Color(0xFFFFFFFF),
+  systemNavigationBarIconBrightness: Brightness.dark,
+  //虚拟按键图标色
+  systemNavigationBarDividerColor: Colors.transparent,
+  statusBarBrightness: Brightness.dark,
+);
 }

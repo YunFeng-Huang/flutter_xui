@@ -11,26 +11,26 @@ class XAlert {
   XAlert(this.context);
 
   /// 底部弹出提示框
-  showBottomAlertCustom({required list, callback, title}) {
+  showBottomAlertCustom({child}) {
     return showCupertinoModalPopup(
       barrierColor: barrierColor,
       context: context,
       builder: (context) {
-        return showBottomAlertCustomWidget(callback, list, title);
+        return child;
       },
     );
   }
 
-  /// 底部弹出提示框
-  showBottomAlertIos({required list, callback, title}) {
-    return showCupertinoModalPopup(
-      barrierColor: barrierColor,
-      context: context,
-      builder: (context) {
-        return ShowCustomAlterWidget(callback, list, title);
-      },
-    );
-  }
+  // /// 底部弹出提示框
+  // showBottomAlertIos({required list, callback, title}) {
+  //   return showCupertinoModalPopup(
+  //     barrierColor: barrierColor,
+  //     context: context,
+  //     builder: (context) {
+  //       return ShowCustomAlterWidget(callback, list, title);
+  //     },
+  //   );
+  // }
 
   /// 底部弹出提示框
   showBottomAlertAndroid({required list, callback}) {

@@ -197,10 +197,10 @@ class DateUtil {
 
   /// is today.
   /// 是否是当天.
-  static bool isToday(int? milliseconds, {bool isUtc = false, int? locMs}) {
-    if (milliseconds == null || milliseconds == 0) return false;
+  static bool isToday(int? millisecondsSinceEpoch, {bool isUtc = false, int? locMs}) {
+    if (millisecondsSinceEpoch == null || millisecondsSinceEpoch == 0) return false;
     DateTime old =
-        DateTime.fromMillisecondsSinceEpoch(milliseconds, isUtc: isUtc);
+        DateTime.fromMillisecondsSinceEpoch(millisecondsSinceEpoch, isUtc: isUtc);
     DateTime now;
     if (locMs != null) {
       now = DateUtil.getDateTimeByMs(locMs);

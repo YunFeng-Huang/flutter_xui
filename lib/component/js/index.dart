@@ -269,15 +269,18 @@ static bool versionDiff(String version, String version1) {
     if (version_1 > version1_1) {
       return true;
     }
-    if (version_2 > version1_2) {
-      return true;
-    }
-    if (version_3 >= version1_3) {
-      return true;
+    if(version_1 == version1_1){
+      if (version_2 > version1_2) {
+        return true;
+      }
+      if (version_2 == version1_2){
+        if (version_3 >= version1_3) {
+          return true;
+        }
+      }
     }
     return false;
   }
-
 }
 
 isNotNull(v) {
