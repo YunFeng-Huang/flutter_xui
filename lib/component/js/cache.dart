@@ -39,6 +39,19 @@ class XCacheManager {
       }
     }
   }
+
+  static Future<double> loadCache() async {
+    //获取文件夹
+    Directory tempDirectory = await getTemporaryDirectory();
+
+    double size = 0;
+    if (tempDirectory.existsSync()) {
+      size += await getTotalSizeOfFilesInDir(tempDirectory);
+    }
+    return size;
+  }
+
+
   static Future<double> loadApplicationCache() async {
     //获取文件夹
     Directory docDirectory = await getApplicationDocumentsDirectory();

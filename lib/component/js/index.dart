@@ -19,14 +19,14 @@ class XUtil {
   ///
   /// [func]: 要执行的方法
   /// [delay]: 要迟延的时长
-// static Timer? timer;
+
   static debounce(
     Function func, [
     Duration delay = const Duration(milliseconds: 500),
   ]) {
     String key = func.toString() + '_debounce';
     if (!enableMap.containsKey(key)) {
-      enableMap.addAll({key: null as Timer});
+      enableMap.addAll({key: null as Timer?});
     }
 
     if (enableMap[key]?.isActive ?? false) {
