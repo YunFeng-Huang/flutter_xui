@@ -1,9 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
 import '../index.dart';
 
 class XAlert {
- late BuildContext context;
+  late BuildContext context;
   Color barrierColor = CupertinoDynamicColor.withBrightness(
     color: Color.fromRGBO(0, 0, 0, 0.5),
     darkColor: Color.fromRGBO(0, 0, 0, 0.4),
@@ -49,17 +50,13 @@ class XAlert {
                 children: [
                   Column(
                     children: List.generate(
-                      list?.length??0,
+                      list?.length ?? 0,
                       (index) => XButton(
                         callback: () {
                           Navigator.pop(context);
                           callback(index);
                         },
-                        child: Text(list[index],
-                                style: font(32, colorA: themeColor.primary))
-                            .center
-                            .background(
-                                height: 112.w, borderTop: index == 0 ? 0 : 1.w),
+                        child: Text(list[index], style: font(32, colorA: themeColor.primary)).center.background(height: 112.w, borderTop: index == 0 ? 0 : 1.w),
                       ),
                     ),
                   ),
@@ -77,10 +74,7 @@ class XAlert {
                     ).center.background(height: 110.w),
                   )
                 ],
-              )
-                  .background(
-                      color: themeColor.ffFFFFFF, topRight: 16.w, topLeft: 16.w)
-                  .bottomCenter
+              ).background(color: themeColor.ffFFFFFF, topRight: 16.w, topLeft: 16.w).bottomCenter
             ]),
           ),
         );
@@ -89,50 +83,32 @@ class XAlert {
   }
 
   /// 中间弹出提示框
-  showCenterTipsAlter(
-      { Function? callback,
-      title,
-      info,
-      cancelText,
-      sureText,
-      width,
-      height,
-      bool sureBtn = true,
-      bool cancelBtn = true,
-      heightAuto,
-      elevation,
-      minHeight,
-      maxHeight,
-        barrierDismissible:false,
-        cancelBtnBackgroundColor,
-        sureBtnBackgroundColor,
-        cancelBtnTextColor,
-        sureBtnTextColor,
-      child,}) {
+  showCenterTipsAlter({
+    Function? callback,
+    title,
+    info,
+    cancelText,
+    sureText,
+    width,
+    height,
+    bool sureBtn = true,
+    bool cancelBtn = true,
+    heightAuto,
+    elevation,
+    minHeight,
+    maxHeight,
+    barrierDismissible = false,
+    cancelBtnBackgroundColor,
+    sureBtnBackgroundColor,
+    cancelBtnTextColor,
+    sureBtnTextColor,
+    child,
+  }) {
     return showDialog(
       barrierColor: barrierColor,
       context: context,
       builder: (BuildContext context) {
-        return TipsAlterHeightAutoWidget(
-          callback,
-          cancelText,
-          sureText,
-          width,
-          height,
-          sureBtn,
-          cancelBtn,
-          child: child,
-          info: info,
-          title: title,
-          minHeight: minHeight,
-          elevation: elevation,
-          maxHeight: maxHeight,
-            barrierDismissible:barrierDismissible,
-          sureBtnBackgroundColor:sureBtnBackgroundColor,
-          cancelBtnBackgroundColor:cancelBtnBackgroundColor,
-            cancelBtnTextColor:cancelBtnTextColor,
-            sureBtnTextColor:sureBtnTextColor
-        );
+        return TipsAlterHeightAutoWidget(callback, cancelText, sureText, width, height, sureBtn, cancelBtn, child: child, info: info, title: title, minHeight: minHeight, elevation: elevation, maxHeight: maxHeight, barrierDismissible: barrierDismissible, sureBtnBackgroundColor: sureBtnBackgroundColor, cancelBtnBackgroundColor: cancelBtnBackgroundColor, cancelBtnTextColor: cancelBtnTextColor, sureBtnTextColor: sureBtnTextColor);
       },
     );
   }
@@ -146,15 +122,12 @@ showLoading(context, [String text = "加载中，请等待..."]) {
     builder: (context) {
       return Center(
         child: Container(
-          decoration: BoxDecoration(
-              color: themeColor.ffFFFFFF,
-              borderRadius: BorderRadius.circular(20.w),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black12,
-                  blurRadius: 10.w,
-                )
-              ]),
+          decoration: BoxDecoration(color: themeColor.ffFFFFFF, borderRadius: BorderRadius.circular(20.w), boxShadow: [
+            BoxShadow(
+              color: Colors.black12,
+              blurRadius: 10.w,
+            )
+          ]),
           padding: EdgeInsets.all(20.w),
           // margin: EdgeInsets.all(.w),
           // constraints: BoxConstraints(minHeight: 220.w, minWidth: 220.w),
@@ -275,8 +248,7 @@ Future<dynamic>? showConfirmDialog(
                           ),
                           borderRadius: BorderRadius.only(
                             bottomRight: Radius.circular(20.w),
-                            bottomLeft: Radius.circular(
-                                cancelTitle != null ? 0.w : 20.w),
+                            bottomLeft: Radius.circular(cancelTitle != null ? 0.w : 20.w),
                           ),
                         ),
                         alignment: Alignment.center,

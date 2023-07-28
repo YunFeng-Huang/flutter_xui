@@ -7,8 +7,6 @@ import 'package:pull_to_refresh/pull_to_refresh.dart';
 import '../index.dart';
 import 'my_scroll_view_widget/appBarWidget.dart';
 import 'my_scroll_view_widget/bottomAppBarWrap.dart';
-import 'my_scroll_view_widget/headerWidget.dart';
-import 'my_scroll_view_widget/smartRefresherCustomFooter.dart';
 
 enum PageStatus { loading, error, success }
 
@@ -36,29 +34,7 @@ class XCustomScrollView extends StatefulWidget {
   bool? scrollbar;
   bool? bottom;
   bool? top;
-  XCustomScrollView(
-      {Key? key,
-      this.bottom = true,
-      this.top,
-      this.scrollbar = true,
-      this.onRefresh,
-      this.appbarHeight,
-      this.onLoading,
-      this.init,
-      this.resizeToAvoidBottomInset,
-      required this.status,
-      required this.slivers,
-       this.emptyWidget,
-      this.errorWidget,
-      this.appbar,
-      this.backgroundColor = Colors.transparent,
-      this.bottomAppBar,
-      this.xAppBar,
-      this.bottomAppBarConfig,
-      this.headerLoading,
-      this.loadingWidget,
-      this.footer})
-      : super(key: key) {
+  XCustomScrollView({Key? key, this.bottom = true, this.top, this.scrollbar = true, this.onRefresh, this.appbarHeight, this.onLoading, this.init, this.resizeToAvoidBottomInset, required this.status, required this.slivers, this.emptyWidget, this.errorWidget, this.appbar, this.backgroundColor = Colors.transparent, this.bottomAppBar, this.xAppBar, this.bottomAppBarConfig, this.headerLoading, this.loadingWidget, this.footer}) : super(key: key) {
     headerLoading = this.headerLoading;
     list = [];
     if (status != PageStatus.loading) {
@@ -93,14 +69,12 @@ class XCustomScrollViewState extends State<XCustomScrollView> {
   // ScrollController controller = ScrollController();
   double opacity = 0.0;
   double get appbarHeight => widget.appbarHeight ?? 100.w;
-  RefreshController _refreshController =
-      RefreshController(initialRefresh: false);
+  RefreshController _refreshController = RefreshController(initialRefresh: false);
   Function? get onRefresh => widget.onRefresh;
   Function? get onLoading => widget.onLoading;
   AppBar? get xAppBar => widget.xAppBar;
   Color? get bottomAppBarColor => widget.bottomAppBarConfig?.bottomAppBarColor!;
-  double get bottomAppBarHeight =>
-      widget.bottomAppBarConfig?.bottomAppBarHeight! ?? 0.0;
+  double get bottomAppBarHeight => widget.bottomAppBarConfig?.bottomAppBarHeight! ?? 0.0;
   Timer? _timer;
   ScrollController? controller = ScrollController();
   @override
@@ -112,9 +86,7 @@ class XCustomScrollViewState extends State<XCustomScrollView> {
     if (!isNotNull(appbar?.customAppBar))
       controller?.addListener(() {
         setState(() {
-          opacity = (controller?.offset ?? 0.0) >= appbarHeight
-              ? 1.00
-              : (controller?.offset ?? 0.0) / appbarHeight;
+          opacity = (controller?.offset ?? 0.0) >= appbarHeight ? 1.00 : (controller?.offset ?? 0.0) / appbarHeight;
         });
       });
   }
@@ -253,8 +225,7 @@ class XCustomScrollViewState extends State<XCustomScrollView> {
                 appbarHeight: appbarHeight,
                 color: Colors.black.withOpacity(opacity),
               ),
-            if (isNotNull(appbar?.customAppBar) && isNotNull(appbar))
-              appbar!.customAppBar!,
+            if (isNotNull(appbar?.customAppBar) && isNotNull(appbar)) appbar!.customAppBar!,
             if (bottomAppBar != null && status == PageStatus.success)
               Positioned(
                 child: _footerBottom(),
@@ -296,9 +267,8 @@ class XBottomAppBarConfig {
 
 class CusBehavior extends ScrollBehavior {
   @override
-  Widget buildViewportChrome(
-      BuildContext context, Widget child, AxisDirection axisDirection) {
+  Widget buildOverscrollIndicator(BuildContext context, Widget child, ScrollableDetails details) {
     if (Platform.isAndroid || Platform.isFuchsia) return child;
-    return super.buildViewportChrome(context, child, axisDirection);
+    return super.buildOverscrollIndicator(context, child, details);
   }
 }

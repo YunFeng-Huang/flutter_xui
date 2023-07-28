@@ -2,15 +2,12 @@ import 'dart:async';
 import 'dart:collection';
 import 'dart:convert';
 import 'dart:io';
-import 'dart:math';
 import 'dart:ui' as ui;
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:xui/component/ui/index.dart';
-
-import 'local_storage.dart';
 
 class XUtil {
   /// 函数节流
@@ -29,7 +26,7 @@ class XUtil {
   ]) {
     String key = func.toString() + '_debounce';
     if (!enableMap.containsKey(key)) {
-      enableMap.addAll({key: null as Timer});
+      enableMap.addAll({key: null});
     }
 
     if (enableMap[key]?.isActive ?? false) {
@@ -69,7 +66,6 @@ class XUtil {
     } catch (e) {}
     return isJson;
   }
-
 
 //数组分组
   static List splitList(xList, [chunk = 2]) {
@@ -116,8 +112,7 @@ class XUtil {
 // GlobalConfig.TimerCancel = null; 销毁
   static countdown(time, callback) {
     if (time.isAfter(DateTime.now())) {
-      GlobalConfig.timerCancel =
-          Timer.periodic(const Duration(seconds: 1), (timer) {
+      GlobalConfig.timerCancel = Timer.periodic(const Duration(seconds: 1), (Timer timer) {
         var difference = time.difference(DateTime.now());
         print('difference: $difference');
         if (time.isBefore(DateTime.now())) {
@@ -125,7 +120,6 @@ class XUtil {
           print('取消定时器');
           //取消定时器，避免无限回调
           timer.cancel();
-          timer = null as Timer;
         }
       });
     }
@@ -153,8 +147,7 @@ class XUtil {
   static Future<ui.Image> loadImage(String url) async {
     Completer<ui.Image> completer = Completer<ui.Image>();
     ImageStreamListener? listener;
-    ImageStream stream =
-        CachedNetworkImageProvider(url).resolve(ImageConfiguration.empty);
+    ImageStream stream = CachedNetworkImageProvider(url).resolve(ImageConfiguration.empty);
     listener = ImageStreamListener((ImageInfo frame, bool sync) {
       final ui.Image image = frame.image;
       completer.complete(image);
@@ -201,8 +194,8 @@ class XUtil {
     }
     return newObj;
   }
- 
-  static String formatName(String text, {type: "text"}) {
+
+  static String formatName(String text, {type = "text"}) {
     if (text == "" || text == null) return "";
     if (type == 'phone') {
       return text.replaceFirst(new RegExp(r'\d{4}'), '****', 3);
@@ -213,7 +206,8 @@ class XUtil {
       return text.substring(0, 1) + '*';
     }
   }
- static String renderSize(double value,[fix=2]) {
+
+  static String renderSize(double value, [fix = 2]) {
     // ignore: unnecessary_null_comparison
     if (value == null) {
       return '0.0';
@@ -231,6 +225,7 @@ class XUtil {
     String size = value.toStringAsFixed(fix);
     return size + unitArr[index];
   }
+
   //循环获取缓存大小
   static Future getTotalSizeOfFilesInDir(final FileSystemEntity file) async {
     //  File
@@ -253,8 +248,8 @@ class XUtil {
     return 0.0;
   }
 
-///版本比较
-static bool versionDiff(String version, String version1) {
+  ///版本比较
+  static bool versionDiff(String version, String version1) {
     String _v = version.replaceAll('v', '').replaceAll('V', '');
     List list1 = _v.split('.');
     int version_1 = XUtil.intParse(list1[0]);
@@ -269,11 +264,11 @@ static bool versionDiff(String version, String version1) {
     if (version_1 > version1_1) {
       return true;
     }
-    if(version_1 == version1_1){
+    if (version_1 == version1_1) {
       if (version_2 > version1_2) {
         return true;
       }
-      if (version_2 == version1_2){
+      if (version_2 == version1_2) {
         if (version_3 >= version1_3) {
           return true;
         }
@@ -286,6 +281,3 @@ static bool versionDiff(String version, String version1) {
 isNotNull(v) {
   return v != null;
 }
-
-
-
