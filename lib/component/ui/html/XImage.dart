@@ -82,7 +82,7 @@ class _XImageState extends State<XImage> {
       errorWidget: (context, url, error) => Container(
         color: widget.background,
         child: Center(
-          child:const Icon(Icons.error),
+          child:const Icon(Icons.error,color: Colors.black38,),
         ).background(width: widget.iconSize, height: widget.iconSize),
       ),
     );
@@ -98,7 +98,7 @@ class _XImageState extends State<XImage> {
               width: widget.width,
               height: widget.height,
               color: widget.background,
-              child:const Icon(Icons.error),
+              child:const Icon(Icons.error,color: Colors.black38,),
             )
           : widget.image!.contains('http') || widget.image!.contains('assets') == false
               ? _network()
