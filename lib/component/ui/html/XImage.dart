@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 import '../../index.dart';
 
-enum XImageType { general, avatar }
+enum XImageType { general, avatar ,file }
 
 // ignore: must_be_immutable
 class XImage extends StatefulWidget {
@@ -26,28 +26,28 @@ class XImage extends StatefulWidget {
 }
 
 class _XImageState extends State<XImage> {
-  _errorWidget() {
-    var _icon = globalConfig.imgList[widget.type];
-    if (XUtil.typeOf(_icon) == 'Null') {
-      return Center(
-        child: CircularProgressIndicator(
-          valueColor: new AlwaysStoppedAnimation<Color>(themeColor.primary!),
-          strokeWidth: 2.w,
-        ),
-      ).background(width: widget.iconSize, height: widget.iconSize);
-    } else if (XUtil.typeOf(_icon) == 'Icon') {
-      if (widget.hideIcon) {
-        return SizedBox(width: 0, height: 0);
-      }
-      return Icon(
-        _icon.icon,
-        size: widget.iconSize,
-        color: themeColor.ffFFFFFF,
-      );
-    } else {
-      return Center(child: XImage(image: _icon));
-    }
-  }
+  // _errorWidget() {
+  //   var _icon = globalConfig.imgList[widget.type];
+  //   if (XUtil.typeOf(_icon) == 'Null') {
+  //     return Center(
+  //       child: CircularProgressIndicator(
+  //         valueColor: new AlwaysStoppedAnimation<Color>(themeColor.primary!),
+  //         strokeWidth: 2.w,
+  //       ),
+  //     ).background(width: widget.iconSize, height: widget.iconSize);
+  //   } else if (XUtil.typeOf(_icon) == 'Icon') {
+  //     if (widget.hideIcon) {
+  //       return SizedBox(width: 0, height: 0);
+  //     }
+  //     return Icon(
+  //       _icon.icon,
+  //       size: widget.iconSize,
+  //       color: themeColor.ffFFFFFF,
+  //     );
+  //   } else {
+  //     return Center(child: XImage(image: _icon));
+  //   }
+  // }
 
   _network() {
     CachedNetworkImage cachedNetworkImage = CachedNetworkImage(
@@ -72,11 +72,18 @@ class _XImageState extends State<XImage> {
       height: widget.height,
       placeholder: (context, url) => Container(
         color: widget.background,
-        child: _errorWidget(),
+        child: Center(
+          child: CircularProgressIndicator(
+            valueColor: new AlwaysStoppedAnimation<Color>(themeColor.primary!),
+            strokeWidth: 2.w,
+          ),
+        ).background(width: widget.iconSize, height: widget.iconSize),
       ),
       errorWidget: (context, url, error) => Container(
         color: widget.background,
-        child: _errorWidget(),
+        child: Center(
+          child:const Icon(Icons.error,color: Colors.black38,),
+        ).background(width: widget.iconSize, height: widget.iconSize),
       ),
     );
 
@@ -91,7 +98,7 @@ class _XImageState extends State<XImage> {
               width: widget.width,
               height: widget.height,
               color: widget.background,
-              child: _errorWidget(),
+              child:const Icon(Icons.error,color: Colors.black38,),
             )
           : widget.image!.contains('http') || widget.image!.contains('assets') == false
               ? _network()

@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
@@ -156,7 +155,7 @@ class XCustomScrollViewState extends State<XCustomScrollView> {
         children: [
           Expanded(
             child: ScrollConfiguration(
-              behavior: CusBehavior(), // 自定义的 behavior
+              behavior: ScrollBehavior(), // 自定义的 behavior
               child: SmartRefresher(
                 // ignore: unnecessary_null_comparison
                 enablePullDown: onRefresh != null,
@@ -262,13 +261,5 @@ class XBottomAppBarConfig {
     bottomAppBarColor = this.bottomAppBarColor ?? Colors.white;
     bottomAppBarHeight = this.bottomAppBarHeight ?? 0.0;
     bottomAppBarHeightAuto = this.bottomAppBarHeightAuto ?? false;
-  }
-}
-
-class CusBehavior extends ScrollBehavior {
-  @override
-  Widget buildOverscrollIndicator(BuildContext context, Widget child, ScrollableDetails details) {
-    if (Platform.isAndroid || Platform.isFuchsia) return child;
-    return super.buildOverscrollIndicator(context, child, details);
   }
 }

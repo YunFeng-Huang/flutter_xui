@@ -122,10 +122,14 @@ packages:
     dependency: "direct main"
     description:
       name: flutter_picker
+<<<<<<< HEAD
       sha256: "57f960b65db0149199f885b7d57161b1f8ba55d20ad6767b8e80094b15698882"
+=======
+      sha256: "2f94c6eefba8697b07e3cd008b75f06b4ba7053cb26d23ae0fcd5932b7dc75af"
+>>>>>>> master
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "2.0.2"
+    version: "2.1.0"
   flutter_test:
     dependency: "direct dev"
     description: flutter

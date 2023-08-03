@@ -19,7 +19,7 @@ class XUtil {
   ///
   /// [func]: 要执行的方法
   /// [delay]: 要迟延的时长
-// static Timer? timer;
+
   static debounce(
     Function func, [
     Duration delay = const Duration(milliseconds: 500),
@@ -112,7 +112,7 @@ class XUtil {
 // GlobalConfig.TimerCancel = null; 销毁
   static countdown(time, callback) {
     if (time.isAfter(DateTime.now())) {
-      GlobalConfig.timerCancel = Timer.periodic(const Duration(seconds: 1), (Timer timer) {
+      GlobalConfig.timerCancel = Timer.periodic(const Duration(seconds: 1), (timer) {
         var difference = time.difference(DateTime.now());
         print('difference: $difference');
         if (time.isBefore(DateTime.now())) {
