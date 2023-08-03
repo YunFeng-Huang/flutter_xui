@@ -26,28 +26,28 @@ class XImage extends StatefulWidget {
 }
 
 class _XImageState extends State<XImage> {
-  // _errorWidget() {
-  //   var _icon = globalConfig.imgList[widget.type];
-  //   if (XUtil.typeOf(_icon) == 'Null') {
-  //     return Center(
-  //       child: CircularProgressIndicator(
-  //         valueColor: new AlwaysStoppedAnimation<Color>(themeColor.primary!),
-  //         strokeWidth: 2.w,
-  //       ),
-  //     ).background(width: widget.iconSize, height: widget.iconSize);
-  //   } else if (XUtil.typeOf(_icon) == 'Icon') {
-  //     if (widget.hideIcon) {
-  //       return SizedBox(width: 0, height: 0);
-  //     }
-  //     return Icon(
-  //       _icon.icon,
-  //       size: widget.iconSize,
-  //       color: themeColor.ffFFFFFF,
-  //     );
-  //   } else {
-  //     return Center(child: XImage(image: _icon));
-  //   }
-  // }
+  _errorWidget() {
+    var _icon = globalConfig.imgList[widget.type];
+    if (XUtil.typeOf(_icon) == 'Null') {
+      return Center(
+        child: CircularProgressIndicator(
+          valueColor: new AlwaysStoppedAnimation<Color>(themeColor.primary!),
+          strokeWidth: 2.w,
+        ),
+      ).background(width: widget.iconSize, height: widget.iconSize);
+    } else if (XUtil.typeOf(_icon) == 'Icon') {
+      if (widget.hideIcon) {
+        return SizedBox(width: 0, height: 0);
+      }
+      return Icon(
+        _icon.icon,
+        size: widget.iconSize,
+        color: themeColor.ffFFFFFF,
+      );
+    } else {
+      return Center(child: XImage(image: _icon));
+    }
+  }
 
   _network() {
     CachedNetworkImage cachedNetworkImage = CachedNetworkImage(
@@ -81,9 +81,7 @@ class _XImageState extends State<XImage> {
       ),
       errorWidget: (context, url, error) => Container(
         color: widget.background,
-        child: Center(
-          child:const Icon(Icons.error,color: Colors.black38,),
-        ).background(width: widget.iconSize, height: widget.iconSize),
+        child: _errorWidget().background(width: widget.iconSize, height: widget.iconSize),
       ),
     );
 
@@ -98,7 +96,7 @@ class _XImageState extends State<XImage> {
               width: widget.width,
               height: widget.height,
               color: widget.background,
-              child:const Icon(Icons.error,color: Colors.black38,),
+              child:_errorWidget(),
             )
           : widget.image!.contains('http') || widget.image!.contains('assets') == false
               ? _network()
