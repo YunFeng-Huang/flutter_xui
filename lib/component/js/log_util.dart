@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:logger/logger.dart';
 
 var logger = Logger(
@@ -10,3 +12,7 @@ var logger = Logger(
     printTime: false, // Should each log print contain a timestamp
   ),
 );
+
+loggerWrite(String text, {bool isError = false}) {
+  Future.microtask(() => log('** $text. isError: [$isError]'));
+}
