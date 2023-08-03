@@ -13,6 +13,6 @@ var logger = Logger(
   ),
 );
 
-loggerWrite(String text, {bool isError = false}) {
+ loggerWrite(String text, {bool isError = false}) {
   Future.microtask(() => log('** $text. isError: [$isError]'));
 }
