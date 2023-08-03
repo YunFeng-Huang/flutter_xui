@@ -32,7 +32,7 @@ dependencies:
   shared_preferences: ^2.0.7 # 存储
   flutter_picker: ^2.1.0
   path_provider: ^2.0.2 #获取路径
-  logger: ^1.4.0 #日志
+  logger: ^2.0.1 #日志
 
 dev_dependencies:
   flutter_test:
