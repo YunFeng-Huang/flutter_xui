@@ -6,7 +6,7 @@ extension ExtSpace on Widget {
         child: this,
       );
 
-  Padding paddingAll(double padding) => Padding(padding: EdgeInsets.all(padding), child: this);
+  Padding paddingA(double padding) => Padding(padding: EdgeInsets.all(padding), child: this);
 
   Container margin({double left = 0, double top = 0, double right = 0, double bottom = 0, vertical, horizontal}) => Container(
         margin: vertical != null || horizontal != null ? EdgeInsets.symmetric(vertical: vertical ?? 0, horizontal: horizontal ?? 0) : EdgeInsets.only(left: left, top: top, right: right, bottom: bottom),

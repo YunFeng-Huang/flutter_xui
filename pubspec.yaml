@@ -33,6 +33,7 @@ dependencies:
   flutter_picker: ^2.1.0
   path_provider: ^2.0.2 #获取路径
   logger: ^1.4.0 #日志
+  url_launcher: ^6.1.6 #跳转、唤起原生能力
 
 dev_dependencies:
   flutter_test:

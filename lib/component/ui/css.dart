@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import '../index.dart';
-import '../js/color_utils.dart';
+import '../js/color_util.dart';
 
 ThemeColor themeColor = ThemeColor();
 
