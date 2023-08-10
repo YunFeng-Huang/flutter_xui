@@ -11,12 +11,12 @@ class XImage extends StatefulWidget {
   BoxFit? fit;
   double? width;
   double? height;
-  double? borderRadius;
+  double? radius;
   XImageType type;
   Color? background;
   double iconSize = 0.0;
   bool hideIcon = false;
-  XImage({Key? key, required this.image, this.fit, this.width, this.height, this.borderRadius, this.type = XImageType.general, this.background, this.hideIcon = false}) : super(key: key) {
+  XImage({Key? key, required this.image, this.fit, this.width, this.height, this.radius, this.type = XImageType.general, this.background, this.hideIcon = false}) : super(key: key) {
     iconSize = (this.height == null ? 40.w : this.height!) / 2;
     background = this.background ?? Colors.transparent;
   }
@@ -30,11 +30,8 @@ class _XImageState extends State<XImage> {
     var _icon = globalConfig.imgList[widget.type];
     if (XUtil.typeOf(_icon) == 'Null') {
       return Center(
-        child: CircularProgressIndicator(
-          valueColor: new AlwaysStoppedAnimation<Color>(themeColor.primary!),
-          strokeWidth: 2.w,
-        ),
-      ).background(width: widget.iconSize, height: widget.iconSize);
+        child:const Icon(Icons.error,color: Colors.black38,),
+    ).background(width: widget.iconSize, height: widget.iconSize);
     } else if (XUtil.typeOf(_icon) == 'Icon') {
       if (widget.hideIcon) {
         return SizedBox(width: 0, height: 0);
@@ -80,8 +77,9 @@ class _XImageState extends State<XImage> {
         ).background(width: widget.iconSize, height: widget.iconSize),
       ),
       errorWidget: (context, url, error) => Container(
+        width: widget.iconSize, height: widget.iconSize,
         color: widget.background,
-        child: _errorWidget().background(width: widget.iconSize, height: widget.iconSize),
+        child: _errorWidget(),
       ),
     );
 
@@ -106,7 +104,7 @@ class _XImageState extends State<XImage> {
                   width: widget.width,
                   height: widget.height,
                 ).background(color: widget.background),
-      borderRadius: BorderRadius.circular(widget.borderRadius ?? 0),
+      borderRadius: BorderRadius.circular(widget.radius ?? 0),
     );
   }
 }

@@ -34,7 +34,7 @@ class MapUtil {
     return list;
   }
 
-  static Future gotoMap(MapUtilEnum type, longitude, latitude, [formGaode = false]) async {
+  static Future gotoMap({required MapUtilEnum type,longitude, latitude,formGaode = false}) async {
     if (type == MapUtilEnum.tencent) {
       await gotoTencentMap(longitude, latitude);
     }

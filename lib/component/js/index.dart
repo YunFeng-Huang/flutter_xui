@@ -112,7 +112,8 @@ class XUtil {
 // GlobalConfig.TimerCancel = null; 销毁
   static countdown(time, callback) {
     if (time.isAfter(DateTime.now())) {
-      GlobalConfig.timerCancel = Timer.periodic(const Duration(seconds: 1), (timer) {
+      GlobalConfig.timerCancel =
+          Timer.periodic(const Duration(seconds: 1), (timer) {
         var difference = time.difference(DateTime.now());
         print('difference: $difference');
         if (time.isBefore(DateTime.now())) {
@@ -147,7 +148,8 @@ class XUtil {
   static Future<ui.Image> loadImage(String url) async {
     Completer<ui.Image> completer = Completer<ui.Image>();
     ImageStreamListener? listener;
-    ImageStream stream = CachedNetworkImageProvider(url).resolve(ImageConfiguration.empty);
+    ImageStream stream =
+        CachedNetworkImageProvider(url).resolve(ImageConfiguration.empty);
     listener = ImageStreamListener((ImageInfo frame, bool sync) {
       final ui.Image image = frame.image;
       completer.complete(image);
@@ -275,6 +277,10 @@ class XUtil {
       }
     }
     return false;
+  }
+
+  static moreData(List? res, [int page = 20]) {
+    return (res?.length ?? 0) % page == 0 && res?.length != 0;
   }
 }
 
