@@ -34,11 +34,12 @@ class XAlert {
   // }
 
   /// 底部弹出提示框
-  showBottomAlertAndroid({required list, callback}) {
+  showBottomAlertAndroid({required list, callback,avtive}) {
     return showCupertinoModalPopup(
       barrierColor: barrierColor,
       context: context,
       builder: (context) {
+        Color? color = avtive==null?themeColor.ff0E1424: themeColor.primary;
         return XButton(
           callback: () {
             Navigator.pop(context);
@@ -56,7 +57,7 @@ class XAlert {
                           Navigator.pop(context);
                           callback(index);
                         },
-                        child: Text(list[index], style: font(32, colorA: themeColor.primary)).center.background(height: 112.w, borderTop: index == 0 ? 0 : 1.w),
+                        child: Text(list[index], style: font(32, colorA:themeColor.primary)).center.background(height: 112.w, borderTop: index == 0 ? 0 : 1.w),
                       ),
                     ),
                   ),
