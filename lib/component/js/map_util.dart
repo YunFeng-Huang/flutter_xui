@@ -91,6 +91,7 @@ class MapUtil {
     if (type == MapUtilEnum.tencent) {
       url = 'qqmap://map/routeplan?type=walk&from=$startName&fromcoord=${fromLat},${fromLog}&to=${endName}&tocoord=${toLat},${toLog}';
     }
+   
     bool canLaunch = await canLaunchUrl(Uri.parse(url));
     if (canLaunch) {
       await launchUrl(Uri.parse(url));
