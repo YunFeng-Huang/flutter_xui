@@ -282,6 +282,14 @@ class XUtil {
   static moreData(List? res, [int page = 20]) {
     return (res?.length ?? 0) % page == 0 && res?.length != 0;
   }
+
+  static mapIcons(url){
+    if(Platform.isAndroid){
+      url += '@2x';
+    }
+    url += '.png';
+    return url;
+  }
 }
 
 isNotNull(v) {
