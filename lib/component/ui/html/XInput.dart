@@ -36,6 +36,7 @@ class XInput extends StatelessWidget {
   FocusNode? _focusNode = new FocusNode();
   String? _counterText;
   Widget? _suffixIcon;
+  Widget? _prefixIcon;
   List<TextInputFormatter>? _inputFormatters;
   XInput({
     Key? key,
@@ -72,9 +73,11 @@ class XInput extends StatelessWidget {
     expands,
     counterText,
     suffixIcon,
+  prefixIcon,
   }) {
     _inputFormatters = inputFormatters;
     _suffixIcon = suffixIcon;
+    _prefixIcon=prefixIcon;
     _counterText = counterText;
     _readOnly = readOnly;
     _row = row ?? false;
@@ -152,6 +155,7 @@ class XInput extends StatelessWidget {
           hintStyle: _hintStyle,
           hintMaxLines: _hintMaxLines,
           border: OutlineInputBorder(borderSide: BorderSide.none),
+            prefixIcon:_prefixIcon,
         ),
         selectionControls: _selectionControls,
       );

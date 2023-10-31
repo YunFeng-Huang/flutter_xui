@@ -7,6 +7,7 @@ import 'dart:ui' as ui;
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:xui/component/js/print_log.dart';
 import 'package:xui/component/ui/index.dart';
 
 class XUtil {
@@ -19,21 +20,22 @@ class XUtil {
   ///
   /// [func]: 要执行的方法
   /// [delay]: 要迟延的时长
-
+  //
   static debounce(
     Function func, [
     Duration delay = const Duration(milliseconds: 500),
   ]) {
     String key = func.toString() + '_debounce';
+    print(key);
     if (!enableMap.containsKey(key)) {
       enableMap.addAll({key: null});
     }
-
     if (enableMap[key]?.isActive ?? false) {
       enableMap[key]?.cancel();
     }
     enableMap[key] = Timer(delay, () {
       func.call();
+      enableMap[key]?.cancel();
     });
   }
 
@@ -53,6 +55,42 @@ class XUtil {
     }
   }
 
+  static debounce2(
+      Function func,
+      StackTrace key, {
+        Duration delay = const Duration(milliseconds: 500),
+      }) {
+    MYCustomTrace programInfo = MYCustomTrace(key);
+    String _key = '${programInfo.fileName}_${programInfo.lineNumber}_debounce';
+    if (!XUtil.enableMap.containsKey(_key)) {
+      XUtil.enableMap.addAll({_key: null});
+    }
+    if (XUtil.enableMap[_key]?.isActive ?? false) {
+      XUtil.enableMap[_key]?.cancel();
+    }
+    XUtil.enableMap[_key] = Timer(delay, () {
+      func.call();
+      XUtil.enableMap[_key]?.cancel();
+    });
+  }
+
+  static throttle2(
+      Function func,
+      StackTrace key, {
+        Duration delay = const Duration(milliseconds: 2000),
+      }) {
+    MYCustomTrace programInfo = MYCustomTrace(key);
+    String _key = '${programInfo.fileName}_${programInfo.lineNumber}_throttle';
+    if (XUtil.enableMap.containsKey(_key)) {
+      return;
+    } else {
+      XUtil.enableMap.addAll({_key: true});
+      func.call();
+      Timer(delay, () {
+        XUtil.enableMap.remove(_key);
+      });
+    }
+  }
   static String typeOf(element) {
     return element.runtimeType.toString();
   }
@@ -283,8 +321,8 @@ class XUtil {
     return (res?.length ?? 0) % page == 0 && res?.length != 0;
   }
 
-  static mapIcons(url){
-    if(Platform.isAndroid){
+  static mapIcons(url) {
+    if (Platform.isAndroid) {
       url += '@2x';
     }
     url += '.png';
@@ -295,3 +333,4 @@ class XUtil {
 isNotNull(v) {
   return v != null;
 }
+
