@@ -19,46 +19,13 @@ class XUtil {
   /// 函数防抖
   ///
   /// [func]: 要执行的方法
-  /// [delay]: 要迟延的时长
-  //
+  /// [duration]: 要迟延的时长
+
+  // StackTrace.current
   static debounce(
-    Function func, [
-    Duration delay = const Duration(milliseconds: 500),
-  ]) {
-    String key = func.toString() + '_debounce';
-    print(key);
-    if (!enableMap.containsKey(key)) {
-      enableMap.addAll({key: null});
-    }
-    if (enableMap[key]?.isActive ?? false) {
-      enableMap[key]?.cancel();
-    }
-    enableMap[key] = Timer(delay, () {
-      func.call();
-      enableMap[key]?.cancel();
-    });
-  }
-
-  static throttle(
-    Function func, [
-    Duration delay = const Duration(milliseconds: 2000),
-  ]) {
-    String key = func.toString() + '_throttle';
-    if (enableMap.containsKey(key)) {
-      return;
-    } else {
-      enableMap.addAll({key: true});
-      func.call();
-      Timer(delay, () {
-        enableMap.remove(key);
-      });
-    }
-  }
-
-  static debounce2(
       Function func,
       StackTrace key, {
-        Duration delay = const Duration(milliseconds: 500),
+        Duration duration = const Duration(milliseconds: 500),
       }) {
     MYCustomTrace programInfo = MYCustomTrace(key);
     String _key = '${programInfo.fileName}_${programInfo.lineNumber}_debounce';
@@ -68,25 +35,26 @@ class XUtil {
     if (XUtil.enableMap[_key]?.isActive ?? false) {
       XUtil.enableMap[_key]?.cancel();
     }
-    XUtil.enableMap[_key] = Timer(delay, () {
+    XUtil.enableMap[_key] = Timer(duration, () {
       func.call();
       XUtil.enableMap[_key]?.cancel();
     });
   }
 
-  static throttle2(
+  static throttle(
       Function func,
       StackTrace key, {
-        Duration delay = const Duration(milliseconds: 2000),
+        Duration duration = const Duration(milliseconds: 2000),
       }) {
     MYCustomTrace programInfo = MYCustomTrace(key);
     String _key = '${programInfo.fileName}_${programInfo.lineNumber}_throttle';
+    print(_key);
     if (XUtil.enableMap.containsKey(_key)) {
       return;
     } else {
       XUtil.enableMap.addAll({_key: true});
       func.call();
-      Timer(delay, () {
+      Timer(duration, () {
         XUtil.enableMap.remove(_key);
       });
     }
