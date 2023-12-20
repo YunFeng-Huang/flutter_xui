@@ -31,6 +31,7 @@ class XInput extends StatelessWidget {
   int? _maxLines;
   int? _maxLength;
   int? _hintMaxLines;
+
   late bool _autofocus;
   TextSelectionControls? _selectionControls;
   FocusNode? _focusNode = new FocusNode();
@@ -40,7 +41,7 @@ class XInput extends StatelessWidget {
   List<TextInputFormatter>? _inputFormatters;
   XInput({
     Key? key,
-    row = true,
+    row,
     label,
     readOnly,
     inputFormatters,
@@ -73,11 +74,13 @@ class XInput extends StatelessWidget {
     expands,
     counterText,
     suffixIcon,
-  prefixIcon,
+    prefixIcon,
+    showClose,
+    eyeChange,
   }) {
     _inputFormatters = inputFormatters;
-    _suffixIcon = suffixIcon;
-    _prefixIcon=prefixIcon;
+
+    _prefixIcon = prefixIcon;
     _counterText = counterText;
     _readOnly = readOnly;
     _row = row ?? false;
@@ -91,25 +94,74 @@ class XInput extends StatelessWidget {
     _hintStyle = hintStyle;
     _keyboardType = keyboardType;
     _controller = controller;
-    _onChanged = onChanged;
+
     _textAlign = textAlign;
     _border = border;
-    _contentPadding = contentPadding ?? EdgeInsets.only(top: 10.w, bottom: 10.w);
+    _contentPadding =
+        contentPadding ?? EdgeInsets.only(top: 10.w, bottom: 10.w);
     _enabled = enabled;
     _radius = radius ?? 10.w;
     _obscureText = obscureText;
     _style = style;
-    _maxLines = maxLines;
+    _maxLines = obscureText ?? false ? 1 : maxLines;
     _fillColor = fillColor;
     _autofocus = autofocus ?? false;
-    _maxLength = maxLength;
+
     _selectionControls = selectionControls;
     _hintMaxLines = hintMaxLines;
     _expands = expands ?? false;
+
+    ///密码眼睛
+    if (eyeChange != null) {
+      _suffixIcon = GestureDetector(
+        onLongPressStart: (details) {
+          eyeChange?.call(false);
+        },
+        onLongPressDown: (v) {
+          eyeChange?.call(false);
+        },
+        onTap: () {
+          eyeChange?.call(true);
+        },
+        onLongPressUp: () {
+          eyeChange?.call(true);
+        },
+        onLongPressEnd: (details) {
+          eyeChange?.call(true);
+        },
+        child: _obscureText ?? false
+            ? const Icon(Icons.visibility_off_outlined,size: 22,)
+            : const Icon(Icons.visibility_outlined,size: 22),
+      );
+      //输入框清空
+    } else if (showClose ?? false) {
+      _suffixIcon = controller.text.length > 0
+          ? GestureDetector(
+              onTap: () {
+                controller.text = '';
+                onChanged?.call('');
+              },
+              child: Icon(
+                Icons.close_outlined,
+                size: 38.w,
+              ),
+            )
+          : null;
+    } else {
+      _suffixIcon = suffixIcon;
+    }
+
+    _onChanged = (v) {
+      if (maxLength != null && v.length > maxLength) {
+        controller.text = controller.text.substring(0, maxLength);
+        controller.selection =
+            TextSelection.fromPosition(TextPosition(offset: maxLength ?? 0));
+      }
+      onChanged?.call(v);
+    };
   }
   @override
   Widget build(BuildContext context) {
-
     // ignore: non_constant_identifier_names
     _LabelWidget() {
       return Container(
@@ -128,7 +180,7 @@ class XInput extends StatelessWidget {
     // ignore: non_constant_identifier_names
     _InputWidget() {
       return TextField(
-         key:key,
+        key: key,
         inputFormatters: _inputFormatters,
         expands: _expands ?? false,
         cursorColor: themeColor.ffFF4300,
@@ -141,7 +193,7 @@ class XInput extends StatelessWidget {
         textAlign: _textAlign ?? TextAlign.start,
         enabled: _enabled ?? true,
         style: _style,
-        readOnly:_readOnly??false,
+        readOnly: _readOnly ?? false,
         maxLength: _maxLength,
         onChanged: _onChanged,
         decoration: InputDecoration(
@@ -155,7 +207,7 @@ class XInput extends StatelessWidget {
           hintStyle: _hintStyle,
           hintMaxLines: _hintMaxLines,
           border: OutlineInputBorder(borderSide: BorderSide.none),
-            prefixIcon:_prefixIcon,
+          prefixIcon: _prefixIcon,
         ),
         selectionControls: _selectionControls,
       );
@@ -166,7 +218,14 @@ class XInput extends StatelessWidget {
       child: Container(
           // padding:
           //     _padding ?? EdgeInsets.symmetric(vertical: 4.w, horizontal: 10.w),
-          decoration: _border == null ? null : BoxDecoration(borderRadius: _radius == null ? null : BorderRadius.all(Radius.circular(_radius!)), border: Border.all(width: 1, color: _border ?? Colors.white), color: Colors.red),
+          decoration: _border == null
+              ? null
+              : BoxDecoration(
+                  borderRadius: _radius == null
+                      ? null
+                      : BorderRadius.all(Radius.circular(_radius!)),
+                  border: Border.all(width: 1, color: _border ?? Colors.white),
+                  color: Colors.red),
           child: _row!
               ? Row(
                   children: [
@@ -209,7 +268,8 @@ class MyNumberTextInputFormatter extends TextInputFormatter {
   }
 
   @override
-  TextEditingValue formatEditUpdate(TextEditingValue oldValue, TextEditingValue newValue) {
+  TextEditingValue formatEditUpdate(
+      TextEditingValue oldValue, TextEditingValue newValue) {
     String value = newValue.text;
     int selectionIndex = newValue.selection.end;
     if (value == ".") {
@@ -218,7 +278,10 @@ class MyNumberTextInputFormatter extends TextInputFormatter {
     } else if (value == "-") {
       value = "-";
       selectionIndex++;
-    } else if (value != "" && value != defaultDouble.toString() && strToFloat(value, defaultDouble) == defaultDouble || getValueDigit(value) > digit) {
+    } else if (value != "" &&
+            value != defaultDouble.toString() &&
+            strToFloat(value, defaultDouble) == defaultDouble ||
+        getValueDigit(value) > digit) {
       value = oldValue.text;
       selectionIndex = oldValue.selection.end;
     }
