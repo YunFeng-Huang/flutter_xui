@@ -1,10 +1,10 @@
-// ignore: must_be_immutable
+// ignore_for_file: must_be_immutable
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import '../../index.dart';
 
-// ignore: must_be_immutable
 class XInput extends StatelessWidget {
   Key? key;
   String? _label;
@@ -39,47 +39,45 @@ class XInput extends StatelessWidget {
   Widget? _suffixIcon;
   Widget? _prefixIcon;
   List<TextInputFormatter>? _inputFormatters;
-  XInput({
-    Key? key,
-    row,
-    label,
-    readOnly,
-    inputFormatters,
-    labelWidget,
-    labelAlign,
-    labelWidth = 0.0,
-    labelStyle,
-    padding,
-    radius,
-    hintText,
-    hintStyle,
-    keyboardType,
-    controller,
-    obscureText,
-    validator,
-    textAlign,
-    border,
-    onChanged,
-    contentPadding,
-    required,
-    enabled,
-    style,
-    maxLines,
-    autofocus,
-    maxLength,
-    focusNode,
-    selectionControls,
-    fillColor,
-    hintMaxLines,
-    expands,
-    counterText,
-    suffixIcon,
-    prefixIcon,
-    showClose,
-    eyeChange,
-  }) {
+  XInput(
+      {Key? key,
+      row = true,
+      label,
+      readOnly,
+      inputFormatters,
+      labelWidget,
+      labelAlign,
+      labelWidth = 0.0,
+      labelStyle,
+      padding,
+      radius,
+      hintText,
+      hintStyle,
+      keyboardType,
+      controller,
+      obscureText,
+      validator,
+      textAlign,
+      border,
+      onChanged,
+      contentPadding,
+      required,
+      enabled,
+      style,
+      maxLines,
+      autofocus,
+      maxLength,
+      focusNode,
+      selectionControls,
+      fillColor,
+      hintMaxLines,
+      expands,
+      counterText,
+      suffixIcon,
+      prefixIcon,
+      showClose,
+      eyeChange}) {
     _inputFormatters = inputFormatters;
-
     _prefixIcon = prefixIcon;
     _counterText = counterText;
     _readOnly = readOnly;
@@ -130,8 +128,11 @@ class XInput extends StatelessWidget {
           eyeChange?.call(true);
         },
         child: _obscureText ?? false
-            ? const Icon(Icons.visibility_off_outlined,size: 22,)
-            : const Icon(Icons.visibility_outlined,size: 22),
+            ? const Icon(
+                Icons.visibility_off_outlined,
+                size: 22,
+              )
+            : const Icon(Icons.visibility_outlined, size: 22),
       );
       //输入框清空
     } else if (showClose ?? false) {

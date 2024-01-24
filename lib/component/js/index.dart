@@ -256,14 +256,26 @@ class XUtil {
     return 0.0;
   }
 
+  static getVersion(version){
+    RegExp regExp = RegExp(r'v\d+\.\d+\.\d+');
+    Iterable<Match> matches = regExp.allMatches(version ?? '');
+    if (matches.isNotEmpty) {
+    Match match = matches.first;
+    print(match);
+    version = match.group(0);
+    }
+    return version;
+  }
   ///版本比较
   static bool versionDiff(String version, String version1) {
-    String _v = version.replaceAll('v', '').replaceAll('V', '');
+    String _v = getVersion(version).replaceAll('v', '').replaceAll('V', '');
+    print(_v);
     List list1 = _v.split('.');
     int version_1 = XUtil.intParse(list1[0]);
     int version_2 = XUtil.intParse(list1[1]);
     int version_3 = XUtil.intParse(list1[2]);
-    String _v1 = version1.replaceAll('v', '').replaceAll('V', '');
+    String _v1 = getVersion(version1).replaceAll('v', '').replaceAll('V', '');
+    print(_v1);
     List list2 = _v1.split('.');
     int version1_1 = XUtil.intParse(list2[0]);
     int version1_2 = XUtil.intParse(list2[1]);
