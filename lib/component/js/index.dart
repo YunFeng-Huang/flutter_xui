@@ -86,6 +86,7 @@ class XUtil {
 
   static intParse(params) {
     if (typeOf(params) != 'int' && params != null) {
+      if(params == "")params="0";
       return int.parse(params);
     } else {
       return params;

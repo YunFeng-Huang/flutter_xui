@@ -2,7 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:xui/xui.dart';
-
+import 'dart:io';
 GlobalConfig globalConfig = GlobalConfig();
 
 class GlobalConfig {
@@ -31,17 +31,19 @@ class GlobalConfig {
 
 
 class SystemUiStyle {
-  static SystemUiOverlayStyle light  = SystemUiOverlayStyle(
+  static SystemUiOverlayStyle light = Platform.isAndroid ? SystemUiStyle._l: SystemUiStyle._d;
+  static SystemUiOverlayStyle dark = Platform.isAndroid ? SystemUiStyle._d: SystemUiStyle._l;
+  static SystemUiOverlayStyle _l  = SystemUiOverlayStyle(
   statusBarColor: Colors.transparent,
   statusBarIconBrightness: Brightness.light,
     systemNavigationBarColor:  Color(0xFFFFFFFF),
-  systemNavigationBarIconBrightness: Brightness.light, //虚拟按键图标色
+  systemNavigationBarIconBrightness: Brightness.light, //虚拟按键图标色Ï
   systemNavigationBarDividerColor: Colors.transparent,
   statusBarBrightness: Brightness.light,
 );
 
 
-static SystemUiOverlayStyle dark  = SystemUiOverlayStyle(
+static SystemUiOverlayStyle _d  = SystemUiOverlayStyle(
   statusBarColor: Colors.transparent,
   statusBarIconBrightness: Brightness.dark,
   systemNavigationBarColor:  Color(0xFFFFFFFF),

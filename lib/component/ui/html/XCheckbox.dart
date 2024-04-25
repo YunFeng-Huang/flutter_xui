@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import '../../index.dart';
 
 // ignore: must_be_immutable
@@ -14,18 +15,7 @@ class XCheckBox extends StatefulWidget {
   Widget? right;
   String? activeImg;
   String? defaultImg;
-  XCheckBox(
-      {required this.value,
-      required this.onChanged,
-      this.radius,
-      this.disable,
-      this.color,
-      this.size,
-      this.label,
-      this.left,
-      this.right,
-      this.activeImg,
-      this.defaultImg});
+  XCheckBox({required this.value, required this.onChanged, this.radius, this.disable, this.color, this.size, this.label, this.left, this.right, this.activeImg, this.defaultImg});
   @override
   _XCheckBoxState createState() => _XCheckBoxState();
 }
@@ -68,8 +58,8 @@ class _XCheckBoxState extends State<XCheckBox> {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          if (left!=null) left!.margin(right: 10.w),
-          activeImg!=null
+          if (left != null) left!.margin(right: 10.w),
+          activeImg != null
               ? (_value
                   ? XImage(
                       image: activeImg!,
@@ -86,7 +76,6 @@ class _XCheckBoxState extends State<XCheckBox> {
           if (isNotNull(right)) right!.margin(left: 10.w)
         ],
       ),
-      disabled: disable ?? false,
       callback: () {
         _value = !_value;
         setState(() {});

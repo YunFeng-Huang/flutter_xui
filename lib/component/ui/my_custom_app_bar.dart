@@ -38,6 +38,7 @@ AppBar XAppBar(
 
   return AppBar(
     automaticallyImplyLeading:automaticallyImplyLeading,
+    // backgroundColor:Colors.transparent,
     backgroundColor:backgroundColor??(theme == 'light'? themeColor.ffFFFFFF : themeColor.primary),
     title: titleWidget ??
         (Stack(

@@ -42,6 +42,9 @@ class CustomFilteringTextInputFormatter {
   /// 禁止表情符号和中文
   static final TextInputFormatter denyChineseAndEmoji =
       FilteringTextInputFormatter.deny(RegExp(r'[\u0080-\uFFFF]'));
+
+
+
 }
 
 class _CustomNumFormatter extends TextInputFormatter {
